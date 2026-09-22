@@ -6,7 +6,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR/'.env')
 SECRET_KEY=os.getenv('DJANGO_SECRET_KEY','change-me-in-production')
 DEBUG=os.getenv('DEBUG','False').lower()=='true'
-ALLOWED_HOSTS=[h.strip() for h in os.getenv('ALLOWED_HOSTS','127.0.0.1,localhost').split(',') if h.strip()]
+ALLOWED_HOSTS=[h.strip() for h in os.getenv('ALLOWED_HOSTS',"graphix-django-before.onrender.com,localhost,127.0.0.1").split(',') if h.strip()]
+CSRF_TRUSTED_ORIGINS=[origin.strip() for origin in os.getenv('CSRF_TRUSTED_ORIGINS','https://graphix-django-before.onrender.com').split(',') if origin.strip()]
 INSTALLED_APPS=['django.contrib.admin','django.contrib.auth','django.contrib.contenttypes','django.contrib.sessions','django.contrib.messages','django.contrib.staticfiles','website']
 MIDDLEWARE=['django.middleware.security.SecurityMiddleware','whitenoise.middleware.WhiteNoiseMiddleware','django.contrib.sessions.middleware.SessionMiddleware','django.middleware.common.CommonMiddleware','django.middleware.csrf.CsrfViewMiddleware','django.contrib.auth.middleware.AuthenticationMiddleware','django.contrib.messages.middleware.MessageMiddleware','django.middleware.clickjacking.XFrameOptionsMiddleware']
 ROOT_URLCONF='config.urls'
