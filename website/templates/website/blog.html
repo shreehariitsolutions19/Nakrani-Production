@@ -1,0 +1,7 @@
+{% extends 'website/base.html' %}
+{% load static %}
+{% block content %}
+<section class="page-hero"><div class="section-padding w-full hero-content"><span class="page-kicker">Ideas & Insights</span><h1 class="page-title">The design <span class="script">journal</span></h1><p class="page-lead">Thoughts on branding, packaging, digital design and building memorable visual systems.</p></div></section>
+<section class="reference-section cream"><div class="section-padding"><div class="ref-grid-3">{% for post in posts %}<a class="blog-card-ref reveal" href="{% url 'blog_detail' post.slug %}"><div class="cover">{% if post.cover_image %}<img src="{{ post.cover_image.url }}" alt="{{ post.title }}" loading="lazy">{% else %}<img src="{% static 'site/images/7_cereal-editorial.jpg' %}" alt="{{ post.title }}" loading="lazy">{% endif %}</div><div class="copy"><span class="date">{{ post.category }} · {{ post.published_at|date:'d M Y' }}</span><h3>{{ post.title }}</h3><p class="muted">{{ post.excerpt }}</p><span class="arrow-link">Read More <i class="ri-arrow-right-line"></i></span></div></a>{% empty %}<p>No articles available.</p>{% endfor %}</div></div></section>
+<section class="reference-section dark"><div class="section-padding text-center"><span class="section-label">Stay curious</span><h2 class="section-title">Good design starts with a <span class="font-script text-brand-500 font-normal">good idea</span>.</h2><a class="btn-primary mt-6" href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a></div></section>
+{% endblock %}
