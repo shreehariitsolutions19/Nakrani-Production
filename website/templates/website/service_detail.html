@@ -1,5 +1,5 @@
-{% load static %}
 {% extends 'website/base.html' %}
+{% load static %}
 {% block content %}
 <section class="page-hero"><div class="section-padding w-full hero-content"><span class="page-kicker">Service</span><h1 class="page-title">{{ service.title }}</h1><p class="page-lead">{{ service.description }}</p></div></section>
 <section class="reference-section cream"><div class="section-padding"><div class="ref-grid-2"><div class="reveal">{% if service.image %}<img class="detail-image" src="{{ service.image.url }}" alt="{{ service.title }}">{% else %}<div class="detail-image" style="background:linear-gradient(135deg,#2a241d,#c89a5e);display:flex;align-items:center;justify-content:center;color:#fff;font:700 5rem Poppins">{{ service.title|slice:':1' }}</div>{% endif %}</div><div class="reveal"><span class="section-label">What you get</span><h2 class="section-title">Built with <span class="font-script text-brand-500 font-normal">intention</span>.</h2><div class="detail-content">{{ service.description|linebreaks }}</div>{% if service.feature_list %}<div class="mt-8">{% for feature in service.feature_list %}<div class="flex items-center gap-3 mb-3"><i class="ri-check-line text-brand-500"></i><span>{{ feature }}</span></div>{% endfor %}</div>{% endif %}</div></div></div></section>
