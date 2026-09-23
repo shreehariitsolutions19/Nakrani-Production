@@ -5,6 +5,7 @@ python -m pip install -r requirements.txt
 
 python manage.py collectstatic --no-input
 python manage.py migrate
+python manage.py seed_demo
 
 if [ -n "${DJANGO_ADMIN_USERNAME:-}" ] && [ -n "${DJANGO_ADMIN_PASSWORD:-}" ]; then
 	python manage.py shell <<'PY'
