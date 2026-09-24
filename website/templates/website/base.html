@@ -105,10 +105,10 @@
         <a class="flex items-center h-10 mb-6" href="{% url 'home' %}"><img class="h-full w-auto object-contain" src="{% static 'site/images/logo.webp' %}" alt="Nakrani Production"></a>
         <p class="text-dark-600 text-sm leading-relaxed mb-6 max-w-xs">{% if site_settings %}{{ site_settings.tagline }}{% else %}We create stunning visual experiences that inspire and engage. Premium design for premium brands.{% endif %}</p>
         <div class="flex items-center gap-3">
-          {% if site_settings and site_settings.facebook %}<a class="social" href="{{ site_settings.facebook }}" target="_blank" rel="noopener" aria-label="Facebook"><i class="ri-facebook-fill"></i></a>{% endif %}
-          {% if site_settings and site_settings.linkedin %}<a class="social" href="{{ site_settings.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="ri-linkedin-fill"></i></a>{% endif %}
-          {% if site_settings and site_settings.instagram %}<a class="social" href="{{ site_settings.instagram }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="ri-instagram-fill"></i></a>{% endif %}
-          {% if site_settings and site_settings.twitter %}<a class="social" href="{{ site_settings.twitter }}" target="_blank" rel="noopener" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a>{% endif %}
+          <a class="social" href="{% if site_settings and site_settings.facebook %}{{ site_settings.facebook }}{% else %}https://www.facebook.com/{% endif %}" target="_blank" rel="noopener" aria-label="Facebook"><i class="ri-facebook-fill"></i></a>
+          <a class="social" href="{% if site_settings and site_settings.linkedin %}{{ site_settings.linkedin }}{% else %}https://www.linkedin.com/{% endif %}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="ri-linkedin-fill"></i></a>
+          <a class="social" href="{% if site_settings and site_settings.instagram %}{{ site_settings.instagram }}{% else %}https://www.instagram.com/{% endif %}" target="_blank" rel="noopener" aria-label="Instagram"><i class="ri-instagram-fill"></i></a>
+          <a class="social" href="{% if site_settings and site_settings.twitter %}{{ site_settings.twitter }}{% else %}https://x.com/{% endif %}" target="_blank" rel="noopener" aria-label="X"><i class="ri-twitter-x-fill"></i></a>
         </div>
       </div>
       <div class="lg:col-span-2"><h4 class="footer-title">Quick Links</h4><ul class="space-y-3 footer-list"><li><a href="{% url 'home' %}">Home</a></li><li><a href="{% url 'about' %}">About</a></li><li><a href="{% url 'services' %}">Services</a></li><li><a href="{% url 'portfolio' %}">Portfolio</a></li></ul></div>

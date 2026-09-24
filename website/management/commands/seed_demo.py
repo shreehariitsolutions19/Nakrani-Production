@@ -30,6 +30,10 @@ class Command(BaseCommand):
             "email": "Design.Hitul@gmail.com",
             "city": "Visnagar, Mehsana, Gujarat, India",
             "address": "Visnagar, Mehsana, Gujarat, India",
+            "facebook": "https://www.facebook.com/",
+            "linkedin": "https://www.linkedin.com/",
+            "instagram": "https://www.instagram.com/",
+            "twitter": "https://x.com/",
             "meta_title": "Nakrani Production — Premium Graphic Design Agency",
             "meta_description": "Premium graphic design, branding, packaging, print and social media design.",
         })
