@@ -1,7 +1,308 @@
 {% extends 'website/base.html' %}
 {% load static %}
+
+{% block extra_head %}
+<script>document.documentElement.classList.add('ar-js');</script>
+<style>
+  :root{--ar-bg:#0a0a0a;--ar-alt:#1a1a1a;--ar-gold:#c89a5e;--ar-gold-dk:#b0884e;--ar-muted:#8a8a8a;--ar-line:rgba(255,255,255,.1)}
+  body{background:var(--ar-bg)}
+  .ar-page{background:var(--ar-bg);color:#fff;overflow-x:hidden}
+  .ar-shell{width:100%;margin:0 auto;padding:0 1rem}
+  @media(min-width:768px){.ar-shell{padding:0 1.5rem}}
+  @media(min-width:1024px){.ar-shell{padding:0 2rem}}
+  @media(min-width:1280px){.ar-shell{padding:0 3rem}}
+  @media(min-width:1536px){.ar-shell{padding:0 5rem}}
+
+  .ar-script{font-family:Pacifico,cursive;color:var(--ar-gold);font-weight:400}
+  .ar-tag{display:block;margin-bottom:.75rem;color:var(--ar-gold);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .ar-h2{margin:0;font-family:Poppins,Inter,system-ui,sans-serif;font-size:clamp(1.875rem,3.4vw,3rem);font-weight:700;line-height:1.2;color:#fff}
+  .ar-text{margin:0;color:var(--ar-muted);font-size:1rem;line-height:1.7}
+  .ar-section{position:relative;overflow:hidden;padding:5rem 0;background:var(--ar-bg)}
+  .ar-section--alt{background:var(--ar-alt)}
+  @media(min-width:768px){.ar-section{padding:7rem 0}}
+  .ar-section>.ar-shell{position:relative;z-index:1}
+  .ar-page .btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:1rem 2rem;border-radius:9999px;background:var(--ar-gold);color:#1a1a1a;font-weight:500;text-decoration:none;white-space:nowrap;transition:all .3s cubic-bezier(.4,0,.2,1)}
+  .ar-page .btn-primary:hover{background:var(--ar-gold-dk);box-shadow:0 0 40px rgba(200,154,94,.15)}
+  .ar-page a:focus-visible{outline:2px solid var(--ar-gold);outline-offset:3px}
+
+  .ar-blob{position:absolute;border-radius:50%;background:rgba(200,154,94,.05);filter:blur(64px);pointer-events:none}
+  .ar-parallax{transform:translate3d(var(--px,0px),var(--py,0px),0);transition:transform .3s ease-out}
+  .ar-js .ar-reveal{opacity:0;transform:translateY(32px);transition:opacity .6s ease-out var(--d,0s),transform .6s ease-out var(--d,0s),border-color .3s ease}
+  .ar-js .ar-reveal.ar-in{opacity:1;transform:none}
+
+  /* hero */
+  .ar-hero{position:relative;overflow:hidden;padding:8rem 0 4rem;background:var(--ar-bg)}
+  @media(min-width:768px){.ar-hero{padding:10rem 0 6rem}}
+  .ar-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.2}
+  .ar-hero-fade{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,.85),rgba(10,10,10,.7),rgba(10,10,10,.95))}
+  .ar-hero-inner{position:relative;z-index:1}
+  .ar-hero-grid{display:flex;flex-direction:column;align-items:center;gap:3rem}
+  @media(min-width:1024px){.ar-hero-grid{flex-direction:row;gap:4rem}.ar-hero-grid>*{flex:1;width:100%}.ar-hero-grid .ar-cover{max-width:420px;margin-top:0}}
+  .ar-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-bottom:1.5rem;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .ar-crumb a{color:rgba(255,255,255,.6);text-decoration:none;transition:color .3s}
+  .ar-crumb a:hover{color:var(--ar-gold)}
+  .ar-crumb .sep{color:rgba(255,255,255,.3)}
+  .ar-crumb .current{color:var(--ar-gold)}
+  .ar-head{max-width:48rem}
+  .ar-pill{display:inline-flex;align-items:center;margin-bottom:1.25rem;padding:.25rem .75rem;border-radius:999px;background:rgba(200,154,94,.15);color:var(--ar-gold);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .ar-title{margin:0 0 1.5rem;font-family:Poppins,Inter,system-ui,sans-serif;font-size:clamp(1.875rem,5vw,3.75rem);font-weight:700;line-height:1.15;color:#fff}
+  .ar-meta{display:flex;flex-wrap:wrap;gap:.75rem 1.5rem}
+  .ar-meta span{display:inline-flex;align-items:center;gap:.5rem;color:var(--ar-muted);font-size:.875rem}
+  .ar-meta i{color:var(--ar-gold)}
+  .ar-cover{max-width:64rem;margin-top:3rem}
+  @media(min-width:768px){.ar-cover{margin-top:4rem}}
+  .ar-cover-frame{overflow:hidden;border-radius:1rem;border:1px solid var(--ar-line);box-shadow:0 25px 50px -12px rgba(0,0,0,.6)}
+  .ar-cover img{display:block;width:100%;height:280px;object-fit:cover;object-position:top}
+  @media(min-width:640px){.ar-cover img{height:400px}}
+  @media(min-width:1024px){.ar-cover img{height:420px}}
+
+  /* article body */
+  .ar-narrow{max-width:48rem;margin:0 auto}
+  .ar-circle-link{display:inline-flex;align-items:center;gap:.5rem;color:#fff;font-size:.875rem;font-weight:500;text-decoration:none}
+  .ar-circle-link span{display:flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;border:1px solid rgba(255,255,255,.2);border-radius:50%;color:var(--ar-gold);transition:border-color .3s}
+  .ar-circle-link i{transition:transform .3s}
+  .ar-circle-link:hover span{border-color:rgba(200,154,94,.5)}
+  .ar-circle-link:hover i{transform:translateX(-2px)}
+  .ar-back-top{margin-bottom:3rem}
+  .ar-content{color:var(--ar-muted);font-size:1.0625rem;line-height:1.7;overflow-wrap:anywhere}
+  @media(min-width:768px){.ar-content{font-size:1.125rem}}
+  .ar-content>*+*{margin-top:1.75rem}
+  .ar-content p{margin:0}
+  .ar-content h2,.ar-content h3{margin:0;padding-top:1rem;font-family:Poppins,Inter,system-ui,sans-serif;font-weight:700;line-height:1.3;color:#fff}
+  .ar-content h2{font-size:clamp(1.5rem,3vw,1.875rem)}
+  .ar-content h3{font-size:clamp(1.25rem,2.4vw,1.5rem)}
+  .ar-content a{color:var(--ar-gold);text-underline-offset:3px}
+  .ar-content strong{color:#fff;font-weight:600}
+  .ar-content ul,.ar-content ol{padding-left:1.4rem}
+  .ar-content li+li{margin-top:.5rem}
+  .ar-content img{display:block;max-width:100%;height:auto;border-radius:.75rem}
+  .ar-content blockquote{margin:1rem 0;padding:.5rem 0 .5rem 1.5rem;border-left:2px solid var(--ar-gold)}
+  .ar-content blockquote p{font-family:Poppins,Inter,sans-serif;font-size:clamp(1.25rem,2.4vw,1.5rem);font-style:italic;line-height:1.6;color:#fff}
+
+  /* prev / next */
+  .ar-navwrap{padding:3.5rem 0;border-bottom:1px solid rgba(255,255,255,.08)}
+  @media(min-width:768px){.ar-navwrap{padding:4rem 0}}
+  .ar-nav{display:grid;gap:1rem}
+  @media(min-width:768px){.ar-nav{grid-template-columns:1fr 1fr;gap:1.5rem}}
+  .ar-glass{background:rgba(255,255,255,.05);border:1px solid var(--ar-line);border-radius:1rem;-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);transition:border-color .3s}
+  .ar-glass:hover{border-color:rgba(200,154,94,.4)}
+  .ar-nav-card{display:flex;align-items:center;gap:1rem;padding:1.5rem;color:#fff;text-decoration:none}
+  .ar-nav-card.next{justify-content:flex-end;text-align:right}
+  .ar-nav-card.is-empty{visibility:hidden}
+  .ar-nav-arrow{display:flex;flex-shrink:0;align-items:center;justify-content:center;width:2.75rem;height:2.75rem;border:1px solid rgba(255,255,255,.15);border-radius:50%;color:var(--ar-gold);font-size:1.125rem;transition:border-color .3s}
+  .ar-nav-card:hover .ar-nav-arrow{border-color:rgba(200,154,94,.5)}
+  .ar-nav-card.next .ar-nav-arrow{order:2}
+  .ar-nav-label{display:block;margin-bottom:.25rem;color:rgba(255,255,255,.5);font-size:.6875rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .ar-nav-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-family:Poppins,Inter,sans-serif;font-size:1rem;font-weight:600;line-height:1.4;transition:color .3s}
+  .ar-nav-card:hover .ar-nav-title{color:var(--ar-gold)}
+  .ar-back{display:flex;justify-content:center;margin-top:2.5rem}
+
+  /* related */
+  .ar-related{padding:5rem 0}
+  @media(min-width:768px){.ar-related{padding:7rem 0}}
+  .ar-related-head{margin-bottom:3rem}
+  .ar-related-head .ar-h2{max-width:42rem}
+  .ar-grid{display:grid;gap:1.5rem}
+  @media(min-width:640px){.ar-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:768px){.ar-grid{gap:2rem}}
+  @media(min-width:1024px){.ar-grid{grid-template-columns:repeat(3,1fr)}}
+  .ar-card{display:flex;flex-direction:column;height:100%;overflow:hidden;border:1px solid rgba(170,170,170,.05);border-radius:.75rem;background:#fff;color:#1a1a1a;text-decoration:none;box-shadow:0 4px 20px rgba(0,0,0,.08);transition:transform .5s ease,box-shadow .5s ease}
+  .ar-card:hover{transform:translateY(-.5rem);box-shadow:0 20px 40px rgba(0,0,0,.3)}
+  .ar-card-img{aspect-ratio:16/10;overflow:hidden;background:#e8e6e2}
+  .ar-card-img img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .7s ease}
+  .ar-card:hover .ar-card-img img{transform:scale(1.1)}
+  .ar-card-body{display:flex;flex-direction:column;flex:1;padding:1.5rem}
+  .ar-cat{display:block;margin-bottom:.75rem;color:var(--ar-gold-dk);font-size:.6875rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+  .ar-card h3{margin:0 0 .75rem;font-family:Poppins,Inter,sans-serif;font-size:1.125rem;font-weight:700;line-height:1.375;color:#1a1a1a;transition:color .3s}
+  .ar-card:hover h3{color:var(--ar-gold-dk)}
+  .ar-card p{flex:1;margin:0 0 1.25rem;color:#5a5a5a;font-size:.875rem;line-height:1.7}
+  .ar-card-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:1rem;border-top:1px solid rgba(0,0,0,.07)}
+  .ar-card-foot time{color:#5a5a5a;font-size:.75rem}
+  .ar-more{display:inline-flex;align-items:center;gap:.5rem;color:#1a1a1a;font-size:.875rem;font-weight:500;transition:color .3s}
+  .ar-more i{font-size:1.125rem;transition:transform .3s}
+  .ar-card:hover .ar-more{color:var(--ar-gold-dk)}
+  .ar-card:hover .ar-more i{transform:translateX(4px)}
+
+  /* CTA */
+  .ar-cta{max-width:56rem;margin:0 auto;text-align:center}
+  .ar-cta .ar-h2{margin-bottom:1.5rem}
+  .ar-cta .ar-text{max-width:42rem;margin:0 auto 2.5rem;font-size:1.05rem}
+
+  @media(prefers-reduced-motion:reduce){
+    .ar-js .ar-reveal{opacity:1;transform:none;transition:none}
+    .ar-parallax,.ar-card,.ar-card-img img{transition:none!important;transform:none!important}
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-<section class="page-hero"><div class="section-padding w-full hero-content"><span class="page-kicker">{{ post.category }} · {{ post.published_at|date:'d M Y' }}</span><h1 class="page-title">{{ post.title }}</h1><p class="page-lead">{{ post.excerpt }}</p></div></section>
-<section class="reference-section cream"><div class="section-padding"><div class="max-w-4xl mx-auto">{% if post.cover_image %}<img class="detail-image reveal" src="{{ post.cover_image.url }}" alt="{{ post.title }}">{% else %}<img class="detail-image reveal" src="{% static 'site/images/7_cereal-editorial.jpg' %}" alt="{{ post.title }}">{% endif %}<div class="mt-12 reveal"><span class="section-label">{{ post.author }} · {{ post.published_at|date:'d M Y' }}</span><div class="detail-content mt-6">{{ post.content|linebreaks }}</div></div></div></div></section>
-<section class="reference-section dark"><div class="section-padding"><div class="flex items-end justify-between gap-8 mb-10"><div><span class="section-label">More from the journal</span><h2 class="section-title">Related <span class="font-script text-brand-500 font-normal">articles</span>.</h2></div><a class="btn-outline" href="{% url 'blog' %}">All Articles <i class="ri-arrow-right-line"></i></a></div><div class="ref-grid-3">{% for item in related_posts %}<a class="blog-card-ref reveal" href="{% url 'blog_detail' item.slug %}"><div class="cover">{% if item.cover_image %}<img src="{{ item.cover_image.url }}" alt="{{ item.title }}">{% else %}<img src="{% static 'site/images/7_cereal-editorial.jpg' %}" alt="{{ item.title }}">{% endif %}</div><div class="copy"><span class="date">{{ item.category }}</span><h3>{{ item.title }}</h3><span class="arrow-link">Read More <i class="ri-arrow-right-line"></i></span></div></a>{% endfor %}</div></div></section>
+<main class="ar-page">
+
+  <!-- HERO -->
+  <section class="ar-hero">
+    <div class="ar-hero-bg" style="background-image:url('{% if post.cover_image %}{{ post.cover_image.url }}{% else %}{% static 'site/images/blog-detail-hero.webp' %}{% endif %}')"></div>
+    <div class="ar-hero-fade"></div>
+    <div class="ar-blob ar-parallax" data-depth="16" style="top:6rem;right:4rem;width:18rem;height:18rem"></div>
+    <div class="ar-blob ar-parallax" data-depth="9" style="bottom:2.5rem;left:2.5rem;width:24rem;height:24rem"></div>
+
+    <div class="ar-shell ar-hero-inner ar-hero-grid">
+      <div class="hero-copy">
+        <nav class="ar-crumb" aria-label="Breadcrumb">
+          <a href="{% url 'blog' %}">Blog</a>
+          <span class="sep">/</span>
+          <span class="current">{{ post.category }}</span>
+        </nav>
+
+        <div class="ar-head">
+          <span class="ar-pill">{{ post.category }}</span>
+          <h1 class="ar-title">{{ post.title }}</h1>
+          <div class="ar-meta">
+            <span><i class="ri-user-3-line"></i>{{ post.author|default:"Nakrani Studio" }}</span>
+            <span><i class="ri-calendar-line"></i>{{ post.published_at|date:'F j, Y' }}</span>
+            <span><i class="ri-time-line"></i>{{ post.read_time|default:"6" }} min read</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ar-cover ar-parallax hero-art" data-depth="10">
+        <div class="ar-cover-frame">
+          {% if post.cover_image %}
+            <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" loading="eager">
+          {% else %}
+            <img src="{% static 'site/images/blog-detail-hero.webp' %}" alt="{{ post.title }}" loading="eager">
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
+      <span class="text-xs uppercase tracking-widest" style="writing-mode:vertical-lr">Scroll Down</span>
+      <div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div>
+    </div>
+  </section>
+
+  <!-- ARTICLE -->
+  <section class="ar-section ar-section--alt" style="padding-bottom:0">
+    <div class="ar-shell">
+      <div class="ar-narrow" style="padding-bottom:5rem">
+        <a class="ar-circle-link ar-back-top" href="{% url 'blog' %}"><span><i class="ri-arrow-left-line"></i></span>Back to Blog</a>
+        {# Plain-text content. If your content is written as HTML (e.g. CKEditor), change linebreaks to safe. #}
+        <article class="ar-content">
+          {{ post.content|linebreaks }}
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREVIOUS / NEXT + RELATED -->
+  <section class="ar-section--alt" style="background:var(--ar-alt)">
+    <div class="ar-shell">
+      <div class="ar-navwrap">
+        {% if previous_post or next_post %}
+        <div class="ar-nav">
+          {% if previous_post %}
+            <a class="ar-glass ar-nav-card" data-reveal href="{% url 'blog_detail' previous_post.slug %}" aria-label="Previous article: {{ previous_post.title }}">
+              <span class="ar-nav-arrow"><i class="ri-arrow-left-line"></i></span>
+              <span><span class="ar-nav-label">Previous Article</span><span class="ar-nav-title">{{ previous_post.title }}</span></span>
+            </a>
+          {% else %}
+            <span class="ar-nav-card is-empty" aria-hidden="true"></span>
+          {% endif %}
+          {% if next_post %}
+            <a class="ar-glass ar-nav-card next" data-reveal style="--d:.12s" href="{% url 'blog_detail' next_post.slug %}" aria-label="Next article: {{ next_post.title }}">
+              <span><span class="ar-nav-label">Next Article</span><span class="ar-nav-title">{{ next_post.title }}</span></span>
+              <span class="ar-nav-arrow"><i class="ri-arrow-right-line"></i></span>
+            </a>
+          {% endif %}
+        </div>
+        {% endif %}
+        <div class="ar-back" data-reveal style="--d:.24s">
+          <a class="ar-circle-link" href="{% url 'blog' %}"><span><i class="ri-arrow-left-line"></i></span>Back to Blog</a>
+        </div>
+      </div>
+
+      {% if related_posts %}
+      <div class="ar-related">
+        <div class="ar-related-head">
+          <span class="ar-tag" data-reveal style="--d:.1s">Keep Reading</span>
+          <h2 class="ar-h2" data-reveal style="--d:.2s">Related <span class="ar-script">Articles</span></h2>
+        </div>
+        <div class="ar-grid">
+          {% for item in related_posts %}
+          <div data-reveal style="--d:{{ forloop.counter }}00ms">
+            <a class="ar-card" href="{% url 'blog_detail' item.slug %}">
+              <div class="ar-card-img">
+                {% if item.cover_image %}
+                  <img src="{{ item.cover_image.url }}" alt="{{ item.title }} article cover" loading="lazy" decoding="async">
+                {% else %}
+                  <img src="{% static 'site/images/blog-detail-hero.webp' %}" alt="{{ item.title }} article cover" loading="lazy" decoding="async">
+                {% endif %}
+              </div>
+              <div class="ar-card-body">
+                <span class="ar-cat">{{ item.category }}</span>
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.excerpt|truncatewords:24 }}</p>
+                <div class="ar-card-foot">
+                  <time>{{ item.published_at|date:'F j, Y' }}</time>
+                  <span class="ar-more">Read More <i class="ri-arrow-right-line"></i></span>
+                </div>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="ar-section">
+    <div class="ar-blob ar-parallax" data-depth="14" style="top:50%;left:50%;width:600px;height:600px;margin:-300px 0 0 -300px"></div>
+    <div class="ar-shell">
+      <div class="ar-cta">
+        <span class="ar-tag" data-reveal>Start a Project</span>
+        <h2 class="ar-h2" data-reveal style="--d:.15s">Let's work <span class="ar-script">together</span></h2>
+        <p class="ar-text" data-reveal style="--d:.3s">Let's turn your idea into a visual experience your audience remembers.</p>
+        <div data-reveal style="--d:.45s">
+          <a class="btn-primary" href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var items = document.querySelectorAll('.ar-reveal');
+    if ('IntersectionObserver' in window && !reduce) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('ar-in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12 });
+      items.forEach(function (el) { io.observe(el); });
+    } else {
+      items.forEach(function (el) { el.classList.add('ar-in'); });
+    }
+
+    if (!reduce && window.matchMedia('(pointer: fine)').matches) {
+      var layers = document.querySelectorAll('[data-depth]'), raf = 0;
+      window.addEventListener('mousemove', function (ev) {
+        var nx = ev.clientX / window.innerWidth - 0.5, ny = ev.clientY / window.innerHeight - 0.5;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(function () {
+          layers.forEach(function (l) {
+            var d = parseFloat(l.dataset.depth) || 0;
+            l.style.setProperty('--px', (nx * d * -1.2).toFixed(2) + 'px');
+            l.style.setProperty('--py', (ny * d * -1.2).toFixed(2) + 'px');
+          });
+        });
+      }, { passive: true });
+    }
+  });
+</script>
 {% endblock %}

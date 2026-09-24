@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const panel = document.getElementById('mobile-panel');
   const icon = toggle ? toggle.querySelector('i') : null;
   const onScroll = () => nav && nav.classList.toggle('scrolled', window.scrollY > 20);
-  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
   if (toggle && panel) {
     toggle.addEventListener('click', () => {
       const open = panel.classList.toggle('open');
@@ -13,32 +15,73 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
   }
-  const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('in-view'); }), {threshold:.12});
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('in-view');
+    });
+  }, { threshold: 0.12 });
+
   document.querySelectorAll('.reveal, .animate-element').forEach(el => observer.observe(el));
+
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const button = item.querySelector('.faq-question');
+    if (!button) return;
+    button.addEventListener('click', () => {
+      const isOpen = item.classList.contains('is-open');
+      faqItems.forEach(entry => {
+        const q = entry.querySelector('.faq-question');
+        const openState = entry === item ? !isOpen : false;
+        entry.classList.toggle('is-open', openState);
+        if (q) q.setAttribute('aria-expanded', String(openState));
+      });
+    });
+  });
+
   const finePointer = window.matchMedia('(pointer:fine)').matches;
   if (finePointer) {
-    document.querySelectorAll('[data-parallax]').forEach(card => {
-      const strength = Number(card.dataset.parallax || 12);
-      card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
-        card.style.transform = `translate3d(${x*strength}px,${y*strength}px,0)`;
+    const motionState = {
+      currentX: 0,
+      currentY: 0,
+      targetX: 0,
+      targetY: 0,
+      rafId: null,
+    };
+
+    const parallaxEls = document.querySelectorAll('[data-parallax]');
+
+    const updateMotion = () => {
+      motionState.currentX += (motionState.targetX - motionState.currentX) * 0.08;
+      motionState.currentY += (motionState.targetY - motionState.currentY) * 0.08;
+
+      parallaxEls.forEach(el => {
+        const strength = Number(el.dataset.parallax || 0);
+        const tx = motionState.currentX * strength;
+        const ty = motionState.currentY * strength;
+        // Write to CSS variables instead of overwriting `transform` directly,
+        // so each element's own rotation / hover transforms keep working.
+        // Elements should use e.g. transform: translate3d(var(--px,0px), var(--py,0px), 0) rotate(...)
+        el.style.setProperty('--px', `${tx}px`);
+        el.style.setProperty('--py', `${ty}px`);
       });
-      card.addEventListener('mouseleave', () => card.style.transform = 'translate3d(0,0,0)');
+
+      motionState.rafId = requestAnimationFrame(updateMotion);
+    };
+
+    window.addEventListener('pointermove', event => {
+      const x = (event.clientX / window.innerWidth) - 0.5;
+      const y = (event.clientY / window.innerHeight) - 0.5;
+      motionState.targetX = x;
+      motionState.targetY = y;
+      if (!motionState.rafId) {
+        motionState.rafId = requestAnimationFrame(updateMotion);
+      }
     });
-    const hero = document.querySelector('.hero-floating-zone');
-    if (hero) {
-      const cards = [...hero.querySelectorAll('.floating-card')];
-      const base = cards.map(card => card.style.transform || '');
-      hero.addEventListener('mousemove', e => {
-        const r = hero.getBoundingClientRect();
-        const x = (e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
-        cards.forEach((card,i) => {
-          const power = 4 + i * 1.1;
-          card.style.transform = `${base[i]} translate3d(${x*power}px,${y*power}px,0)`;
-        });
-      });
-      hero.addEventListener('mouseleave', () => cards.forEach((card,i) => card.style.transform = base[i]));
-    }
+
+    window.addEventListener('pointerleave', () => {
+      motionState.targetX = 0;
+      motionState.targetY = 0;
+    });
   }
 });

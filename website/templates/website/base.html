@@ -14,6 +14,62 @@
   <link rel="stylesheet" href="{% static 'site/reference.css' %}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css">
   {% block extra_head %}{% endblock %}
+  <style>
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity .7s cubic-bezier(.22, 1, .36, 1) var(--d, 0s),
+                  transform .7s cubic-bezier(.22, 1, .36, 1) var(--d, 0s);
+      will-change: opacity, transform;
+    }
+
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .hero-copy > * {
+      animation: fadeUp .9s cubic-bezier(.22, 1, .36, 1) both;
+    }
+    .hero-copy > *:nth-child(1) { animation-delay: 0s; }
+    .hero-copy > *:nth-child(2) { animation-delay: .12s; }
+    .hero-copy > *:nth-child(3) { animation-delay: .24s; }
+    .hero-copy > *:nth-child(4) { animation-delay: .36s; }
+    .hero-copy > *:nth-child(5) { animation-delay: .48s; }
+    .hero-art {
+      animation: fadeUp 1s cubic-bezier(.22, 1, .36, 1) .3s both;
+    }
+
+    #aboutHero .about-hero-image,
+    .c-photo img,
+    .p-photo img,
+    .d-art img,
+    .bl-hero-frame img,
+    .ar-cover img,
+    .pd-cover img {
+      object-fit: contain;
+      background-color: #111;
+    }
+
+    .services-hero-art > img {
+      object-fit: cover;
+      background-color: transparent;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal] {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .hero-copy > *, .hero-art { animation: none !important; }
+    }
+  </style>
 </head>
 <body>
 <header id="site-nav" class="reference-nav">
@@ -64,5 +120,29 @@
   <div class="border-t border-dark-100/50"><div class="section-padding py-6"><div class="footer-bottom"><p>© {% now "Y" %} {% if site_settings %}{{ site_settings.brand_name }}{% else %}Nakrani Production{% endif %}. All rights reserved.</p><div><a href="{% url 'about' %}">Privacy Policy</a><a href="{% url 'about' %}">Terms of Service</a></div></div></div></div>
 </footer>
 <script src="{% static 'site/reference.js' %}"></script>
+<script>
+(function () {
+  document.querySelectorAll('[data-stagger]').forEach(function (parent) {
+    var n = parseInt(parent.dataset.stagger, 10) || 3;
+    Array.prototype.forEach.call(parent.children, function (child, i) {
+      child.style.setProperty('--d', ((i % n) * 0.12) + 's');
+    });
+  });
+  var items = document.querySelectorAll('[data-reveal]');
+  if (!('IntersectionObserver' in window)) {
+    items.forEach(function (el) { el.classList.add('is-visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  items.forEach(function (el) { io.observe(el); });
+})();
+</script>
 {% block extra_js %}{% endblock %}
 </body></html>

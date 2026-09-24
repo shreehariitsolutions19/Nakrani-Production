@@ -1,7 +1,393 @@
 {% extends 'website/base.html' %}
 {% load static %}
+
+{% block extra_head %}
+<script>document.documentElement.classList.add('bl-js');</script>
+<style>
+  :root{--bl-bg:#0a0a0a;--bl-alt:#1a1a1a;--bl-gold:#c89a5e;--bl-gold-dk:#b0884e;--bl-muted:#8a8a8a;--bl-label:#7a7a7a;--bl-line:rgba(255,255,255,.1)}
+  body{background:var(--bl-bg)}
+  .bl-page{background:var(--bl-bg);color:#fff;overflow-x:hidden}
+  .bl-shell{width:100%;margin:0 auto;padding:0 1rem}
+  @media(min-width:768px){.bl-shell{padding:0 1.5rem}}
+  @media(min-width:1024px){.bl-shell{padding:0 2rem}}
+  @media(min-width:1280px){.bl-shell{padding:0 3rem}}
+  @media(min-width:1536px){.bl-shell{padding:0 5rem}}
+
+  .bl-script{font-family:Pacifico,cursive;color:var(--bl-gold);font-weight:400}
+  .bl-tag{display:block;margin-bottom:.75rem;color:var(--bl-gold);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .bl-h2{margin:0;font-family:Poppins,Inter,system-ui,sans-serif;font-size:clamp(1.875rem,3.4vw,3rem);font-weight:700;line-height:1.2;color:#fff}
+  .bl-text{margin:0;color:var(--bl-muted);font-size:1rem;line-height:1.7}
+  .bl-section{position:relative;overflow:hidden;padding:5rem 0;background:var(--bl-bg)}
+  .bl-section--alt{background:var(--bl-alt)}
+  @media(min-width:768px){.bl-section{padding:7rem 0}}
+  .bl-section>.bl-shell{position:relative;z-index:1}
+  .bl-page .btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:1rem 2rem;border:0;border-radius:9999px;background:var(--bl-gold);color:#1a1a1a;font-family:inherit;font-size:1rem;font-weight:500;line-height:1.5;text-decoration:none;white-space:nowrap;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1)}
+  .bl-page .btn-primary:hover{background:var(--bl-gold-dk);box-shadow:0 0 40px rgba(200,154,94,.15)}
+  .bl-page a:focus-visible,.bl-page button:focus-visible,.bl-page input:focus-visible{outline:2px solid var(--bl-gold);outline-offset:3px}
+
+  .bl-blob{position:absolute;border-radius:50%;background:rgba(200,154,94,.05);filter:blur(64px);pointer-events:none}
+  .bl-parallax{transform:translate3d(var(--px,0px),var(--py,0px),0);transition:transform .3s ease-out}
+
+  .bl-js .bl-reveal{opacity:0;transform:translateY(32px);transition:opacity .6s ease-out var(--d,0s),transform .6s ease-out var(--d,0s)}
+  .bl-js .bl-reveal.bl-in{opacity:1;transform:none}
+
+  /* hero */
+  .bl-hero{position:relative;display:flex;align-items:center;min-height:100vh;overflow:hidden;background:var(--bl-bg)}
+  .bl-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.2}
+  .bl-hero-fade{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,.85),rgba(10,10,10,.65),rgba(10,10,10,.95))}
+  .bl-hero-inner{position:relative;z-index:1;padding-top:7rem;padding-bottom:7rem}
+  @media(min-width:768px){.bl-hero-inner{padding-top:8rem;padding-bottom:8rem}}
+  .bl-hero-grid{display:flex;flex-direction:column;align-items:center;gap:3rem}
+  @media(min-width:1024px){.bl-hero-grid{flex-direction:row;gap:4rem}}
+  .bl-hero-grid>*{flex:1;width:100%}
+  .bl-hero-copy{text-align:center}
+  @media(min-width:1024px){.bl-hero-copy{text-align:left}}
+  .bl-kicker{display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.5rem;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .bl-kicker b{color:var(--bl-gold);font-weight:600}
+  .bl-kicker span{color:rgba(255,255,255,.6)}
+  .bl-h1{margin:0 0 1.5rem;font-family:Poppins,Inter,system-ui,sans-serif;font-size:clamp(2.25rem,6vw,4.5rem);font-weight:700;line-height:1.15;color:#fff}
+  .bl-hero-copy .bl-text{max-width:32rem;margin:0 auto 2rem;font-size:1.05rem}
+  @media(min-width:1024px){.bl-hero-copy .bl-text{margin-left:0}}
+  .bl-actions{display:flex;flex-direction:column;align-items:center;gap:1rem;justify-content:center}
+  @media(min-width:640px){.bl-actions{flex-direction:row}}
+  @media(min-width:1024px){.bl-actions{justify-content:flex-start}}
+  .bl-ghost{display:inline-flex;align-items:center;gap:.5rem;color:rgba(255,255,255,.7);font-size:.875rem;font-weight:500;text-decoration:none;transition:color .3s}
+  .bl-ghost span{display:flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;border:1px solid rgba(255,255,255,.2);border-radius:50%;transition:border-color .3s}
+  .bl-ghost:hover{color:var(--bl-gold)}
+  .bl-ghost:hover span{border-color:rgba(200,154,94,.5)}
+  .bl-hero-visual{position:relative;max-width:28rem;margin:0 auto}
+  .bl-hero-frame{overflow:hidden;border-radius:1rem;border:1px solid var(--bl-line);box-shadow:0 25px 50px -12px rgba(0,0,0,.6)}
+  .bl-hero-frame img{display:block;width:100%;height:420px;object-fit:cover;object-position:top}
+  @media(min-width:768px){.bl-hero-frame img{height:520px}}
+  .bl-badge{position:absolute;left:-1.5rem;bottom:-1.5rem;padding:1.25rem 1.5rem;border-radius:.75rem;background:var(--bl-gold);color:#1a1a1a}
+  .bl-badge strong{display:block;font-family:Poppins,Inter,sans-serif;font-size:1.875rem;line-height:1.2;font-weight:700}
+  .bl-badge>span{display:block;color:rgba(26,26,26,.8);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase}
+  @media(max-width:767px){.bl-badge{left:.75rem;bottom:-1.25rem}}
+  /* featured */
+  .bl-feat-head{margin-bottom:3rem}
+  @media(min-width:768px){.bl-feat-head{margin-bottom:3.5rem}}
+  .bl-feat-head .bl-h2{max-width:42rem}
+  .bl-feat-grid{display:grid;gap:2.5rem;align-items:center}
+  @media(min-width:1024px){.bl-feat-grid{grid-template-columns:1fr 1fr;gap:4rem}}
+  .bl-feat-img{position:relative;display:block;overflow:hidden;border-radius:1rem;border:1px solid var(--bl-line)}
+  .bl-feat-img img{display:block;width:100%;height:300px;object-fit:cover;object-position:top;transition:transform .7s ease}
+  @media(min-width:640px){.bl-feat-img img{height:400px}}
+  @media(min-width:1024px){.bl-feat-img img{height:520px}}
+  .bl-feat-img:hover img{transform:scale(1.05)}
+  .bl-feat-img::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.5),transparent);opacity:0;transition:opacity .5s}
+  .bl-feat-img:hover::after{opacity:1}
+  .bl-meta{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;margin-bottom:1rem}
+  .bl-pill{display:inline-flex;align-items:center;padding:.25rem .75rem;border-radius:999px;background:rgba(200,154,94,.15);color:var(--bl-gold);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .bl-date{color:var(--bl-label);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase}
+  .bl-feat-title{margin:0 0 1.25rem;font-family:Poppins,Inter,sans-serif;font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;line-height:1.2;color:#fff}
+  .bl-feat-copy .bl-text{margin-bottom:2rem}
+
+  /* latest reads */
+  .bl-center{text-align:center;margin-bottom:3rem}
+  .bl-center .bl-h2{margin-bottom:1rem}
+  .bl-center .bl-text{max-width:36rem;margin:0 auto}
+  .bl-filters{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem;margin-bottom:3rem}
+  @media(min-width:768px){.bl-filters{gap:.75rem;margin-bottom:3.5rem}}
+  .bl-filter{padding:.625rem 1.25rem;border:1px solid rgba(255,255,255,.15);border-radius:999px;background:none;color:rgba(255,255,255,.7);font-family:inherit;font-size:.875rem;font-weight:500;line-height:1.25;white-space:nowrap;cursor:pointer;transition:all .3s}
+  .bl-filter:hover{border-color:rgba(200,154,94,.5);color:var(--bl-gold)}
+  .bl-filter.is-active{border-color:var(--bl-gold);background:var(--bl-gold);color:#1a1a1a}
+  .bl-grid{display:grid;gap:1.5rem}
+  @media(min-width:640px){.bl-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:768px){.bl-grid{gap:2rem}}
+  @media(min-width:1024px){.bl-grid{grid-template-columns:repeat(3,1fr)}}
+  .bl-cell[hidden]{display:none}
+  .bl-card{display:flex;flex-direction:column;height:100%;overflow:hidden;border:1px solid rgba(170,170,170,.05);border-radius:.75rem;background:#fff;color:#1a1a1a;text-decoration:none;box-shadow:0 4px 20px rgba(0,0,0,.08);transition:transform .5s ease,box-shadow .5s ease}
+  .bl-card:hover{transform:translateY(-.5rem);box-shadow:0 20px 40px rgba(0,0,0,.3)}
+  .bl-card-img{aspect-ratio:16/10;overflow:hidden;background:#e8e6e2}
+  .bl-card-img img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .7s ease}
+  .bl-card:hover .bl-card-img img{transform:scale(1.1)}
+  .bl-card-body{display:flex;flex-direction:column;flex:1;padding:1.5rem}
+  .bl-cat{display:block;margin-bottom:.75rem;color:var(--bl-gold-dk);font-size:.6875rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+  .bl-card h3{margin:0 0 .75rem;font-family:Poppins,Inter,sans-serif;font-size:1.125rem;font-weight:700;line-height:1.375;color:#1a1a1a;transition:color .3s}
+  .bl-card:hover h3{color:var(--bl-gold-dk)}
+  .bl-card p{flex:1;margin:0 0 1.25rem;color:#5a5a5a;font-size:.875rem;line-height:1.7}
+  .bl-card-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:1rem;border-top:1px solid rgba(0,0,0,.07)}
+  .bl-card-foot time{color:#5a5a5a;font-size:.75rem}
+  .bl-more{display:inline-flex;align-items:center;gap:.5rem;color:#1a1a1a;font-size:.875rem;font-weight:500;transition:color .3s}
+  .bl-more i{font-size:1.125rem;transition:transform .3s}
+  .bl-card:hover .bl-more{color:var(--bl-gold-dk)}
+  .bl-card:hover .bl-more i{transform:translateX(4px)}
+  .bl-empty{grid-column:1/-1;text-align:center}
+
+  /* newsletter */
+  .bl-news{max-width:48rem;margin:0 auto;padding:2rem;text-align:center;background:rgba(255,255,255,.05);border:1px solid var(--bl-line);border-radius:1rem;-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px)}
+  @media(min-width:768px){.bl-news{padding:3rem}}
+  .bl-news .bl-h2{margin-bottom:1.25rem}
+  .bl-news .bl-text{max-width:36rem;margin:0 auto 2rem;font-size:1.05rem}
+  .bl-form{display:flex;flex-direction:column;align-items:stretch;gap:.75rem;max-width:32rem;margin:0 auto}
+  @media(min-width:640px){.bl-form{flex-direction:row}}
+  .bl-input{flex:1;min-width:0;padding:.875rem 1.25rem;border:1px solid rgba(255,255,255,.15);border-radius:999px;background:rgba(255,255,255,.05);color:#fff;font-family:inherit;font-size:.875rem;line-height:1.25;transition:border-color .3s}
+  .bl-input::placeholder{color:var(--bl-label)}
+  .bl-input:focus{outline:none;border-color:rgba(200,154,94,.6)}
+
+  @media(prefers-reduced-motion:reduce){
+    .bl-js .bl-reveal{opacity:1;transform:none;transition:none}
+    .bl-parallax,.bl-card,.bl-card-img img,.bl-feat-img img{transition:none!important;transform:none!important}
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-<section class="page-hero"><div class="section-padding w-full hero-content"><span class="page-kicker">Ideas & Insights</span><h1 class="page-title">The design <span class="script">journal</span></h1><p class="page-lead">Thoughts on branding, packaging, digital design and building memorable visual systems.</p></div></section>
-<section class="reference-section cream"><div class="section-padding"><div class="ref-grid-3">{% for post in posts %}<a class="blog-card-ref reveal" href="{% url 'blog_detail' post.slug %}"><div class="cover">{% if post.cover_image %}<img src="{{ post.cover_image.url }}" alt="{{ post.title }}" loading="lazy">{% else %}<img src="{% static 'site/images/7_cereal-editorial.jpg' %}" alt="{{ post.title }}" loading="lazy">{% endif %}</div><div class="copy"><span class="date">{{ post.category }} · {{ post.published_at|date:'d M Y' }}</span><h3>{{ post.title }}</h3><p class="muted">{{ post.excerpt }}</p><span class="arrow-link">Read More <i class="ri-arrow-right-line"></i></span></div></a>{% empty %}<p>No articles available.</p>{% endfor %}</div></div></section>
-<section class="reference-section dark"><div class="section-padding text-center"><span class="section-label">Stay curious</span><h2 class="section-title">Good design starts with a <span class="font-script text-brand-500 font-normal">good idea</span>.</h2><a class="btn-primary mt-6" href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a></div></section>
+<main class="bl-page">
+
+  <!-- HERO -->
+  <section class="bl-hero">
+    <div class="bl-hero-bg" style="background-image:url('{% static 'site/images/blog-detail-hero.webp' %}')"></div>
+    <div class="bl-hero-fade"></div>
+    <div class="bl-blob bl-parallax" data-depth="16" style="top:6rem;right:4rem;width:18rem;height:18rem"></div>
+    <div class="bl-blob bl-parallax" data-depth="9" style="bottom:4rem;left:4rem;width:24rem;height:24rem"></div>
+
+    <div class="bl-shell bl-hero-inner">
+      <div class="bl-hero-grid">
+        <div class="bl-hero-copy hero-copy">
+          <div class="bl-kicker"><b>Journal</b><span>Nakrani Production</span></div>
+          <h1 class="bl-h1">Insights, <span class="bl-script">Ideas</span> &amp; Inspiration</h1>
+          <p class="bl-text">Thoughts on branding, graphic design, creativity and building memorable visual experiences.</p>
+          <div class="bl-actions">
+            <a class="btn-primary" href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
+            <a class="bl-ghost" href="{% url 'portfolio' %}"><span><i class="ri-arrow-right-line"></i></span>View Our Work</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="bl-hero-visual bl-parallax hero-art" data-depth="20">
+            <div class="bl-hero-frame">
+              <img src="{% static 'site/images/blog-hero.webp' %}" alt="Nakrani Production creative journal and insights">
+            </div>
+            <div class="bl-badge">
+              <strong><span data-count-to="{{ posts|length }}">{{ posts|length }}</span>+</strong>
+              <span>Latest Articles</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
+      <span class="text-xs uppercase tracking-widest" style="writing-mode:vertical-lr">Scroll Down</span>
+      <div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div>
+    </div>
+
+  </section>
+
+  <!-- FEATURED ARTICLE -->
+  {% with featured_post=posts|first %}
+  <section class="bl-section bl-section--alt">
+    <div class="bl-shell">
+      <div class="bl-feat-head">
+        <span class="bl-tag" data-reveal>Featured Article</span>
+        <h2 class="bl-h2" data-reveal style="--d:.15s">Fresh thinking from the <span class="bl-script">studio</span>.</h2>
+      </div>
+
+      <div class="bl-feat-grid">
+        <div data-reveal style="--d:.3s">
+          {% if featured_post %}
+            <a class="bl-feat-img" href="{% url 'blog_detail' featured_post.slug %}">
+              {% if featured_post.cover_image %}
+                <img src="{{ featured_post.cover_image.url }}" alt="{{ featured_post.title }}">
+              {% else %}
+                <img src="{% static 'site/images/blog-detail-hero.webp' %}" alt="{{ featured_post.title }}">
+              {% endif %}
+            </a>
+          {% else %}
+            <a class="bl-feat-img" href="{% url 'blog' %}">
+              <img src="{% static 'site/images/blog-detail-hero.webp' %}" alt="Featured article visual">
+            </a>
+          {% endif %}
+        </div>
+
+        <div class="bl-feat-copy" data-reveal style="--d:.45s">
+          {% if featured_post %}
+            <div class="bl-meta">
+              <span class="bl-pill">{{ featured_post.category }}</span>
+              <span class="bl-date">{{ featured_post.published_at|date:'F j, Y' }} · {{ featured_post.read_time|default:"6" }} min read</span>
+            </div>
+            <h3 class="bl-feat-title">{{ featured_post.title }}</h3>
+            <p class="bl-text">{{ featured_post.excerpt }}</p>
+            <a class="btn-primary" href="{% url 'blog_detail' featured_post.slug %}">Read Article <i class="ri-arrow-right-line"></i></a>
+          {% else %}
+            <div class="bl-meta">
+              <span class="bl-pill">Branding</span>
+              <span class="bl-date">September 12, 2026 · 6 min read</span>
+            </div>
+            <h3 class="bl-feat-title">Why Strong Visual Identity Matters for Modern Brands</h3>
+            <p class="bl-text">A strong visual identity is more than a logo — it is the system that makes a brand instantly recognisable, trustworthy and impossible to forget.</p>
+            <a class="btn-primary" href="{% url 'blog' %}">Read Article <i class="ri-arrow-right-line"></i></a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endwith %}
+
+  <!-- LATEST READS -->
+  <section class="bl-section">
+    <div class="bl-shell">
+      <div class="bl-center">
+        <span class="bl-tag">All Articles</span>
+        <h2 class="bl-h2">Latest Reads</h2>
+        <p class="bl-text">Practical ideas and considered opinions on design, branding and the craft behind memorable visual work.</p>
+      </div>
+
+      <div class="bl-filters" id="blFilters" role="group" aria-label="Filter articles by category">
+        <button type="button" class="bl-filter is-active" data-filter="all">All</button>
+      </div>
+
+      <div class="bl-grid" id="blGrid">
+        {% for post in posts %}
+          {% if not forloop.first or posts|length == 1 %}
+          <div class="bl-cell" data-reveal data-category="{{ post.category|lower }}" data-label="{{ post.category }}">
+            <a class="bl-card" href="{% url 'blog_detail' post.slug %}">
+              <div class="bl-card-img">
+                {% if post.cover_image %}
+                  <img src="{{ post.cover_image.url }}" alt="{{ post.title }} article cover" loading="lazy" decoding="async">
+                {% else %}
+                  <img src="{% static 'site/images/blog-detail-hero.webp' %}" alt="{{ post.title }} article cover" loading="lazy" decoding="async">
+                {% endif %}
+              </div>
+              <div class="bl-card-body">
+                <span class="bl-cat">{{ post.category }}</span>
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.excerpt|truncatewords:24 }}</p>
+                <div class="bl-card-foot">
+                  <time>{{ post.published_at|date:'F j, Y' }}</time>
+                  <span class="bl-more">Read More <i class="ri-arrow-right-line"></i></span>
+                </div>
+              </div>
+            </a>
+          </div>
+          {% endif %}
+        {% empty %}
+          <p class="bl-text bl-empty">No articles available.</p>
+        {% endfor %}
+        <p class="bl-text bl-empty" id="blNoResults" hidden>No articles in this category yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="bl-section bl-section--alt">
+    <div class="bl-blob bl-parallax" data-depth="12" style="top:50%;left:50%;width:600px;height:600px;margin:-300px 0 0 -300px"></div>
+    <div class="bl-shell">
+      <div class="bl-news" data-reveal>
+        <span class="bl-tag" style="margin-bottom:1rem">Newsletter</span>
+        <h2 class="bl-h2">Stay <span class="bl-script">Inspired</span>.</h2>
+        <p class="bl-text">Get occasional insights, creative ideas and updates from Nakrani Production.</p>
+        {# TODO: connect this form to your newsletter view #}
+        <form class="bl-form" id="blNewsForm" novalidate>
+          <input class="bl-input" type="email" name="email" placeholder="Enter your email" aria-label="Email address" autocomplete="email">
+          <button class="btn-primary" type="submit">Subscribe <i class="ri-arrow-right-line"></i></button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* scroll reveal (delay is cleared after the animation so card hover stays instant) */
+    function markIn(el) {
+      el.classList.add('bl-in');
+      setTimeout(function () { el.style.setProperty('--d', '0s'); }, 1200);
+    }
+    var items = document.querySelectorAll('.bl-reveal');
+    if ('IntersectionObserver' in window && !reduce) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { markIn(e.target); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12 });
+      items.forEach(function (el, i) {
+        if (el.classList.contains('bl-cell')) el.style.setProperty('--d', ((i % 3) * 0.08).toFixed(2) + 's');
+        io.observe(el);
+      });
+    } else {
+      items.forEach(function (el) { el.classList.add('bl-in'); });
+    }
+
+    /* soft mouse parallax (desktop only) */
+    if (!reduce && window.matchMedia('(pointer: fine)').matches) {
+      var layers = document.querySelectorAll('[data-depth]'), raf = 0;
+      window.addEventListener('mousemove', function (ev) {
+        var nx = ev.clientX / window.innerWidth - 0.5, ny = ev.clientY / window.innerHeight - 0.5;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(function () {
+          layers.forEach(function (l) {
+            var d = parseFloat(l.dataset.depth) || 0;
+            l.style.setProperty('--px', (nx * d * -1.2).toFixed(2) + 'px');
+            l.style.setProperty('--py', (ny * d * -1.2).toFixed(2) + 'px');
+          });
+        });
+      }, { passive: true });
+    }
+
+    /* badge count-up */
+    var counter = document.querySelector('[data-count-to]');
+    if (counter && !reduce && 'IntersectionObserver' in window) {
+      var target = parseInt(counter.getAttribute('data-count-to'), 10) || 0;
+      if (target > 0) {
+        counter.textContent = '0';
+        var cio = new IntersectionObserver(function (entries) {
+          if (!entries[0].isIntersecting) return;
+          cio.disconnect();
+          var t0 = performance.now();
+          (function step(now) {
+            var p = Math.min((now - t0) / 900, 1);
+            counter.textContent = Math.round(p * target);
+            if (p < 1) requestAnimationFrame(step);
+          })(t0);
+        }, { threshold: 0.6 });
+        cio.observe(counter);
+      }
+    }
+
+    /* category filters — built from the categories your posts actually have */
+    var filterBar = document.getElementById('blFilters');
+    var cells = Array.prototype.slice.call(document.querySelectorAll('#blGrid .bl-cell'));
+    var noResults = document.getElementById('blNoResults');
+    var seen = {};
+    cells.forEach(function (c) {
+      var key = c.dataset.category, label = c.dataset.label;
+      if (key && !seen[key]) {
+        seen[key] = true;
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'bl-filter'; b.dataset.filter = key; b.textContent = label;
+        filterBar.appendChild(b);
+      }
+    });
+    if (Object.keys(seen).length === 0) filterBar.style.display = 'none';
+
+    filterBar.addEventListener('click', function (e) {
+      var btn = e.target.closest('.bl-filter');
+      if (!btn) return;
+      filterBar.querySelectorAll('.bl-filter').forEach(function (f) { f.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+      var key = btn.dataset.filter, shown = 0;
+      cells.forEach(function (c) {
+        var match = key === 'all' || c.dataset.category === key;
+        c.hidden = !match;
+        if (match) {
+          c.classList.remove('bl-in');
+          c.style.setProperty('--d', (shown * 0.06).toFixed(2) + 's');
+          void c.offsetWidth;
+          markIn(c);
+          shown++;
+        }
+      });
+      if (noResults) noResults.hidden = shown !== 0;
+    });
+
+    /* newsletter: not connected to a backend yet */
+    var form = document.getElementById('blNewsForm');
+    if (form) form.addEventListener('submit', function (e) { e.preventDefault(); });
+  });
+</script>
 {% endblock %}

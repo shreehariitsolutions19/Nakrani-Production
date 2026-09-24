@@ -1,9 +1,461 @@
 {% extends "website/base.html" %}
 {% load static %}
 {% block content %}
-<section class="relative min-h-screen bg-dark overflow-hidden flex items-center"><div class="absolute inset-0 bg-cover bg-center opacity-20" style="background-image:url({% static 'site/images/hero-bg.webp' %})"></div><div class="absolute inset-0 bg-gradient-to-b from-dark/80 via-dark/60 to-dark/90"></div><div class="absolute top-20 right-20 w-72 h-72 bg-brand-500/5 rounded-full blur-3xl"></div><div class="absolute bottom-20 left-20 w-96 h-96 bg-brand-500/3 rounded-full blur-3xl"></div><div class="relative z-10 section-padding w-full py-24 md:py-32"><div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-8"><div class="flex-1 text-center lg:text-left"><div class="inline-flex items-center gap-2 mb-6"><span class="text-brand-500 text-xs font-semibold uppercase tracking-widest">We Are</span><span class="text-white/60 text-xs font-semibold uppercase tracking-widest">Nakrani Production</span></div><h1 class="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">We Create <span class="font-script text-brand-500 font-normal block sm:inline">visual</span><br/>Experiences</h1><p class="text-dark-500 text-base md:text-lg leading-relaxed max-w-lg mx-auto lg:mx-0 mb-8">We combine creativity, strategy and design to create stunning visuals that inspire and engage.<div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start"><a class="btn-primary whitespace-nowrap" data-discover="true" href="{% url 'portfolio' %}">Explore Work<i class="ri-arrow-right-line text-lg"></i></a><a class="inline-flex items-center gap-2 text-white/70 text-sm font-medium hover:text-brand-500 transition-colors duration-300" data-discover="true" href="{% url 'contact' %}"><span class="w-10 h-10 flex items-center justify-center rounded-full border border-white/20 hover:border-brand-500/50 transition-colors"><i class="ri-arrow-right-line"></i></span>Get a Free Quote</a></div></p></div><div class="flex-1 relative perspective-1000"><div class="relative w-full max-w-xl mx-auto h-[400px] md:h-[500px] preserve-3d hero-floating-zone"><div class="floating-card absolute top-0 left-0 w-48 md:w-56 h-32 md:h-40 rounded-xl overflow-hidden shadow-2xl transition-transform duration-500 ease-out" style="transform:translate(2.89045px,-3.43846px) rotate(-3deg)"><img alt="Branding mockup" class="w-full h-full object-cover" src="{% static 'site/images/1_branding-mockup.jpg' %}"/></div><div class="floating-card absolute top-4 right-0 w-44 md:w-52 h-56 md:h-64 rounded-xl overflow-hidden shadow-2xl transition-transform duration-500 ease-out" style="transform:translate(5.7809px,-6.87693px) rotate(3deg)"><img alt="Creative agency mockup" class="w-full h-full object-cover" src="{% static 'site/images/2_creative-agency-mockup.jpg' %}"/><div class="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent"></div><div class="absolute top-4 left-4"><p class="text-brand-500 text-xs font-bold uppercase tracking-wider">Creative<p class="text-brand-500 text-xs font-bold uppercase tracking-wider">Design<p class="text-brand-500 text-xs font-bold uppercase tracking-wider">Agency</p></p></p></div></div><div class="floating-card absolute bottom-4 left-4 w-52 md:w-60 h-36 md:h-44 rounded-xl overflow-hidden shadow-2xl transition-transform duration-500 ease-out" style="transform:translate(8.67135px,-10.3154px) rotate(-3deg)"><img alt="Stationery mockup" class="w-full h-full object-cover" src="{% static 'site/images/3_stationery-mockup.jpg' %}"/></div><div class="floating-card absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 md:w-48 h-40 md:h-48 rounded-xl overflow-hidden shadow-2xl z-10 transition-transform duration-500 ease-out" style="transform:translate(11.5618px,-13.7539px) rotate(3deg)"><div class="w-full h-full bg-brand-500 flex items-center justify-center"><div class="text-center"><p class="text-dark-50 font-heading text-xl font-bold">Nakrani<p class="text-dark-50/70 text-xs mt-1">Production</p></p></div></div></div><div class="floating-card absolute bottom-0 right-4 w-36 md:w-44 h-28 md:h-36 rounded-xl overflow-hidden shadow-2xl transition-transform duration-500 ease-out" style="transform:translate(14.4523px,-17.1923px) rotate(-3deg)"><div class="w-full h-full bg-dark-100 flex items-center justify-center"><span class="text-white font-heading text-3xl font-bold">NP</span></div></div></div></div></div></div><div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40"><span class="text-xs uppercase tracking-widest writing-mode-vertical rotate-180" style="writing-mode:vertical-lr">Scroll Down</span><div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div></div></section>
-<section class="bg-cream-400 py-20 md:py-28"><div class="section-padding"><div class="text-center mb-16"><span class="text-brand-600 text-xs font-semibold uppercase tracking-widest mb-3 block">What We Do</span><h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-dark-50 mb-4">Our Services</h2><p class="text-dark-400 text-base max-w-xl mx-auto leading-relaxed">We help brands bring their ideas to life through creative and impactful design solutions.</p></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"><div class="service-card bg-white rounded-xl p-6 md:p-8 border border-dark-900/5 shadow-soft hover:shadow-medium transition-all duration-500 group animate-in" style="opacity:0;transform:translateY(40px);transition:opacity 0.6s ease-out,transform 0.6s ease-out"><div class="w-14 h-14 flex items-center justify-center rounded-full bg-cream-400 mb-6 group-hover:bg-brand-50 transition-colors duration-300"><i class="ri-palette-line text-2xl text-dark-50 group-hover:text-brand-600 transition-colors duration-300"></i></div><h3 class="font-heading text-lg font-bold text-dark-50 mb-3">Branding &amp; Identity</h3><p class="text-dark-400 text-sm leading-relaxed mb-6">We create strong brand identities that make your business stand out from the crowd. From logos to complete brand systems.</p><a class="inline-flex items-center gap-2 text-dark-50 text-sm font-medium group-hover:text-brand-600 transition-colors duration-300" data-discover="true" href="{% url 'services' %}">Learn More<i class="ri-arrow-right-line text-lg transition-transform duration-300 group-hover:translate-x-1"></i></a></div><div class="service-card bg-white rounded-xl p-6 md:p-8 border border-dark-900/5 shadow-soft hover:shadow-medium transition-all duration-500 group animate-in" style="opacity:0;transform:translateY(40px);transition:opacity 0.6s ease-out 0.15s,transform 0.6s ease-out 0.15s"><div class="w-14 h-14 flex items-center justify-center rounded-full bg-cream-400 mb-6 group-hover:bg-brand-50 transition-colors duration-300"><i class="ri-computer-line text-2xl text-dark-50 group-hover:text-brand-600 transition-colors duration-300"></i></div><h3 class="font-heading text-lg font-bold text-dark-50 mb-3">Web Design</h3><p class="text-dark-400 text-sm leading-relaxed mb-6">We design modern, responsive and user-friendly websites that deliver results and elevate your digital presence.</p><a class="inline-flex items-center gap-2 text-dark-50 text-sm font-medium group-hover:text-brand-600 transition-colors duration-300" data-discover="true" href="{% url 'services' %}">Learn More<i class="ri-arrow-right-line text-lg transition-transform duration-300 group-hover:translate-x-1"></i></a></div><div class="service-card bg-white rounded-xl p-6 md:p-8 border border-dark-900/5 shadow-soft hover:shadow-medium transition-all duration-500 group animate-in" style="opacity:0;transform:translateY(40px);transition:opacity 0.6s ease-out 0.3s,transform 0.6s ease-out 0.3s"><div class="w-14 h-14 flex items-center justify-center rounded-full bg-cream-400 mb-6 group-hover:bg-brand-50 transition-colors duration-300"><i class="ri-file-list-3-line text-2xl text-dark-50 group-hover:text-brand-600 transition-colors duration-300"></i></div><h3 class="font-heading text-lg font-bold text-dark-50 mb-3">Print Design</h3><p class="text-dark-400 text-sm leading-relaxed mb-6">From brochures to posters, we design print materials that communicate your message with elegance and impact.</p><a class="inline-flex items-center gap-2 text-dark-50 text-sm font-medium group-hover:text-brand-600 transition-colors duration-300" data-discover="true" href="{% url 'services' %}">Learn More<i class="ri-arrow-right-line text-lg transition-transform duration-300 group-hover:translate-x-1"></i></a></div><div class="service-card bg-white rounded-xl p-6 md:p-8 border border-dark-900/5 shadow-soft hover:shadow-medium transition-all duration-500 group animate-in" style="opacity:0;transform:translateY(40px);transition:opacity 0.6s ease-out 0.45s,transform 0.6s ease-out 0.45s"><div class="w-14 h-14 flex items-center justify-center rounded-full bg-cream-400 mb-6 group-hover:bg-brand-50 transition-colors duration-300"><i class="ri-share-line text-2xl text-dark-50 group-hover:text-brand-600 transition-colors duration-300"></i></div><h3 class="font-heading text-lg font-bold text-dark-50 mb-3">Social Media Design</h3><p class="text-dark-400 text-sm leading-relaxed mb-6">We create eye-catching social media designs that boost engagement, grow brands, and drive meaningful conversations.</p><a class="inline-flex items-center gap-2 text-dark-50 text-sm font-medium group-hover:text-brand-600 transition-colors duration-300" data-discover="true" href="{% url 'services' %}">Learn More<i class="ri-arrow-right-line text-lg transition-transform duration-300 group-hover:translate-x-1"></i></a></div></div></div><style class="sf-hidden">.animate-in{opacity:1!important;transform:translateY(0)!important}</style></section>
-<section class="bg-dark-50 py-20 md:py-28"><div class="section-padding"><div class="text-center mb-16"><span class="text-brand-500 text-xs font-semibold uppercase tracking-widest mb-3 block">Our Work</span><h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">Recent Projects</h2><p class="text-dark-500 text-base max-w-xl mx-auto leading-relaxed">Here are some of our latest projects that showcase our creativity and expertise.</p></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"><a class="portfolio-item group relative rounded-xl overflow-hidden cursor-pointer block animate-in" data-discover="true" href="{% url 'portfolio' %}" style="opacity:0;transform:translateY(50px);transition:opacity 0.6s ease-out,transform 0.6s ease-out"><div class="aspect-[4/3] overflow-hidden"><img alt="MOON Cosmetics" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="{% static 'site/images/4_moon-cosmetics.jpg' %}"/></div><div class="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div><div class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500"><span class="text-brand-500 text-xs font-semibold uppercase tracking-wider mb-2 block">Branding</span><h3 class="font-heading text-xl font-bold text-white">MOON Cosmetics</h3></div></a><a class="portfolio-item group relative rounded-xl overflow-hidden cursor-pointer block animate-in" data-discover="true" href="{% url 'portfolio' %}" style="opacity:0;transform:translateY(50px);transition:opacity 0.6s ease-out 0.1s,transform 0.6s ease-out 0.1s"><div class="aspect-[4/3] overflow-hidden"><img alt="Aura Packaging" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="{% static 'site/images/5_aura-packaging.jpg' %}"/></div><div class="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div><div class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500"><span class="text-brand-500 text-xs font-semibold uppercase tracking-wider mb-2 block">Packaging</span><h3 class="font-heading text-xl font-bold text-white">Aura Packaging</h3></div></a><a class="portfolio-item group relative rounded-xl overflow-hidden cursor-pointer block animate-in" data-discover="true" href="{% url 'portfolio' %}" style="opacity:0;transform:translateY(50px);transition:opacity 0.6s ease-out 0.2s,transform 0.6s ease-out 0.2s"><div class="aspect-[4/3] overflow-hidden"><img alt="Tivra Brand" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="{% static 'site/images/6_tivra-brand.jpg' %}"/></div><div class="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div><div class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500"><span class="text-brand-500 text-xs font-semibold uppercase tracking-wider mb-2 block">Identity</span><h3 class="font-heading text-xl font-bold text-white">Tivra Brand</h3></div></a><a class="portfolio-item group relative rounded-xl overflow-hidden cursor-pointer block animate-in" data-discover="true" href="{% url 'portfolio' %}" style="opacity:0;transform:translateY(50px);transition:opacity 0.6s ease-out 0.3s,transform 0.6s ease-out 0.3s"><div class="aspect-[4/3] overflow-hidden"><img alt="Cereal Editorial" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="{% static 'site/images/7_cereal-editorial.jpg' %}"/></div><div class="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div><div class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500"><span class="text-brand-500 text-xs font-semibold uppercase tracking-wider mb-2 block">Print Design</span><h3 class="font-heading text-xl font-bold text-white">Cereal Editorial</h3></div></a><a class="portfolio-item group relative rounded-xl overflow-hidden cursor-pointer block animate-in" data-discover="true" href="{% url 'portfolio' %}" style="opacity:0;transform:translateY(50px);transition:opacity 0.6s ease-out 0.4s,transform 0.6s ease-out 0.4s"><div class="aspect-[4/3] overflow-hidden"><img alt="Lumina Label" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="{% static 'site/images/8_lumina-label.jpg' %}"/></div><div class="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div><div class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500"><span class="text-brand-500 text-xs font-semibold uppercase tracking-wider mb-2 block">Label Design</span><h3 class="font-heading text-xl font-bold text-white">Lumina Label</h3></div></a><a class="portfolio-item group relative rounded-xl overflow-hidden cursor-pointer block animate-in" data-discover="true" href="{% url 'portfolio' %}" style="opacity:0;transform:translateY(50px);transition:opacity 0.6s ease-out 0.5s,transform 0.6s ease-out 0.5s"><div class="aspect-[4/3] overflow-hidden"><img alt="TATTVA" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="{% static 'site/images/9_tattva.png' %}"/></div><div class="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div><div class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500"><span class="text-brand-500 text-xs font-semibold uppercase tracking-wider mb-2 block">Branding</span><h3 class="font-heading text-xl font-bold text-white">TATTVA</h3></div></a></div><div class="text-center mt-12"><a class="inline-flex items-center gap-2 px-8 py-4 border border-white/20 text-white font-medium rounded-full hover:bg-white/10 hover:border-white/40 transition-all duration-300" data-discover="true" href="{% url 'portfolio' %}">View All Projects<i class="ri-arrow-right-line text-brand-500"></i></a></div></div><style class="sf-hidden">.animate-in{opacity:1!important;transform:translateY(0)!important}</style></section>
-<section class="bg-cream-400 py-20 md:py-28"><div class="section-padding"><div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12"><div class="animate-element animate-in" style="opacity:0;transform:translateY(30px);transition:opacity 0.6s ease-out,transform 0.6s ease-out"><span class="text-brand-600 text-xs font-semibold uppercase tracking-widest mb-4 block">About Us</span><h3 class="font-heading text-2xl md:text-3xl font-bold text-dark-50 mb-4 leading-tight">We are passionate designers</h3><div class="w-12 h-0.5 bg-brand-500 mb-6"></div><p class="text-dark-400 text-sm leading-relaxed mb-4">At Nakrani Production, we believe design is more than just looks — it's about communication, connection and creativity. We work closely with our clients to deliver designs that make an impact.<p class="text-dark-400 text-sm leading-relaxed mb-6">Our team of skilled designers brings together diverse expertise in branding, digital design, and print media to create cohesive visual experiences.</p><a class="inline-flex items-center gap-2 px-6 py-3 border border-dark-900/20 text-dark-50 text-sm font-medium rounded-full hover:bg-dark-50 hover:text-white transition-all duration-300" data-discover="true" href="{% url 'about' %}">Read More<i class="ri-arrow-right-line"></i></a></p></div><div class="animate-element bg-white rounded-xl p-6 md:p-8 border border-dark-900/5 animate-in" style="opacity:0;transform:translateY(30px);transition:opacity 0.6s ease-out 0.2s,transform 0.6s ease-out 0.2s"><span class="text-brand-600 text-xs font-semibold uppercase tracking-widest mb-4 block">Testimonial</span><div class="mb-6"><i class="ri-double-quotes-l text-3xl text-brand-500/30"></i></div><blockquote class="text-dark-50 text-sm leading-relaxed mb-6">“Nakrani Production understood our vision perfectly and delivered a brand identity that truly represents our business. Highly professional and creative team!”</blockquote><div class="flex items-center gap-4"><div class="w-12 h-12 rounded-full overflow-hidden bg-dark-900"><img alt="Ravi Patel" class="w-full h-full object-cover" src="{% static 'site/images/10_ravi-patel.jpg' %}"/></div><div><p class="text-dark-50 font-semibold text-sm">Ravi Patel<p class="text-dark-400 text-xs">Founder, Urban Style</p></p></div></div></div><div class="animate-element animate-in" style="opacity:0;transform:translateY(30px);transition:opacity 0.6s ease-out 0.4s,transform 0.6s ease-out 0.4s"><div class="bg-brand-500 rounded-xl p-8 md:p-10 h-full flex flex-col justify-between"><div><div class="w-14 h-14 flex items-center justify-center rounded-full bg-white/20 mb-6"><i class="ri-send-plane-line text-2xl text-white"></i></div><h3 class="font-heading text-2xl md:text-3xl font-bold text-white mb-4">Let's work together</h3><p class="text-white/80 text-sm leading-relaxed mb-6">Have a project in mind? Let's create something amazing together. We are ready to bring your vision to life.</p></div><a class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-dark-50 text-white text-sm font-medium rounded-full hover:bg-dark-100 transition-all duration-300" data-discover="true" href="{% url 'contact' %}">Contact Us<i class="ri-arrow-right-line"></i></a></div></div></div></div><style class="sf-hidden">.animate-in{opacity:1!important;transform:translateY(0)!important}</style></section>
-<section class="bg-dark-50 py-20 md:py-28 relative overflow-hidden"><div class="absolute top-0 left-0 w-full h-full"><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-500/5 rounded-full blur-3xl"></div></div><div class="section-padding relative z-10"><div class="max-w-4xl mx-auto text-center"><span class="text-brand-500 text-xs font-semibold uppercase tracking-widest mb-4 block">Start a Project</span><h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">Ready to transform your <span class="font-script text-brand-500 font-normal">brand</span>?</h2><p class="text-dark-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-10">Let's collaborate and create something extraordinary. Our team is ready to bring your vision to life with premium design that makes an impact.<div class="flex flex-col sm:flex-row items-center justify-center gap-4"><a class="btn-primary whitespace-nowrap" data-discover="true" href="{% url 'contact' %}">Start a Project<i class="ri-arrow-right-line text-lg"></i></a><a class="btn-outline whitespace-nowrap" data-discover="true" href="{% url 'portfolio' %}">View Our Work<i class="ri-arrow-right-line text-lg"></i></a></div></p></div></div></section>
+<section id="parallaxHero" class="relative min-h-screen bg-dark overflow-hidden flex items-center">
+  <div class="absolute inset-0 bg-cover bg-center opacity-20"
+    style="background-image:url({% static 'site/images/hero-bg.webp' %})"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-dark/80 via-dark/60 to-dark/90"></div>
+  <div class="absolute top-20 right-20 w-72 h-72 bg-brand-500/5 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-20 left-20 w-96 h-96 bg-brand-500/3 rounded-full blur-3xl"></div>
+  <div class="relative z-10 section-padding w-full py-24 md:py-32">
+    <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+      <div class="flex-1 text-center lg:text-left hero-copy">
+        <div class="inline-flex items-center gap-2 mb-6"><span
+            class="text-brand-500 text-xs font-semibold uppercase tracking-widest">We Are</span><span
+            class="text-white/60 text-xs font-semibold uppercase tracking-widest">Nakrani Production</span></div>
+        <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">We
+          Create <span class="font-script text-brand-500 font-normal block sm:inline">visual</span><br />Experiences
+        </h1>
+        <p class="text-dark-500 text-base md:text-lg leading-relaxed max-w-lg mx-auto lg:mx-0 mb-8">We combine
+          creativity, strategy and design to create stunning visuals that inspire and engage.
+        <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start"><a
+            class="btn-primary whitespace-nowrap" data-discover="true" href="{% url 'portfolio' %}">Explore Work<i
+              class="ri-arrow-right-line text-lg"></i></a><a
+            class="inline-flex items-center gap-2 text-white/70 text-sm font-medium hover:text-brand-500 transition-colors duration-300"
+            data-discover="true" href="{% url 'contact' %}"><span
+              class="w-10 h-10 flex items-center justify-center rounded-full border border-white/20 hover:border-brand-500/50 transition-colors"><i
+                class="ri-arrow-right-line"></i></span>Get a Free Quote</a></div>
+        </p>
+      </div>
+      <div class="flex-1 relative perspective-1000 hero-art">
+        <div class="relative w-full max-w-xl mx-auto h-[400px] md:h-[500px] preserve-3d hero-floating-zone">
+          <div
+            class="floating-card absolute top-0 left-0 w-48 md:w-56 h-32 md:h-40 rounded-xl overflow-hidden shadow-2xl"
+            data-depth="18" data-rotate="-3" style="--rot:-3deg"><img alt="Branding mockup"
+              class="w-full h-full object-cover" src="{% static 'site/images/1_branding-mockup.jpg' %}" /></div>
+          <div
+            class="floating-card absolute top-4 right-0 w-44 md:w-52 h-56 md:h-64 rounded-xl overflow-hidden shadow-2xl"
+            data-depth="32" data-rotate="3" style="--rot:3deg"><img alt="Creative agency mockup"
+              class="w-full h-full object-cover" src="{% static 'site/images/2_creative-agency-mockup.jpg' %}" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent"></div>
+            <div class="absolute top-4 left-4">
+              <p class="text-brand-500 text-xs font-bold uppercase tracking-wider">Creative
+              <p class="text-brand-500 text-xs font-bold uppercase tracking-wider">Design
+              <p class="text-brand-500 text-xs font-bold uppercase tracking-wider">Agency</p>
+              </p>
+              </p>
+            </div>
+          </div>
+          <div
+            class="floating-card absolute bottom-4 left-4 w-52 md:w-60 h-36 md:h-44 rounded-xl overflow-hidden shadow-2xl"
+            data-depth="46" data-rotate="-3" style="--rot:-3deg"><img alt="Stationery mockup"
+              class="w-full h-full object-cover" src="{% static 'site/images/3_stationery-mockup.jpg' %}" /></div>
+          <div
+            class="floating-card absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 md:w-48 h-40 md:h-48 rounded-xl overflow-hidden shadow-2xl z-10"
+            data-depth="60" data-rotate="3" data-center="true" style="--rot:3deg">
+            <div class="w-full h-full bg-brand-500 flex items-center justify-center">
+              <div class="text-center">
+                <p class="text-dark-50 font-heading text-xl font-bold">Nakrani
+                <p class="text-dark-50/70 text-xs mt-1">Production</p>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="floating-card absolute bottom-0 right-4 w-36 md:w-44 h-28 md:h-36 rounded-xl overflow-hidden shadow-2xl"
+            data-depth="74" data-rotate="-3" style="--rot:-3deg">
+            <div class="w-full h-full bg-dark-100 flex items-center justify-center"><span
+                class="text-white font-heading text-3xl font-bold">NP</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
+    <span class="text-xs uppercase tracking-widest writing-mode-vertical rotate-180" style="writing-mode:vertical-lr">Scroll Down</span>
+    <div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div>
+  </div>
+</section>
+
+<style class="sf-hidden">
+  /* --- Parallax base state (cards only) --- */
+  #parallaxHero .floating-card {
+    --px: 0px;
+    --py: 0px;
+    --rot: 0deg;
+    transform: translate(var(--px), var(--py)) rotate(var(--rot));
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  /* the center card keeps its Tailwind -translate-x-1/2 -translate-y-1/2 centering,
+     then layers the parallax offset and rotation on top of that */
+  #parallaxHero .floating-card[data-center] {
+    transform: translate(-50%, -50%) translate(var(--px), var(--py)) rotate(var(--rot));
+  }
+
+  /* =========================================================
+     HERO LOAD-IN (fade + rise, staggered — same feel as Services hero)
+     ========================================================= */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .hero-copy > * {
+    animation: fadeUp .9s cubic-bezier(.22, 1, .36, 1) both;
+  }
+  .hero-copy > *:nth-child(1) { animation-delay: 0s; }
+  .hero-copy > *:nth-child(2) { animation-delay: .12s; }
+  .hero-copy > *:nth-child(3) { animation-delay: .24s; }
+  .hero-copy > *:nth-child(4) { animation-delay: .36s; }
+
+  .hero-art {
+    animation: fadeUp 1s cubic-bezier(.22, 1, .36, 1) .3s both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-copy > *,
+    .hero-art {
+      animation: none !important;
+    }
+  }
+
+  /* =========================================================
+     SCROLL REVEAL (site-wide) — same system as the Services page
+     ========================================================= */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity .7s cubic-bezier(.22, 1, .36, 1) var(--d, 0s),
+                transform .7s cubic-bezier(.22, 1, .36, 1) var(--d, 0s);
+    will-change: opacity, transform;
+  }
+
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script class="sf-hidden">
+  (function () {
+    const hero = document.getElementById('parallaxHero');
+    if (!hero) return;
+
+    const cards = hero.querySelectorAll('.floating-card');
+    let rafId = null;
+    let targetX = 0;
+    let targetY = 0;
+
+    function applyParallax() {
+      cards.forEach((card) => {
+        const depth = parseFloat(card.dataset.depth) || 20;
+        const px = targetX * depth;
+        const py = targetY * depth;
+        card.style.setProperty('--px', px.toFixed(2) + 'px');
+        card.style.setProperty('--py', py.toFixed(2) + 'px');
+      });
+      rafId = null;
+    }
+
+    function onMove(clientX, clientY) {
+      const rect = hero.getBoundingClientRect();
+      targetX = ((clientX - rect.left) / rect.width - 0.5) * 2;
+      targetY = ((clientY - rect.top) / rect.height - 0.5) * 2;
+      if (!rafId) rafId = requestAnimationFrame(applyParallax);
+    }
+
+    hero.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+
+    hero.addEventListener('mouseleave', () => {
+      targetX = 0;
+      targetY = 0;
+      if (!rafId) rafId = requestAnimationFrame(applyParallax);
+    });
+
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', (e) => {
+        if (e.gamma === null || e.beta === null) return;
+        targetX = Math.max(-1, Math.min(1, e.gamma / 30));
+        targetY = Math.max(-1, Math.min(1, (e.beta - 45) / 30));
+        if (!rafId) rafId = requestAnimationFrame(applyParallax);
+      });
+    }
+  })();
+</script>
+
+<section class="bg-cream-400 py-20 md:py-28">
+  <div class="section-padding">
+    <div class="text-center mb-16" data-reveal><span
+        class="text-brand-600 text-xs font-semibold uppercase tracking-widest mb-3 block">What We Do</span>
+      <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-dark-50 mb-4">Our Services</h2>
+      <p class="text-dark-400 text-base max-w-xl mx-auto leading-relaxed">We help brands bring their ideas to life
+        through creative and impactful design solutions.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8" data-stagger="4">
+      <div
+        class="service-card bg-white rounded-xl p-6 md:p-8 border border-dark-900/5 shadow-soft hover:shadow-medium hover:-translate-y-2 transition-all duration-500 group"
+        data-reveal>
+        <div
+          class="w-14 h-14 flex items-center justify-center rounded-full bg-cream-400 mb-6 group-hover:bg-brand-50 transition-colors duration-300">
+          <i
+            class="ri-palette-line text-2xl text-dark-50 group-hover:text-brand-600 transition-colors duration-300"></i>
+        </div>
+        <h3 class="font-heading text-lg font-bold text-dark-50 mb-3">Branding &amp; Identity</h3>
+        <p class="text-dark-400 text-sm leading-relaxed mb-6">We create strong brand identities that make your business
+          stand out from the crowd. From logos to complete brand systems.</p><a
+          class="inline-flex items-center gap-2 text-dark-50 text-sm font-medium group-hover:text-brand-600 transition-colors duration-300"
+          data-discover="true" href="{% url 'services' %}">Learn More<i
+            class="ri-arrow-right-line text-lg transition-transform duration-300 group-hover:translate-x-1"></i></a>
+      </div>
+      <div
+        class="service-card bg-white rounded-xl p-6 md:p-8 border border-dark-900/5 shadow-soft hover:shadow-medium hover:-translate-y-2 transition-all duration-500 group"
+        data-reveal>
+        <div
+          class="w-14 h-14 flex items-center justify-center rounded-full bg-cream-400 mb-6 group-hover:bg-brand-50 transition-colors duration-300">
+          <i
+            class="ri-computer-line text-2xl text-dark-50 group-hover:text-brand-600 transition-colors duration-300"></i>
+        </div>
+        <h3 class="font-heading text-lg font-bold text-dark-50 mb-3">Web Design</h3>
+        <p class="text-dark-400 text-sm leading-relaxed mb-6">We design modern, responsive and user-friendly websites
+          that deliver results and elevate your digital presence.</p><a
+          class="inline-flex items-center gap-2 text-dark-50 text-sm font-medium group-hover:text-brand-600 transition-colors duration-300"
+          data-discover="true" href="{% url 'services' %}">Learn More<i
+            class="ri-arrow-right-line text-lg transition-transform duration-300 group-hover:translate-x-1"></i></a>
+      </div>
+      <div
+        class="service-card bg-white rounded-xl p-6 md:p-8 border border-dark-900/5 shadow-soft hover:shadow-medium hover:-translate-y-2 transition-all duration-500 group"
+        data-reveal>
+        <div
+          class="w-14 h-14 flex items-center justify-center rounded-full bg-cream-400 mb-6 group-hover:bg-brand-50 transition-colors duration-300">
+          <i
+            class="ri-file-list-3-line text-2xl text-dark-50 group-hover:text-brand-600 transition-colors duration-300"></i>
+        </div>
+        <h3 class="font-heading text-lg font-bold text-dark-50 mb-3">Print Design</h3>
+        <p class="text-dark-400 text-sm leading-relaxed mb-6">From brochures to posters, we design print materials that
+          communicate your message with elegance and impact.</p><a
+          class="inline-flex items-center gap-2 text-dark-50 text-sm font-medium group-hover:text-brand-600 transition-colors duration-300"
+          data-discover="true" href="{% url 'services' %}">Learn More<i
+            class="ri-arrow-right-line text-lg transition-transform duration-300 group-hover:translate-x-1"></i></a>
+      </div>
+      <div
+        class="service-card bg-white rounded-xl p-6 md:p-8 border border-dark-900/5 shadow-soft hover:shadow-medium hover:-translate-y-2 transition-all duration-500 group"
+        data-reveal>
+        <div
+          class="w-14 h-14 flex items-center justify-center rounded-full bg-cream-400 mb-6 group-hover:bg-brand-50 transition-colors duration-300">
+          <i class="ri-share-line text-2xl text-dark-50 group-hover:text-brand-600 transition-colors duration-300"></i>
+        </div>
+        <h3 class="font-heading text-lg font-bold text-dark-50 mb-3">Social Media Design</h3>
+        <p class="text-dark-400 text-sm leading-relaxed mb-6">We create eye-catching social media designs that boost
+          engagement, grow brands, and drive meaningful conversations.</p><a
+          class="inline-flex items-center gap-2 text-dark-50 text-sm font-medium group-hover:text-brand-600 transition-colors duration-300"
+          data-discover="true" href="{% url 'services' %}">Learn More<i
+            class="ri-arrow-right-line text-lg transition-transform duration-300 group-hover:translate-x-1"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="bg-dark-50 py-20 md:py-28">
+  <div class="section-padding">
+    <div class="text-center mb-16" data-reveal><span
+        class="text-brand-500 text-xs font-semibold uppercase tracking-widest mb-3 block">Our Work</span>
+      <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">Recent Projects</h2>
+      <p class="text-dark-500 text-base max-w-xl mx-auto leading-relaxed">Here are some of our latest projects that
+        showcase our creativity and expertise.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" data-stagger="3"><a
+        class="portfolio-item group relative rounded-xl overflow-hidden cursor-pointer block"
+        data-discover="true" href="{% url 'portfolio' %}" data-reveal>
+        <div class="aspect-[4/3] overflow-hidden"><img alt="MOON Cosmetics"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            src="{% static 'site/images/4_moon-cosmetics.jpg' %}" /></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        </div>
+        <div
+          class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+          <span class="text-brand-500 text-xs font-semibold uppercase tracking-wider mb-2 block">Branding</span>
+          <h3 class="font-heading text-xl font-bold text-white">MOON Cosmetics</h3>
+        </div>
+      </a><a class="portfolio-item group relative rounded-xl overflow-hidden cursor-pointer block"
+        data-discover="true" href="{% url 'portfolio' %}" data-reveal>
+        <div class="aspect-[4/3] overflow-hidden"><img alt="Aura Packaging"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            src="{% static 'site/images/5_aura-packaging.jpg' %}" /></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        </div>
+        <div
+          class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+          <span class="text-brand-500 text-xs font-semibold uppercase tracking-wider mb-2 block">Packaging</span>
+          <h3 class="font-heading text-xl font-bold text-white">Aura Packaging</h3>
+        </div>
+      </a><a class="portfolio-item group relative rounded-xl overflow-hidden cursor-pointer block"
+        data-discover="true" href="{% url 'portfolio' %}" data-reveal>
+        <div class="aspect-[4/3] overflow-hidden"><img alt="Tivra Brand"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            src="{% static 'site/images/6_tivra-brand.jpg' %}" /></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        </div>
+        <div
+          class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+          <span class="text-brand-500 text-xs font-semibold uppercase tracking-wider mb-2 block">Identity</span>
+          <h3 class="font-heading text-xl font-bold text-white">Tivra Brand</h3>
+        </div>
+      </a><a class="portfolio-item group relative rounded-xl overflow-hidden cursor-pointer block"
+        data-discover="true" href="{% url 'portfolio' %}" data-reveal>
+        <div class="aspect-[4/3] overflow-hidden"><img alt="Cereal Editorial"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            src="{% static 'site/images/7_cereal-editorial.jpg' %}" /></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        </div>
+        <div
+          class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+          <span class="text-brand-500 text-xs font-semibold uppercase tracking-wider mb-2 block">Print Design</span>
+          <h3 class="font-heading text-xl font-bold text-white">Cereal Editorial</h3>
+        </div>
+      </a><a class="portfolio-item group relative rounded-xl overflow-hidden cursor-pointer block"
+        data-discover="true" href="{% url 'portfolio' %}" data-reveal>
+        <div class="aspect-[4/3] overflow-hidden"><img alt="Lumina Label"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            src="{% static 'site/images/8_lumina-label.jpg' %}" /></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        </div>
+        <div
+          class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+          <span class="text-brand-500 text-xs font-semibold uppercase tracking-wider mb-2 block">Label Design</span>
+          <h3 class="font-heading text-xl font-bold text-white">Lumina Label</h3>
+        </div>
+      </a><a class="portfolio-item group relative rounded-xl overflow-hidden cursor-pointer block"
+        data-discover="true" href="{% url 'portfolio' %}" data-reveal>
+        <div class="aspect-[4/3] overflow-hidden"><img alt="TATTVA"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            src="{% static 'site/images/9_tattva.png' %}" /></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        </div>
+        <div
+          class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+          <span class="text-brand-500 text-xs font-semibold uppercase tracking-wider mb-2 block">Branding</span>
+          <h3 class="font-heading text-xl font-bold text-white">TATTVA</h3>
+        </div>
+      </a></div>
+    <div class="text-center mt-12" data-reveal><a
+        class="inline-flex items-center gap-2 px-8 py-4 border border-white/20 text-white font-medium rounded-full hover:bg-white/10 hover:border-white/40 transition-all duration-300"
+        data-discover="true" href="{% url 'portfolio' %}">View All Projects<i
+          class="ri-arrow-right-line text-brand-500"></i></a></div>
+  </div>
+</section>
+<section class="bg-cream-400 py-20 md:py-28">
+  <div class="section-padding">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12" data-stagger="3">
+      <div class="animate-element" data-reveal><span
+          class="text-brand-600 text-xs font-semibold uppercase tracking-widest mb-4 block">About Us</span>
+        <h3 class="font-heading text-2xl md:text-3xl font-bold text-dark-50 mb-4 leading-tight">We are passionate
+          designers</h3>
+        <div class="w-12 h-0.5 bg-brand-500 mb-6"></div>
+        <p class="text-dark-400 text-sm leading-relaxed mb-4">At Nakrani Production, we believe design is more than just
+          looks — it's about communication, connection and creativity. We work closely with our clients to deliver
+          designs that make an impact.
+        <p class="text-dark-400 text-sm leading-relaxed mb-6">Our team of skilled designers brings together diverse
+          expertise in branding, digital design, and print media to create cohesive visual experiences.</p><a
+          class="inline-flex items-center gap-2 px-6 py-3 border border-dark-900/20 text-dark-50 text-sm font-medium rounded-full hover:bg-dark-50 hover:text-white transition-all duration-300"
+          data-discover="true" href="{% url 'about' %}">Read More<i class="ri-arrow-right-line"></i></a></p>
+      </div>
+      <div class="animate-element bg-white rounded-xl p-6 md:p-8 border border-dark-900/5" data-reveal>
+        <span class="text-brand-600 text-xs font-semibold uppercase tracking-widest mb-4 block">Testimonial</span>
+        <div class="mb-6"><i class="ri-double-quotes-l text-3xl text-brand-500/30"></i></div>
+        <blockquote class="text-dark-50 text-sm leading-relaxed mb-6">"Nakrani Production understood our vision
+          perfectly and delivered a brand identity that truly represents our business. Highly professional and creative
+          team!"</blockquote>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full overflow-hidden bg-dark-900"><img alt="Ravi Patel"
+              class="w-full h-full object-cover" src="{% static 'site/images/10_ravi-patel.jpg' %}" /></div>
+          <div>
+            <p class="text-dark-50 font-semibold text-sm">Ravi Patel
+            <p class="text-dark-400 text-xs">Founder, Urban Style</p>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="animate-element" data-reveal>
+        <div class="bg-brand-500 rounded-xl p-8 md:p-10 h-full flex flex-col justify-between">
+          <div>
+            <div class="w-14 h-14 flex items-center justify-center rounded-full bg-white/20 mb-6"><i
+                class="ri-send-plane-line text-2xl text-white"></i></div>
+            <h3 class="font-heading text-2xl md:text-3xl font-bold text-white mb-4">Let's work together</h3>
+            <p class="text-white/80 text-sm leading-relaxed mb-6">Have a project in mind? Let's create something amazing
+              together. We are ready to bring your vision to life.</p>
+          </div><a
+            class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-dark-50 text-white text-sm font-medium rounded-full hover:bg-dark-100 transition-all duration-300"
+            data-discover="true" href="{% url 'contact' %}">Contact Us<i class="ri-arrow-right-line"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="bg-dark-50 py-20 md:py-28 relative overflow-hidden">
+  <div class="absolute top-0 left-0 w-full h-full">
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-500/5 rounded-full blur-3xl">
+    </div>
+  </div>
+  <div class="section-padding relative z-10">
+    <div class="max-w-4xl mx-auto text-center" data-reveal><span
+        class="text-brand-500 text-xs font-semibold uppercase tracking-widest mb-4 block">Start a Project</span>
+      <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">Ready to
+        transform your <span class="font-script text-brand-500 font-normal">brand</span>?</h2>
+      <p class="text-dark-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-10">Let's collaborate and create
+        something extraordinary. Our team is ready to bring your vision to life with premium design that makes an
+        impact.
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4"><a class="btn-primary whitespace-nowrap"
+          data-discover="true" href="{% url 'contact' %}">Start a Project<i
+            class="ri-arrow-right-line text-lg"></i></a><a class="btn-outline whitespace-nowrap" data-discover="true"
+          href="{% url 'portfolio' %}">View Our Work<i class="ri-arrow-right-line text-lg"></i></a></div>
+      </p>
+    </div>
+  </div>
+</section>
+
+<script class="sf-hidden">
+  (function () {
+    /* Stagger delays inside grids/lists that have data-stagger="n" */
+    document.querySelectorAll('[data-stagger]').forEach(function (parent) {
+      var n = parseInt(parent.dataset.stagger, 10) || 3;
+      Array.prototype.forEach.call(parent.children, function (child, i) {
+        child.style.setProperty('--d', ((i % n) * 0.12) + 's');
+      });
+    });
+
+    var items = document.querySelectorAll('[data-reveal]');
+
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    items.forEach(function (el) { io.observe(el); });
+  })();
+</script>
 {% endblock %}

@@ -1,9 +1,939 @@
 {% extends 'website/base.html' %}
 {% load static %}
+
+{% block extra_head %}
+<style>
+  /* =========================================================
+     SCROLL PROGRESS BAR
+     ========================================================= */
+  #scrollProgress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #c89a5e, #e6c48f);
+    transform: scaleX(0);
+    transform-origin: left;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+
+  /* =========================================================
+     REVEAL ON SCROLL (individual transform props, so hover
+     `transform` never conflicts)
+     ========================================================= */
+  [data-reveal] {
+    transition:
+      opacity .8s ease var(--d, 0s),
+      translate .8s cubic-bezier(.22, 1, .36, 1) var(--d, 0s),
+      scale .8s cubic-bezier(.22, 1, .36, 1) var(--d, 0s);
+  }
+
+  .js-reveal [data-reveal]                { opacity: 0; translate: 0 32px; }
+  .js-reveal [data-reveal="left"]         { translate: -40px 0; }
+  .js-reveal [data-reveal="right"]        { translate: 40px 0; }
+  .js-reveal [data-reveal="scale"]        { translate: 0 24px; scale: .94; }
+  .js-reveal [data-reveal].is-visible     { opacity: 1; translate: 0 0; scale: 1; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { transform: scaleY(.5); transform-origin: top; opacity: .4; }
+    50%      { transform: scaleY(1);  transform-origin: top; opacity: 1; }
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { opacity: .6; transform: translate(-50%, -50%) scale(1); }
+    50%      { opacity: 1;  transform: translate(-50%, -50%) scale(1.12); }
+  }
+
+
+  /* =========================================================
+     SHARED
+     ========================================================= */
+  .d-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .d-section {
+    padding: 5rem 1rem;
+    color: #fff;
+  }
+
+  .d-dark { background: #0a0a0a; }
+  .d-mid  { background: #1a1a1a; }
+
+  .d-label {
+    display: inline-block;
+    color: #c89a5e;
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .17em;
+    text-transform: uppercase;
+  }
+
+  .d-section h2,
+  .d-cta h2 {
+    font-family: Poppins, sans-serif;
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -.03em;
+    color: #fff;
+    margin: .7rem 0 1.25rem;
+  }
+
+  .d-script {
+    font-family: Pacifico, cursive;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: #c89a5e;
+  }
+
+  .d-head {
+    max-width: 680px;
+    margin: 0 auto 4rem;
+    text-align: center;
+  }
+
+  .d-head p {
+    color: #8e8e8e;
+    line-height: 1.75;
+  }
+
+
+  /* =========================================================
+     HERO
+     ========================================================= */
+  .d-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    padding: 8rem 1rem 6rem;
+    background: #0a0a0a;
+    overflow: hidden;
+  }
+
+  .d-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 14% 22%, rgba(200,154,94,.12), transparent 22%),
+                radial-gradient(circle at 84% 30%, rgba(255,255,255,.035), transparent 16%);
+    pointer-events: none;
+  }
+
+  /* Big faint brand watermark behind the hero (parallax on scroll) */
+  .d-watermark {
+    position: absolute;
+    left: 4%;
+    top: 50%;
+    z-index: 0;
+    transform: translateY(calc(-50% + var(--py, 0px)));
+    font-family: Poppins, sans-serif;
+    font-weight: 800;
+    font-size: clamp(5rem, 17vw, 16rem);
+    line-height: .9;
+    letter-spacing: -.04em;
+    color: rgba(200,154,94,.055);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .d-watermark small {
+    display: block;
+    margin-top: .4em;
+    font-size: .16em;
+    font-weight: 500;
+    letter-spacing: 1.1em;
+    color: rgba(255,255,255,.05);
+  }
+
+  .d-hero-grid {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .d-hero-copy > * {
+    animation: fadeUp .9s cubic-bezier(.22, 1, .36, 1) both;
+  }
+  .d-hero-copy > *:nth-child(2) { animation-delay: .12s; }
+  .d-hero-copy > *:nth-child(3) { animation-delay: .24s; }
+  .d-hero-copy > *:nth-child(4) { animation-delay: .36s; }
+
+  .d-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-bottom: 2rem;
+    color: #6f6f6f;
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+  }
+
+  .d-breadcrumb a {
+    color: #a9a9a9;
+    transition: color .3s;
+  }
+
+  .d-breadcrumb a:hover,
+  .d-breadcrumb .current {
+    color: #c89a5e;
+  }
+
+  .d-hero h1 {
+    font-family: Poppins, sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5.8rem);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -.05em;
+    color: #fff;
+    margin-bottom: 1.25rem;
+  }
+
+  .d-hero h1 .d-script {
+    display: block;
+    line-height: 1.1;
+    margin-top: .05em;
+  }
+
+  .d-hero-copy > p {
+    max-width: 570px;
+    color: #8e8e8e;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+
+  .d-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 2.25rem;
+  }
+
+  .d-work-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: #ddd;
+    transition: color .3s;
+  }
+
+  .d-work-link i {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid #555;
+    border-radius: 50%;
+    color: #c89a5e;
+    transition: border-color .3s, background .3s, color .3s, transform .3s;
+  }
+
+  .d-work-link:hover { color: #c89a5e; }
+
+  .d-work-link:hover i {
+    border-color: #c89a5e;
+    background: #c89a5e;
+    color: #1a1a1a;
+    transform: translateX(4px);
+  }
+
+  .d-art {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    animation: fadeUp 1s cubic-bezier(.22, 1, .36, 1) .3s both;
+    transition: translate .15s ease-out;
+  }
+
+  .d-art img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1.05;
+    object-fit: cover;
+    border-radius: 1.8rem 1.8rem 2.2rem 2.2rem;
+    box-shadow: 0 30px 80px rgba(0,0,0,.4);
+  }
+
+  .d-badge {
+    position: absolute;
+    left: -1.75rem;
+    bottom: -1.5rem;
+    z-index: 3;
+    padding: 1rem 1.4rem;
+    text-align: center;
+    background: rgba(200,154,94,.96);
+    color: #1a1a1a;
+    border-radius: 1rem;
+    box-shadow: 0 18px 36px rgba(0,0,0,.35);
+    animation: floatY 5s ease-in-out infinite;
+  }
+
+  .d-badge strong {
+    display: block;
+    font-family: Poppins, sans-serif;
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .d-badge span {
+    display: block;
+    margin-top: .35rem;
+    font-size: .66rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+
+  /* =========================================================
+     ABOUT THIS SERVICE
+     ========================================================= */
+  .d-about-grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .d-about-line {
+    width: 0;
+    height: 2px;
+    margin-top: 1.5rem;
+    background: #c89a5e;
+    transition: width 1s cubic-bezier(.22, 1, .36, 1) .3s;
+  }
+
+  .is-visible .d-about-line { width: 96px; }
+  html:not(.js-reveal) .d-about-line { width: 96px; }
+
+  .d-about-copy p {
+    margin-bottom: 1.6rem;
+    color: #8e8e8e;
+    font-size: 1.1rem;
+    line-height: 1.85;
+  }
+
+
+  /* =========================================================
+     GLASS CARDS (deliverables / process / more services)
+     ========================================================= */
+  .g-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .g-card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 2.25rem 2rem;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 20px;
+    color: #fff;
+    transition:
+      transform .45s cubic-bezier(.22, 1, .36, 1),
+      border-color .45s ease,
+      box-shadow .45s ease,
+      background .45s ease,
+      opacity .8s ease var(--d, 0s),
+      translate .8s cubic-bezier(.22, 1, .36, 1) var(--d, 0s),
+      scale .8s cubic-bezier(.22, 1, .36, 1) var(--d, 0s);
+  }
+
+  .d-dark .g-card { background: #161616; }
+
+  .g-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #c89a5e;
+    transition: width .5s ease;
+  }
+
+  .g-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(200,154,94,.65);
+    box-shadow: 0 22px 48px rgba(0,0,0,.4);
+  }
+
+  .g-card:hover::before { width: 100%; }
+
+  .g-icon {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 1.75rem;
+    border-radius: 50%;
+    background: rgba(200,154,94,.15);
+    color: #c89a5e;
+    font-size: 1.4rem;
+    transition: background .4s ease, color .4s ease, transform .4s cubic-bezier(.22, 1, .36, 1);
+  }
+
+  .g-card:hover .g-icon {
+    background: #c89a5e;
+    color: #1a1a1a;
+    transform: scale(1.1) rotate(-6deg);
+  }
+
+  .g-num {
+    display: block;
+    margin-bottom: 1.5rem;
+    font-family: Poppins, sans-serif;
+    font-size: clamp(2.4rem, 3.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1;
+    color: rgba(200,154,94,.3);
+    transition: color .4s ease, transform .4s ease;
+  }
+
+  .g-card:hover .g-num {
+    color: #c89a5e;
+    transform: translateX(4px);
+  }
+
+  .g-card h3 {
+    margin: 0 0 .9rem;
+    font-family: Poppins, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #fff;
+  }
+
+  .g-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    margin-bottom: 1.1rem;
+    background: #c89a5e;
+    transition: width .5s ease;
+  }
+
+  .g-card:hover .g-line { width: 56px; }
+
+  .g-card p {
+    color: #8e8e8e;
+    font-size: .92rem;
+    line-height: 1.7;
+  }
+
+  /* More services card extras */
+  .more-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+  }
+
+  .more-top .g-icon { margin-bottom: 0; }
+
+  .more-num {
+    padding-top: .3rem;
+    color: rgba(200,154,94,.55);
+    font-size: .85rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    transition: color .4s ease;
+  }
+
+  .g-card:hover .more-num { color: #c89a5e; }
+
+  .more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    margin-top: 1.5rem;
+    color: #fff;
+    font-size: .92rem;
+    font-weight: 500;
+    transition: color .3s ease;
+  }
+
+  .more-link i { transition: transform .3s ease; }
+  .g-card:hover .more-link { color: #c89a5e; }
+  .g-card:hover .more-link i { transform: translateX(5px); }
+
+
+  /* =========================================================
+     SELECTED WORK
+     ========================================================= */
+  .d-work-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .d-work-head h2 { margin-bottom: 0; }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .work-card { display: block; color: #fff; }
+
+  .work-image {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 28px;
+    background: #1a1a1a;
+    box-shadow: 0 18px 40px rgba(0,0,0,.35);
+  }
+
+  .work-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .8s cubic-bezier(.22, 1, .36, 1), scale 1.4s cubic-bezier(.22, 1, .36, 1);
+  }
+
+  /* image "settles in" while revealing */
+  .js-reveal .work-card .work-image img { scale: 1.15; }
+  .js-reveal .work-card.is-visible .work-image img { scale: 1; }
+
+  .work-card:hover .work-image img { transform: scale(1.07); }
+
+  .work-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(10,10,10,.88), rgba(10,10,10,.15) 55%, transparent);
+    opacity: 0;
+    transition: opacity .45s ease;
+  }
+
+  .work-card:hover .work-overlay { opacity: 1; }
+
+  .work-meta,
+  .work-overlay h3 {
+    transform: translateY(14px);
+    transition: transform .5s cubic-bezier(.22, 1, .36, 1);
+  }
+
+  .work-card:hover .work-meta,
+  .work-card:hover .work-overlay h3 { transform: translateY(0); }
+
+  .work-meta {
+    color: #c89a5e;
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  .work-overlay h3 {
+    margin-top: .4rem;
+    font-family: Poppins, sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .work-arrow {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #c89a5e;
+    color: #1a1a1a;
+    font-size: 1.2rem;
+    transform: scale(.6);
+    opacity: 0;
+    transition: transform .45s cubic-bezier(.22, 1, .36, 1), opacity .3s ease;
+  }
+
+  .work-card:hover .work-arrow { transform: scale(1); opacity: 1; }
+
+  .d-empty { color: #8e8e8e; }
+
+  @media (hover: none) {
+    .work-overlay { opacity: 1; }
+    .work-meta, .work-overlay h3 { transform: none; }
+    .work-arrow { transform: scale(1); opacity: 1; }
+  }
+
+
+  /* =========================================================
+     CTA
+     ========================================================= */
+  .d-cta {
+    position: relative;
+    overflow: hidden;
+    padding: 7rem 1rem;
+    background: #0a0a0a;
+    color: #fff;
+    text-align: center;
+  }
+
+  .d-cta::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 640px;
+    height: 640px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,154,94,.10), transparent 65%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: glowPulse 6s ease-in-out infinite;
+  }
+
+  .d-cta-inner { position: relative; z-index: 1; }
+
+  .d-cta p {
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+    color: #8e8e8e;
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .d-cta .btn-primary {
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+
+  .d-cta .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px rgba(200,154,94,.28);
+  }
+
+
+  /* =========================================================
+     RESPONSIVE
+     ========================================================= */
+  @media (min-width: 640px) {
+    .g-3, .g-5 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 768px) {
+    .d-hero, .d-section, .d-cta { padding-left: 2rem; padding-right: 2rem; }
+    .d-section { padding-top: 7rem; padding-bottom: 7rem; }
+  }
+
+  @media (min-width: 900px) {
+    .work-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .g-5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 1024px) {
+    .d-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); }
+    .d-art { margin-right: 2rem; }
+    .d-about-grid { grid-template-columns: 1fr 1.05fr; gap: 5rem; }
+    .g-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+  }
+
+  @media (min-width: 1180px) {
+    .g-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.25rem; }
+    .g-5 .g-card { padding: 2rem 1.5rem; }
+  }
+
+  @media (max-width: 767px) {
+    .d-hero { min-height: auto; padding-top: 7rem; padding-bottom: 6rem; }
+    .d-hero-copy { text-align: center; }
+    .d-breadcrumb, .d-actions { justify-content: center; }
+    .d-hero-copy > p { margin-left: auto; margin-right: auto; }
+    .d-art { max-width: 340px; }
+    .d-badge { left: .75rem; bottom: -1.25rem; padding: .85rem 1.1rem; }
+    .d-work-head { display: block; }
+    .d-work-head .btn-outline { margin-top: 1.25rem; }
+    .g-card:hover { transform: translateY(-4px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .d-hero *, .d-cta::before, [data-reveal] {
+      animation: none !important;
+      transition: none !important;
+    }
+    .js-reveal [data-reveal] { opacity: 1; translate: none; scale: 1; }
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-<section class="page-hero"><div class="section-padding w-full hero-content"><span class="page-kicker">Service</span><h1 class="page-title">{{ service.title }}</h1><p class="page-lead">{{ service.description }}</p></div></section>
-<section class="reference-section cream"><div class="section-padding"><div class="ref-grid-2"><div class="reveal">{% if service.image %}<img class="detail-image" src="{{ service.image.url }}" alt="{{ service.title }}">{% else %}<div class="detail-image" style="background:linear-gradient(135deg,#2a241d,#c89a5e);display:flex;align-items:center;justify-content:center;color:#fff;font:700 5rem Poppins">{{ service.title|slice:':1' }}</div>{% endif %}</div><div class="reveal"><span class="section-label">What you get</span><h2 class="section-title">Built with <span class="font-script text-brand-500 font-normal">intention</span>.</h2><div class="detail-content">{{ service.description|linebreaks }}</div>{% if service.feature_list %}<div class="mt-8">{% for feature in service.feature_list %}<div class="flex items-center gap-3 mb-3"><i class="ri-check-line text-brand-500"></i><span>{{ feature }}</span></div>{% endfor %}</div>{% endif %}</div></div></div></section>
-<section class="reference-section dark"><div class="section-padding"><div class="text-center mb-12"><span class="section-label">How we work</span><h2 class="section-title">A simple creative <span class="font-script text-brand-500 font-normal">process</span>.</h2></div><div class="process">{% for step in service.process_list %}<div class="process-item"><span class="num">0{{ forloop.counter }}</span><h3>{{ step }}</h3><p>Focused collaboration and careful execution at every stage.</p></div>{% empty %}<div class="process-item"><span class="num">01</span><h3>Discover</h3><p>Understand the brief and opportunity.</p></div>{% endfor %}</div></div></section>
-<section class="reference-section cream"><div class="section-padding"><div class="flex items-end justify-between gap-8 mb-10"><div><span class="section-label">Selected work</span><h2 class="section-title">Related projects</h2></div><a class="btn-outline" href="{% url 'portfolio' %}">View Portfolio <i class="ri-arrow-right-line"></i></a></div><div class="ref-grid-3">{% for project in related_projects %}<a class="project-card-ref reveal" href="{% url 'portfolio_detail' project.slug %}"><div class="project-img-ref">{% if project.image %}<img src="{{ project.image.url }}" alt="{{ project.title }}">{% else %}<img src="{% static 'site/images/4_moon-cosmetics.jpg' %}" alt="{{ project.title }}">{% endif %}</div><div class="project-meta"><span>{{ project.category }}</span><span>{{ project.year }}</span></div><h3>{{ project.title }}</h3></a>{% endfor %}</div></div></section>
-<section class="reference-section dark"><div class="section-padding text-center"><span class="section-label">Start a Project</span><h2 class="section-title text-white">Let's create something <span class="font-script text-brand-500 font-normal">great</span>.</h2><a class="btn-primary mt-6" href="{% url 'contact' %}">Let's Talk <i class="ri-arrow-right-up-line"></i></a></div></section>
+<div id="scrollProgress" aria-hidden="true"></div>
+
+<main>
+
+  <!-- HERO -->
+  <section class="d-hero">
+    <div class="d-watermark" aria-hidden="true">NAKRANI<small>PRODUCTION</small></div>
+
+    <div class="d-hero-grid">
+      <div class="d-hero-copy hero-copy">
+        <nav class="d-breadcrumb" aria-label="Breadcrumb">
+          <a href="{% url 'services' %}">Services</a><span>/</span><span class="current">{{ service.title }}</span>
+        </nav>
+        <h1>{{ service.title.split|slice:":-1"|join:" " }} <span class="d-script">{{ service.title.split|last }}</span></h1>
+        <p>{{ service.description }}</p>
+        <div class="d-actions">
+          <a class="btn-primary" href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
+          <a class="d-work-link" href="{% url 'portfolio' %}"><i class="ri-arrow-right-line"></i> View Our Work</a>
+        </div>
+      </div>
+
+      <div class="d-art hero-art">
+        {% if service.image %}<img src="{{ service.image.url }}" alt="{{ service.title }} — Nakrani Production service">{% else %}<img src="{% static 'site/images/services-hero.webp' %}" alt="{{ service.title }} — Nakrani Production service">{% endif %}
+        <div class="d-badge"><strong>{{ service.order|stringformat:"02d" }}</strong><span>Service</span></div>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
+      <span class="text-xs uppercase tracking-widest" style="writing-mode:vertical-lr">Scroll Down</span>
+      <div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div>
+    </div>
+
+  </section>
+
+  <!-- ABOUT THIS SERVICE -->
+  <section class="d-section d-mid">
+    <div class="d-inner d-about-grid">
+      <div data-reveal="left">
+        <span class="d-label">About This Service</span>
+        <h2>Design that communicates before it decorates.</h2>
+        <div class="d-about-line"></div>
+      </div>
+      <div class="d-about-copy" data-stagger="3">
+        <p data-reveal="right">{{ service.description }} We turn ideas into clear, confident visuals that carry a message without needing a caption.</p>
+        <p data-reveal="right">From campaign work to day-to-day collateral, we build a visual vocabulary that stays consistent across every piece — so each asset reinforces the brand rather than diluting it.</p>
+        <p data-reveal="right">Everything we deliver is considered, refined and ready to use, whether it lives on a screen, a page or a wall.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DELIVERABLES -->
+  <section class="d-section d-dark">
+    <div class="d-inner">
+      <div class="d-head" data-reveal>
+        <span class="d-label">Deliverables</span>
+        <h2>What's <span class="d-script">Included</span></h2>
+        <p>Everything you receive as part of the {{ service.title }} service, prepared to a production-ready standard.</p>
+      </div>
+      <div class="g-grid g-3" data-stagger="3">
+        {% for feature in service.feature_list %}
+        <article class="g-card" data-reveal>
+          <span class="g-icon"><i class="{% cycle 'ri-quill-pen-line' 'ri-palette-line' 'ri-font-size-2' 'ri-book-2-line' 'ri-shapes-line' 'ri-layout-grid-line' %}"></i></span>
+          <h3>{{ feature }}</h3>
+          <i class="g-line"></i>
+          <p>Thoughtful, production-ready visual work tailored to your brand.</p>
+        </article>
+        {% empty %}
+        <article class="g-card" data-reveal>
+          <span class="g-icon"><i class="{{ service.icon_class }}"></i></span>
+          <h3>{{ service.title }}</h3>
+          <i class="g-line"></i>
+          <p>{{ service.description }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="d-section d-mid">
+    <div class="d-inner">
+      <div class="d-head" data-reveal>
+        <span class="d-label">How We Work</span>
+        <h2>A Process Built Around Clarity</h2>
+        <p>A focused five-step process that takes your brand from a rough idea to a finished, effective visual system.</p>
+      </div>
+      <div class="g-grid g-5" data-stagger="5">
+        {% for step in service.process_list %}
+        <div class="g-card" data-reveal>
+          <span class="g-num">{{ forloop.counter|stringformat:"02d" }}</span>
+          <h3>{{ step }}</h3>
+          <i class="g-line"></i>
+          <p>Focused collaboration and careful execution at every stage.</p>
+        </div>
+        {% empty %}
+        <div class="g-card" data-reveal>
+          <span class="g-num">01</span>
+          <h3>Discover</h3>
+          <i class="g-line"></i>
+          <p>Understand the brand, audience and objective.</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- SELECTED WORK -->
+  <section class="d-section d-dark">
+    <div class="d-inner">
+      <div class="d-work-head" data-reveal>
+        <div>
+          <span class="d-label">Selected Work</span>
+          <h2>Work Created With <span class="d-script">Purpose</span></h2>
+        </div>
+        <a class="btn-outline" href="{% url 'portfolio' %}">View Portfolio <i class="ri-arrow-right-line"></i></a>
+      </div>
+      <div class="work-grid" data-stagger="3">
+        {% for project in related_projects %}
+        <a class="work-card" data-reveal="scale" href="{% url 'portfolio_detail' project.slug %}">
+          <div class="work-image">
+            {% if project.image %}<img src="{{ project.image.url }}" alt="{{ project.title }} — {{ project.category }} project">{% else %}<img src="{% static 'site/images/4_moon-cosmetics.jpg' %}" alt="{{ project.title }} — project">{% endif %}
+            <div class="work-overlay">
+              <span class="work-meta">{{ project.category }} · {{ project.year|default:"2026" }}</span>
+              <h3>{{ project.title }}</h3>
+            </div>
+            <i class="work-arrow ri-arrow-right-up-line"></i>
+          </div>
+        </a>
+        {% empty %}
+        <p class="d-empty">More projects are on the way.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- MORE SERVICES -->
+  <section class="d-section d-mid">
+    <div class="d-inner">
+      <div class="d-head" data-reveal>
+        <span class="d-label">More Services</span>
+        <h2>Explore More Services</h2>
+        <p>A full creative toolkit — from the first spark of an identity to the finished, production-ready asset.</p>
+      </div>
+      <div class="g-grid g-3" data-stagger="3">
+        {% for item in services %}{% if item.pk != service.pk %}
+        <a class="g-card more-card" data-reveal href="{% url 'service_detail' item.slug %}">
+          <div class="more-top">
+            <span class="g-icon"><i class="{{ item.icon_class }}"></i></span>
+            <span class="more-num">{{ forloop.counter|stringformat:"02d" }}</span>
+          </div>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
+          <span class="more-link">View Service <i class="ri-arrow-right-line"></i></span>
+        </a>
+        {% endif %}{% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="d-cta">
+    <div class="d-cta-inner" data-reveal>
+      <span class="d-label">Start a Project</span>
+      <h2>Let's work <span class="d-script">together</span></h2>
+      <p>Let's turn your idea into a visual experience.</p>
+      <a class="btn-primary" href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  document.documentElement.classList.add('js-reveal');
+
+  /* Stagger delays inside grids */
+  document.querySelectorAll('[data-stagger]').forEach(function (parent) {
+    var n = parseInt(parent.dataset.stagger, 10) || 3;
+    Array.prototype.forEach.call(parent.children, function (child, i) {
+      child.style.setProperty('--d', ((i % n) * 0.1) + 's');
+    });
+  });
+
+  /* Reveal on scroll */
+  var items = document.querySelectorAll('[data-reveal]');
+
+  if (!('IntersectionObserver' in window)) {
+    items.forEach(function (el) { el.classList.add('is-visible'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    items.forEach(function (el) { io.observe(el); });
+  }
+
+  /* Scroll progress bar + hero parallax + mouse parallax */
+  var bar   = document.getElementById('scrollProgress');
+  var hero  = document.querySelector('.d-hero');
+  var mark  = document.querySelector('.d-watermark');
+  var art   = document.querySelector('.d-art');
+  var copy  = document.querySelector('.d-hero-copy');
+  var canMouse = window.matchMedia('(hover: hover) and (min-width: 1024px)').matches;
+  var mx = 0, my = 0, ticking = false;
+
+  function frame() {
+    var y = window.pageYOffset || document.documentElement.scrollTop;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+
+    if (bar) bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(y / max, 1) : 0) + ')';
+
+    if (hero && y < window.innerHeight * 1.3) {
+      if (mark) mark.style.setProperty('--py', (y * 0.18).toFixed(1) + 'px');
+      if (art)  art.style.translate = mx.toFixed(1) + 'px ' + (my - y * 0.07).toFixed(1) + 'px';
+      if (copy) {
+        copy.style.translate = '0 ' + (y * 0.1).toFixed(1) + 'px';
+        copy.style.opacity = Math.max(1 - y / (window.innerHeight * 0.85), 0).toFixed(2);
+      }
+    }
+    ticking = false;
+  }
+
+  function request() {
+    if (!ticking) { ticking = true; requestAnimationFrame(frame); }
+  }
+
+  window.addEventListener('scroll', request, { passive: true });
+  window.addEventListener('resize', request);
+
+  if (hero && canMouse) {
+    hero.addEventListener('mousemove', function (e) {
+      mx = (e.clientX / window.innerWidth - 0.5) * 2 * 14;
+      my = (e.clientY / window.innerHeight - 0.5) * 2 * 14;
+      request();
+    });
+  }
+
+  frame();
+})();
+</script>
 {% endblock %}

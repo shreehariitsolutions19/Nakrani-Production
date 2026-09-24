@@ -1,8 +1,490 @@
 {% extends 'website/base.html' %}
 {% load static %}
+
+{% block extra_head %}
+<script>document.documentElement.classList.add('pd-js');</script>
+<style>
+  :root{--pd-bg:#0a0a0a;--pd-alt:#1a1a1a;--pd-gold:#c89a5e;--pd-gold-dk:#b0884e;--pd-muted:#8a8a8a;--pd-label:#7a7a7a;--pd-line:rgba(255,255,255,.1)}
+  body{background:var(--pd-bg)}
+  .pd-page{background:var(--pd-bg);color:#fff;overflow-x:hidden}
+  .pd-shell{width:100%;max-width:1600px;margin:0 auto;padding:0 1rem}
+  @media(min-width:768px){.pd-shell{padding:0 1.5rem}}
+  @media(min-width:1024px){.pd-shell{padding:0 2rem}}
+  @media(min-width:1280px){.pd-shell{padding:0 3rem}}
+  @media(min-width:1536px){.pd-shell{padding:0 5rem}}
+
+  .pd-heading{font-family:Poppins,Inter,system-ui,sans-serif}
+  .pd-script{font-family:Pacifico,cursive;color:var(--pd-gold);font-weight:400}
+  .pd-tag{display:block;margin-bottom:1rem;color:var(--pd-gold);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .pd-h2{font-family:Poppins,Inter,system-ui,sans-serif;font-size:clamp(1.875rem,3.4vw,3rem);font-weight:700;line-height:1.2;margin:0;color:#fff}
+  .pd-text{color:var(--pd-muted);font-size:1rem;line-height:1.7;margin:0}
+  .pd-glass{background:rgba(255,255,255,.05);border:1px solid var(--pd-line);border-radius:1rem;-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);transition:border-color .4s ease}
+  .pd-glass:hover{border-color:rgba(200,154,94,.4)}
+  .pd-section{position:relative;overflow:hidden;padding:5rem 0;background:var(--pd-bg)}
+  .pd-section--alt{background:var(--pd-alt)}
+  @media(min-width:768px){.pd-section{padding:7rem 0}}
+  .pd-section-head{margin-bottom:3rem}
+  @media(min-width:768px){.pd-section-head{margin-bottom:3.5rem}}
+  .pd-section > .pd-shell{position:relative;z-index:1}
+  .pd-page .btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:1rem 2rem;border-radius:9999px;background:var(--pd-gold);color:#1a1a1a;font-weight:500;text-decoration:none;white-space:nowrap;transition:all .3s cubic-bezier(.4,0,.2,1)}
+  .pd-page .btn-primary:hover{background:var(--pd-gold-dk);box-shadow:0 0 40px rgba(200,154,94,.15)}
+  .pd-page a:focus-visible,.pd-page button:focus-visible{outline:2px solid var(--pd-gold);outline-offset:3px}
+
+  /* glow blobs + mouse parallax */
+  .pd-blob{position:absolute;border-radius:50%;background:rgba(200,154,94,.05);filter:blur(64px);pointer-events:none}
+  .pd-parallax{transform:translate3d(var(--px,0px),var(--py,0px),0);transition:transform .3s ease-out}
+
+  /* reveal on scroll */
+  .pd-js .pd-reveal{opacity:0;transform:translateY(32px);transition:opacity .6s ease-out var(--d,0s),transform .6s ease-out var(--d,0s),border-color .3s ease}
+  .pd-js .pd-reveal.pd-in{opacity:1;transform:none}
+
+  /* hero */
+  .pd-hero{position:relative;overflow:hidden;padding:8rem 0 4rem;background:var(--pd-bg)}
+  @media(min-width:768px){.pd-hero{padding:10rem 0 6rem}}
+  .pd-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.2}
+  .pd-hero-fade{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,.85),rgba(10,10,10,.7),rgba(10,10,10,.95))}
+  .pd-hero-inner{position:relative;z-index:1}
+  .pd-hero-grid{display:grid;gap:3rem;align-items:center}
+  @media(min-width:1024px){.pd-hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:4rem}.pd-hero-grid .pd-cover{max-width:520px;margin-top:0}}
+  .pd-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-bottom:1.5rem;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .pd-crumb a{color:rgba(255,255,255,.6);text-decoration:none;transition:color .3s}
+  .pd-crumb a:hover{color:var(--pd-gold)}
+  .pd-crumb .sep{color:rgba(255,255,255,.3)}
+  .pd-crumb .current{color:var(--pd-gold)}
+  .pd-title{max-width:48rem;margin:0 0 1.5rem;font-family:Poppins,Inter,system-ui,sans-serif;font-size:clamp(2.25rem,6vw,4.5rem);font-weight:700;line-height:1.15;color:#fff}
+  .pd-meta{display:flex;flex-wrap:wrap;gap:.75rem 1.5rem}
+  .pd-meta span{display:inline-flex;align-items:center;gap:.5rem;color:var(--pd-muted);font-size:.875rem}
+  .pd-meta i{color:var(--pd-gold)}
+  .pd-cover{max-width:72rem;margin-top:3rem}
+  @media(min-width:768px){.pd-cover{margin-top:4rem}}
+  .pd-cover-frame{overflow:hidden;border-radius:1rem;border:1px solid var(--pd-line);box-shadow:0 25px 50px -12px rgba(0,0,0,.6)}
+  .pd-cover img{display:block;width:100%;height:auto;object-fit:contain;object-position:center}
+
+  /* overview */
+  .pd-two{display:grid;gap:3rem}
+  @media(min-width:1024px){.pd-two{grid-template-columns:1fr 1fr;gap:5rem}.pd-two--start{align-items:start}}
+  .pd-card-pad{padding:1.5rem}
+  @media(min-width:768px){.pd-card-pad{padding:2rem}}
+  .pd-dl{margin:0 0 2rem;display:grid;gap:1.25rem}
+  .pd-dl div{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-bottom:1.25rem;border-bottom:1px solid var(--pd-line)}
+  .pd-dl div:last-child{border:0;padding-bottom:0}
+  .pd-dl dt{color:var(--pd-label);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .pd-dl dd{margin:0;text-align:right;color:#fff;font-size:.875rem;font-weight:500}
+  .pd-services-title{margin:0 0 1rem;color:#fff;font-size:.875rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+  .pd-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin:0;padding:0;list-style:none}
+  .pd-pills li{display:inline-flex;align-items:center;gap:.5rem;padding:.375rem .75rem;border-radius:999px;background:rgba(200,154,94,.1);color:var(--pd-gold);font-size:.75rem;font-weight:500}
+
+  /* creative direction */
+  .pd-rule{width:4rem;height:1px;margin-top:2rem;background:var(--pd-gold)}
+  .pd-dir-head{margin-bottom:3.5rem}
+  .pd-grid-4,.pd-grid-3,.pd-grid-2{display:grid;gap:1.5rem}
+  @media(min-width:768px){.pd-grid-4,.pd-grid-3,.pd-grid-2{gap:2rem}}
+  @media(min-width:640px){.pd-grid-4{grid-template-columns:repeat(2,1fr)}.pd-grid-3{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:768px){.pd-grid-2{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:1024px){.pd-grid-4{grid-template-columns:repeat(4,1fr)}.pd-grid-3{grid-template-columns:repeat(3,1fr)}}
+  .pd-dir-card{height:100%;transition:transform .5s ease,border-color .5s ease}
+  .pd-dir-card:hover{transform:translateY(-.5rem)}
+  .pd-icon{display:flex;align-items:center;justify-content:center;width:3rem;height:3rem;margin-bottom:1.25rem;border-radius:50%;background:rgba(200,154,94,.1);color:var(--pd-gold);font-size:1.25rem;transition:background .3s}
+  .pd-dir-card:hover .pd-icon{background:rgba(200,154,94,.2)}
+  .pd-card-title{margin:0 0 .75rem;font-family:Poppins,Inter,system-ui,sans-serif;font-size:1rem;font-weight:700;color:#fff}
+  .pd-card-text{margin:0;color:var(--pd-muted);font-size:.875rem;line-height:1.7}
+
+  /* gallery + zoom buttons */
+  .pd-thumb{position:relative;display:block;width:100%;padding:0;overflow:hidden;border:1px solid var(--pd-line);border-radius:.75rem;background:none;cursor:zoom-in;font:inherit}
+  .pd-thumb .frame{aspect-ratio:4/3;overflow:hidden}
+  .pd-thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .7s ease}
+  .pd-thumb:hover img{transform:scale(1.08)}
+  .pd-thumb .veil{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,10,10,.4);opacity:0;transition:opacity .5s}
+  .pd-thumb:hover .veil,.pd-thumb:focus-visible .veil{opacity:1}
+  .pd-zoom{display:flex;align-items:center;justify-content:center;width:3rem;height:3rem;border-radius:50%;background:var(--pd-gold);color:#1a1a1a;font-size:1.25rem}
+  .pd-thumb--wide{border-radius:1rem}
+  .pd-thumb--wide img{height:300px;aspect-ratio:auto}
+  @media(min-width:640px){.pd-thumb--wide img{height:420px}}
+  @media(min-width:1024px){.pd-thumb--wide img{height:560px}}
+  .pd-thumb--wide:hover img{transform:scale(1.04)}
+
+  /* design details */
+  .pd-detail{height:100%;padding:1.5rem}
+  @media(min-width:768px){.pd-detail{padding:2rem}}
+  .pd-detail-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+  .pd-detail-head .n{font-family:Poppins,Inter,sans-serif;font-size:.875rem;font-weight:700;color:rgba(200,154,94,.6)}
+  .pd-detail-head h3{margin:0;font-family:Poppins,Inter,sans-serif;font-size:1.125rem;font-weight:700;color:#fff}
+  .pd-detail .pd-rule{width:2rem;margin:0 0 1.25rem}
+
+  /* related */
+  .pd-related{position:relative;display:block;overflow:hidden;border-radius:.75rem;text-decoration:none;color:#fff}
+  .pd-related .frame{aspect-ratio:4/3;overflow:hidden;background:#222}
+  .pd-related img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .7s ease}
+  .pd-related:hover img{transform:scale(1.08)}
+  .pd-related .shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.9),rgba(10,10,10,.2),transparent);transition:opacity .5s}
+  .pd-related .info{position:absolute;left:0;right:0;bottom:0;padding:1.5rem;transition:all .5s}
+  .pd-related .cat{display:block;margin-bottom:.5rem;color:var(--pd-gold);font-size:.75rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+  .pd-related h3{margin:0 0 .5rem;font-family:Poppins,Inter,sans-serif;font-size:1.25rem;font-weight:700}
+  .pd-related .more{display:inline-flex;align-items:center;gap:.5rem;color:rgba(255,255,255,.8);font-size:.875rem;font-weight:500}
+  .pd-related .more i{color:var(--pd-gold);transition:transform .3s}
+  .pd-related:hover .more i{transform:translateX(4px)}
+  @media(min-width:1024px) and (hover:hover){
+    .pd-related .shade{opacity:0}
+    .pd-related .info{opacity:0;transform:translateY(1rem)}
+    .pd-related:hover .shade{opacity:1}
+    .pd-related:hover .info,.pd-related:focus-visible .info{opacity:1;transform:none}
+  }
+
+  /* prev / next */
+  .pd-nav{display:grid;gap:1rem}
+  @media(min-width:768px){.pd-nav{grid-template-columns:1fr 1fr;gap:1.5rem}}
+  .pd-nav-card{display:flex;align-items:center;gap:1rem;padding:1.5rem;text-decoration:none;color:#fff}
+  .pd-nav-card.next{justify-content:flex-end;text-align:right}
+  .pd-nav-card.is-empty{visibility:hidden}
+  .pd-nav-arrow{display:flex;flex-shrink:0;align-items:center;justify-content:center;width:2.75rem;height:2.75rem;border:1px solid rgba(255,255,255,.15);border-radius:50%;color:var(--pd-gold);font-size:1.125rem;transition:border-color .3s}
+  .pd-nav-card:hover .pd-nav-arrow{border-color:rgba(200,154,94,.5)}
+  .pd-nav-card.next .pd-nav-arrow{order:2}
+  .pd-nav-label{display:block;margin-bottom:.25rem;color:rgba(255,255,255,.5);font-size:.6875rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .pd-nav-title{font-family:Poppins,Inter,sans-serif;font-size:1rem;font-weight:600;line-height:1.35;transition:color .3s}
+  .pd-nav-card:hover .pd-nav-title{color:var(--pd-gold)}
+
+  /* CTA */
+  .pd-cta-inner{max-width:56rem;margin:0 auto;text-align:center}
+  .pd-cta-inner .pd-h2{margin-bottom:1.5rem}
+  .pd-cta-inner .pd-text{max-width:42rem;margin:0 auto 2.5rem;font-size:1.05rem}
+
+  /* lightbox */
+  .pd-lightbox{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:rgba(0,0,0,.92);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+  .pd-lightbox.open{opacity:1;visibility:visible}
+  .pd-lb-stage{margin:0;text-align:center;transform:scale(.97);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+  .pd-lightbox.open .pd-lb-stage{transform:none}
+  .pd-lb-stage img{display:block;max-width:min(92vw,1100px);max-height:80vh;border-radius:.75rem;object-fit:contain;background:#111}
+  .pd-lb-count{margin-top:.75rem;color:rgba(255,255,255,.6);font-size:.8rem;letter-spacing:.1em}
+  .pd-lb-btn{position:absolute;display:flex;align-items:center;justify-content:center;width:2.75rem;height:2.75rem;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(17,17,17,.8);color:#fff;font-size:1.1rem;cursor:pointer;transition:border-color .3s}
+  .pd-lb-btn:hover{border-color:rgba(200,154,94,.6)}
+  .pd-lb-close{top:1.25rem;right:1.25rem}
+  .pd-lb-prev,.pd-lb-next{top:50%;margin-top:-1.375rem}
+  .pd-lb-prev{left:1rem}.pd-lb-next{right:1rem}
+
+  @media(prefers-reduced-motion:reduce){
+    .pd-js .pd-reveal{opacity:1;transform:none;transition:none}
+    .pd-parallax,.pd-dir-card,.pd-thumb img,.pd-related img,.pd-lb-stage{transition:none!important;transform:none!important}
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-<section class="page-hero"><div class="section-padding w-full hero-content"><span class="page-kicker">{{ project.category }}{% if project.year %} · {{ project.year }}{% endif %}</span><h1 class="page-title">{{ project.title }}</h1><p class="page-lead">{{ project.description }}</p></div></section>
-<section class="reference-section cream"><div class="section-padding"><div class="max-w-6xl mx-auto">{% if project.image %}<img class="detail-image reveal" src="{{ project.image.url }}" alt="{{ project.title }}">{% else %}<img class="detail-image reveal" src="{% static 'site/images/4_moon-cosmetics.jpg' %}" alt="{{ project.title }}">{% endif %}<div class="ref-grid-2 mt-12"><div class="reveal"><span class="section-label">Project details</span><h2 class="section-title">{{ project.title }}</h2><div class="detail-content">{{ project.description|linebreaks }}</div></div><div class="reveal"><div class="ref-card"><div class="mb-6"><span class="tag-pill">{{ project.category }}</span></div><p><strong>Client</strong><br>{{ project.client|default:'Selected client' }}</p><p class="mt-6"><strong>Year</strong><br>{{ project.year|default:'2026' }}</p>{% if project.design_details %}<div class="mt-6 detail-content">{{ project.design_details|linebreaks }}</div>{% endif %}</div></div></div></div></div></section>
-<section class="reference-section dark"><div class="section-padding"><div class="flex items-end justify-between gap-8 mb-10"><div><span class="section-label">Keep exploring</span><h2 class="section-title">Related <span class="font-script text-brand-500 font-normal">work</span>.</h2></div><a class="btn-outline" href="{% url 'portfolio' %}">All Projects <i class="ri-arrow-right-line"></i></a></div><div class="ref-grid-3">{% for item in related_projects %}<a class="project-card-ref reveal" href="{% url 'portfolio_detail' item.slug %}"><div class="project-img-ref">{% if item.image %}<img src="{{ item.image.url }}" alt="{{ item.title }}">{% else %}<img src="{% static 'site/images/4_moon-cosmetics.jpg' %}" alt="{{ item.title }}">{% endif %}</div><div class="project-meta"><span>{{ item.category }}</span><span>{{ item.year }}</span></div><h3>{{ item.title }}</h3></a>{% endfor %}</div></div></section>
-<section class="reference-section cream text-center"><div class="section-padding"><span class="section-label">Next project</span><h2 class="section-title">Have something in <span class="font-script text-brand-500 font-normal">mind</span>?</h2><a class="btn-primary" href="{% url 'contact' %}">Let's Talk <i class="ri-arrow-right-up-line"></i></a></div></section>
+<main class="pd-page">
+
+  <!-- HERO -->
+  <section class="pd-hero">
+    <div class="pd-hero-bg" style="background-image:url('{% if project.image %}{{ project.image.url }}{% else %}{% static 'site/images/portfolio-hero.webp' %}{% endif %}')"></div>
+    <div class="pd-hero-fade"></div>
+    <div class="pd-blob pd-parallax" data-depth="16" style="top:6rem;right:4rem;width:18rem;height:18rem"></div>
+    <div class="pd-blob pd-parallax" data-depth="9" style="bottom:2.5rem;left:2.5rem;width:24rem;height:24rem"></div>
+
+    <div class="pd-shell pd-hero-inner pd-hero-grid">
+      <div class="hero-copy">
+        <nav class="pd-crumb" aria-label="Breadcrumb">
+          <a href="{% url 'portfolio' %}">Portfolio</a>
+          <span class="sep">/</span>
+          <span class="current">{{ project.title }}</span>
+        </nav>
+        <span class="pd-tag">{{ project.category }}</span>
+        <h1 class="pd-title">{{ project.title }}</h1>
+        <div class="pd-meta">
+          <span><i class="ri-user-3-line"></i>{{ project.client|default:"Selected Client" }}</span>
+          <span><i class="ri-calendar-line"></i>{{ project.year|default:"2026" }}</span>
+          <span><i class="ri-price-tag-3-line"></i>{{ project.category }}</span>
+        </div>
+      </div>
+
+      <div class="pd-cover pd-parallax hero-art" data-depth="10">
+        <div class="pd-cover-frame">
+          {% if project.image %}
+            <img src="{{ project.image.url }}" alt="{{ project.title }} — {{ project.category }}" loading="eager">
+          {% else %}
+            <img src="{% static 'site/images/portfolio-hero.webp' %}" alt="{{ project.title }} — {{ project.category }}" loading="eager">
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
+      <span class="text-xs uppercase tracking-widest" style="writing-mode:vertical-lr">Scroll Down</span>
+      <div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="pd-section pd-section--alt">
+    <div class="pd-shell">
+      <div class="pd-two" data-stagger="2">
+        <div class="pd-reveal" data-reveal>
+          <span class="pd-tag">The Brief</span>
+          <h2 class="pd-h2" style="margin-bottom:1.5rem">Project <span class="pd-script">Overview</span></h2>
+          {% if project.description %}
+            <div class="pd-text">{{ project.description|linebreaks }}</div>
+          {% else %}
+            <p class="pd-text">We developed a refined visual direction for this project, blending strategic clarity with a premium presentation that feels distinct, memorable, and production-ready across every channel.</p>
+          {% endif %}
+        </div>
+        <div class="pd-reveal" data-reveal style="--d:.15s">
+          <div class="pd-glass pd-card-pad">
+            <dl class="pd-dl">
+              <div><dt>Project</dt><dd>{{ project.title }}</dd></div>
+              <div><dt>Client</dt><dd>{{ project.client|default:"Selected Client" }}</dd></div>
+              <div><dt>Category</dt><dd>{{ project.category }}</dd></div>
+              <div><dt>Year</dt><dd>{{ project.year|default:"2026" }}</dd></div>
+            </dl>
+            <h3 class="pd-services-title">Services Provided</h3>
+            <ul class="pd-pills">
+              {% for service in project_services %}
+                <li><i class="ri-check-line"></i>{{ service }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREATIVE DIRECTION -->
+  <section class="pd-section">
+    <div class="pd-blob pd-parallax" data-depth="12" style="top:25%;left:0;width:460px;height:460px"></div>
+    <div class="pd-shell">
+      <div class="pd-two pd-two--start pd-dir-head">
+        <div class="pd-reveal" data-reveal>
+          <span class="pd-tag">The Approach</span>
+          <h2 class="pd-h2">Creative <span class="pd-script">Direction</span></h2>
+          <div class="pd-rule"></div>
+        </div>
+        <div class="pd-reveal" data-reveal style="--d:.12s">
+          <p class="pd-text">A warm, confident visual system built on clear typographic hierarchy, so every touchpoint reads instantly and feels intentional.</p>
+        </div>
+      </div>
+      <div class="pd-grid-4" data-stagger="4">
+        <div class="pd-reveal" style="--d:.1s"><article class="pd-glass pd-card-pad pd-dir-card"><div class="pd-icon"><i class="ri-text"></i></div><h3 class="pd-card-title">Typography</h3><p class="pd-card-text">A type hierarchy chosen to carry tone and stay legible.</p></article></div>
+        <div class="pd-reveal" style="--d:.2s"><article class="pd-glass pd-card-pad pd-dir-card"><div class="pd-icon"><i class="ri-palette-line"></i></div><h3 class="pd-card-title">Colour Direction</h3><p class="pd-card-text">A restrained palette anchored by warm, premium tones.</p></article></div>
+        <div class="pd-reveal" style="--d:.3s"><article class="pd-glass pd-card-pad pd-dir-card"><div class="pd-icon"><i class="ri-quill-pen-line"></i></div><h3 class="pd-card-title">Logo &amp; Identity</h3><p class="pd-card-text">A distinctive mark built to scale across every format.</p></article></div>
+        <div class="pd-reveal" style="--d:.4s"><article class="pd-glass pd-card-pad pd-dir-card"><div class="pd-icon"><i class="ri-layout-grid-line"></i></div><h3 class="pd-card-title">Applications</h3><p class="pd-card-text">Real-world touchpoints designed end to end.</p></article></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="pd-section pd-section--alt">
+    <div class="pd-shell">
+      <div class="pd-section-head">
+        <span class="pd-tag pd-reveal" data-reveal>Gallery</span>
+        <h2 class="pd-h2 pd-reveal" data-reveal style="--d:.1s">Project <span class="pd-script">Gallery</span></h2>
+      </div>
+      <div class="pd-grid-3" data-stagger="3">
+        {% for image in gallery_images|slice:":3" %}
+          <button type="button" class="pd-thumb pd-reveal" data-reveal style="--d:{{ forloop.counter }}00ms" data-lightbox aria-label="Open {{ project.title }} image {{ forloop.counter }}">
+            <div class="frame"><img src="{% if image|slice:':5' == 'site/' %}{% static image %}{% else %}{{ image }}{% endif %}" alt="{{ project.title }} project image {{ forloop.counter }}" loading="lazy" decoding="async"></div>
+            <div class="veil"><span class="pd-zoom"><i class="ri-zoom-in-line"></i></span></div>
+          </button>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- ADDITIONAL IMAGERY -->
+  <section class="pd-section">
+    <div class="pd-blob pd-parallax" data-depth="12" style="top:33%;right:0;width:440px;height:440px"></div>
+    <div class="pd-shell">
+      <div class="pd-section-head">
+        <span class="pd-tag pd-reveal" data-reveal>Additional Imagery</span>
+        <h2 class="pd-h2 pd-reveal" data-reveal style="--d:.15s">More From This <span class="pd-script">Project</span></h2>
+      </div>
+      <div class="pd-reveal" data-reveal style="--d:.3s">
+        {% with extra=gallery_images|slice:"3:4" %}
+          {% if extra %}
+            {% for image in extra %}
+              <button type="button" class="pd-thumb pd-thumb--wide" data-lightbox aria-label="Open {{ project.title }} additional image">
+                <img src="{% if image|slice:':5' == 'site/' %}{% static image %}{% else %}{{ image }}{% endif %}" alt="{{ project.title }} additional project visual" loading="lazy" decoding="async">
+                <div class="veil"><span class="pd-zoom"><i class="ri-zoom-in-line"></i></span></div>
+              </button>
+            {% endfor %}
+          {% else %}
+            <button type="button" class="pd-thumb pd-thumb--wide" data-lightbox aria-label="Open {{ project.title }} additional image">
+              <img src="{% if project.image %}{{ project.image.url }}{% else %}{% static 'site/images/portfolio-hero.webp' %}{% endif %}" alt="{{ project.title }} additional project visual" loading="lazy" decoding="async">
+              <div class="veil"><span class="pd-zoom"><i class="ri-zoom-in-line"></i></span></div>
+            </button>
+          {% endif %}
+        {% endwith %}
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGN DETAILS -->
+  <section class="pd-section pd-section--alt">
+    <div class="pd-shell">
+      <div class="pd-section-head">
+        <span class="pd-tag pd-reveal" data-reveal>How It Came Together</span>
+        <h2 class="pd-h2 pd-reveal" data-reveal style="--d:.12s">Design <span class="pd-script">Details</span></h2>
+      </div>
+      <div class="pd-grid-2" data-stagger="2">
+        <div class="pd-reveal" style="--d:.1s"><article class="pd-glass pd-detail"><div class="pd-detail-head"><span class="n">01</span><h3>The Challenge</h3></div><div class="pd-rule"></div><p class="pd-card-text">Balancing practical production with a premium look and feel that stands apart on every touchpoint.</p></article></div>
+        <div class="pd-reveal" style="--d:.2s"><article class="pd-glass pd-detail"><div class="pd-detail-head"><span class="n">02</span><h3>The Approach</h3></div><div class="pd-rule"></div><p class="pd-card-text">{{ project.design_details|default:"A considered visual direction shaped around clarity, warmth and flexibility." }}</p></article></div>
+        <div class="pd-reveal" style="--d:.3s"><article class="pd-glass pd-detail"><div class="pd-detail-head"><span class="n">03</span><h3>The Solution</h3></div><div class="pd-rule"></div><p class="pd-card-text">A complete system covering the core mark, typography, colour and real-world applications.</p></article></div>
+        <div class="pd-reveal" style="--d:.4s"><article class="pd-glass pd-detail"><div class="pd-detail-head"><span class="n">04</span><h3>Result</h3></div><div class="pd-rule"></div><p class="pd-card-text">A confident, cohesive voice that reads consistently across print and digital.</p></article></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED WORK -->
+  <section class="pd-section">
+    <div class="pd-blob pd-parallax" data-depth="10" style="top:33%;left:0;width:420px;height:420px"></div>
+    <div class="pd-shell">
+      <div class="pd-section-head">
+        <span class="pd-tag pd-reveal" data-reveal>Related Work</span>
+        <h2 class="pd-h2 pd-reveal" data-reveal style="--d:.12s">Explore More <span class="pd-script">Work</span></h2>
+      </div>
+      <div class="pd-grid-3" data-stagger="3">
+        {% for related in related_projects %}
+          <a class="pd-related pd-reveal" data-reveal style="--d:{{ forloop.counter }}00ms" href="{% url 'portfolio_detail' related.slug %}">
+            <div class="frame">
+              {% if related.image %}
+                <img src="{{ related.image.url }}" alt="{{ related.title }} — {{ related.category }}" loading="lazy" decoding="async">
+              {% else %}
+                <img src="{% static 'site/images/portfolio-hero.webp' %}" alt="{{ related.title }} — {{ related.category }}" loading="lazy" decoding="async">
+              {% endif %}
+            </div>
+            <div class="shade"></div>
+            <div class="info">
+              <span class="cat">{{ related.category }}</span>
+              <h3>{{ related.title }}</h3>
+              <span class="more">View Project <i class="ri-arrow-right-line"></i></span>
+            </div>
+          </a>
+        {% empty %}
+          <p class="pd-text">No related projects available.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- PREVIOUS / NEXT -->
+  <section class="pd-section pd-section--alt" style="padding:4rem 0">
+    <div class="pd-shell">
+      <div class="pd-nav">
+        {% if previous_project %}
+          <a class="pd-glass pd-nav-card pd-reveal" href="{% url 'portfolio_detail' previous_project.slug %}" aria-label="Previous project: {{ previous_project.title }}">
+            <span class="pd-nav-arrow"><i class="ri-arrow-left-line"></i></span>
+            <span><span class="pd-nav-label">Previous Project</span><span class="pd-nav-title">{{ previous_project.title }}</span></span>
+          </a>
+        {% else %}
+          <span class="pd-nav-card is-empty" aria-hidden="true"></span>
+        {% endif %}
+        {% if next_project %}
+          <a class="pd-glass pd-nav-card next pd-reveal" style="--d:.12s" href="{% url 'portfolio_detail' next_project.slug %}" aria-label="Next project: {{ next_project.title }}">
+            <span><span class="pd-nav-label">Next Project</span><span class="pd-nav-title">{{ next_project.title }}</span></span>
+            <span class="pd-nav-arrow"><i class="ri-arrow-right-line"></i></span>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="pd-section">
+    <div class="pd-blob pd-parallax" data-depth="14" style="top:50%;left:50%;width:600px;height:600px;margin:-300px 0 0 -300px"></div>
+    <div class="pd-shell">
+      <div class="pd-cta-inner">
+        <span class="pd-tag pd-reveal" data-reveal>Start a Project</span>
+        <h2 class="pd-h2 pd-reveal" data-reveal style="--d:.15s">Let's work <span class="pd-script">together</span></h2>
+        <p class="pd-text pd-reveal" data-reveal style="--d:.3s">Let's build something your audience remembers.</p>
+        <div class="pd-reveal" data-reveal style="--d:.45s">
+          <a class="btn-primary" href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- LIGHTBOX -->
+<div class="pd-lightbox" role="dialog" aria-modal="true" aria-label="Project image viewer" aria-hidden="true">
+  <button class="pd-lb-btn pd-lb-close" type="button" aria-label="Close viewer"><i class="ri-close-line"></i></button>
+  <button class="pd-lb-btn pd-lb-prev" type="button" aria-label="Previous image"><i class="ri-arrow-left-line"></i></button>
+  <figure class="pd-lb-stage">
+    <img src="" alt="">
+    <figcaption class="pd-lb-count"></figcaption>
+  </figure>
+  <button class="pd-lb-btn pd-lb-next" type="button" aria-label="Next image"><i class="ri-arrow-right-line"></i></button>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* scroll reveal */
+    var items = document.querySelectorAll('.pd-reveal');
+    if ('IntersectionObserver' in window && !reduce) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('pd-in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12 });
+      items.forEach(function (el) { io.observe(el); });
+    } else {
+      items.forEach(function (el) { el.classList.add('pd-in'); });
+    }
+
+    /* soft mouse parallax (desktop only) */
+    if (!reduce && window.matchMedia('(pointer: fine)').matches) {
+      var layers = document.querySelectorAll('[data-depth]'), raf = 0;
+      window.addEventListener('mousemove', function (ev) {
+        var nx = ev.clientX / window.innerWidth - 0.5, ny = ev.clientY / window.innerHeight - 0.5;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(function () {
+          layers.forEach(function (l) {
+            var d = parseFloat(l.dataset.depth) || 0;
+            l.style.setProperty('--px', (nx * d * -1.2).toFixed(2) + 'px');
+            l.style.setProperty('--py', (ny * d * -1.2).toFixed(2) + 'px');
+          });
+        });
+      }, { passive: true });
+    }
+
+    /* lightbox */
+    var thumbs = Array.prototype.slice.call(document.querySelectorAll('[data-lightbox]'));
+    var box = document.querySelector('.pd-lightbox');
+    var boxImg = box.querySelector('img');
+    var count = box.querySelector('.pd-lb-count');
+    var btnClose = box.querySelector('.pd-lb-close');
+    var current = 0, opener = null;
+
+    function show(i) {
+      current = (i + thumbs.length) % thumbs.length;
+      var img = thumbs[current].querySelector('img');
+      boxImg.src = img.currentSrc || img.src;
+      boxImg.alt = img.alt;
+      count.textContent = (current + 1) + ' / ' + thumbs.length;
+    }
+    function open(i) {
+      opener = document.activeElement;
+      show(i);
+      box.classList.add('open');
+      box.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      btnClose.focus();
+    }
+    function close() {
+      box.classList.remove('open');
+      box.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (opener) opener.focus();
+    }
+
+    thumbs.forEach(function (t, i) { t.addEventListener('click', function () { open(i); }); });
+    btnClose.addEventListener('click', close);
+    box.querySelector('.pd-lb-prev').addEventListener('click', function () { show(current - 1); });
+    box.querySelector('.pd-lb-next').addEventListener('click', function () { show(current + 1); });
+    box.addEventListener('click', function (e) { if (e.target === box) close(); });
+    document.addEventListener('keydown', function (e) {
+      if (!box.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+  });
+</script>
 {% endblock %}

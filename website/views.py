@@ -57,6 +57,8 @@ def portfolio(request):
         "projects": projects,
         "selected_category": selected_category,
         "categories": PortfolioProject.objects.filter(active=True).values_list("category", flat=True).distinct(),
+        "featured_project": PortfolioProject.objects.filter(active=True, featured=True).first()
+            or PortfolioProject.objects.filter(active=True).first(),
     })
     return render(request, "website/portfolio.html", context)
 
@@ -64,10 +66,65 @@ def portfolio(request):
 def portfolio_detail(request, slug):
     project = get_object_or_404(PortfolioProject, slug=slug, active=True)
     context = site_context()
+    active_projects = PortfolioProject.objects.filter(active=True).order_by("order", "id")
+
+    fallback_gallery = {
+        "moon-cosmetics": [
+            "site/images/4_moon-cosmetics.jpg",
+            "site/images/3_stationery-mockup.jpg",
+            "site/images/2_creative-agency-mockup.jpg",
+        ],
+        "aura-packaging": [
+            "site/images/5_aura-packaging.jpg",
+            "site/images/3_stationery-mockup.jpg",
+            "site/images/1_branding-mockup.jpg",
+        ],
+        "tivra-brand": [
+            "site/images/6_tivra-brand.jpg",
+            "site/images/tivra-gallery-1.webp",
+            "site/images/tivra-gallery-2.webp",
+        ],
+        "cereal-editorial": [
+            "site/images/7_cereal-editorial.jpg",
+            "site/images/2_creative-agency-mockup.jpg",
+            "site/images/1_branding-mockup.jpg",
+        ],
+        "lumina-label": [
+            "site/images/8_lumina-label.jpg",
+            "site/images/3_stationery-mockup.jpg",
+            "site/images/5_aura-packaging.jpg",
+        ],
+        "tattva": [
+            "site/images/9_tattva.png",
+            "site/images/1_branding-mockup.jpg",
+            "site/images/2_creative-agency-mockup.jpg",
+        ],
+    }
+
+    gallery = fallback_gallery.get(project.slug, [
+        project.image.url if project.image else "site/images/portfolio-hero.webp",
+        "site/images/portfolio-hero.webp",
+        "site/images/services-hero.webp",
+    ])
+    if project.image:
+        gallery = [project.image.url] + [item for item in gallery if item != project.image.url][:2]
+
+    service_groups = {
+        "Branding": ["Brand Strategy", "Visual Identity", "Brand System", "Campaign Assets"],
+        "Packaging": ["Packaging Design", "Label Design", "Print Production", "Retail Collateral"],
+        "Identity": ["Brand Identity", "Logo System", "Art Direction", "Brand Guidelines"],
+        "Print Design": ["Editorial Design", "Print Collateral", "Typography Direction", "Production Files"],
+        "Label Design": ["Label Design", "Packaging Mockups", "Print Production", "Retail Art"],
+    }
+
     context.update({
         "page_title": project.title,
         "project": project,
-        "related_projects": PortfolioProject.objects.filter(active=True).exclude(pk=project.pk)[:3],
+        "gallery_images": gallery,
+        "project_services": service_groups.get(project.category, ["Brand Strategy", "Identity System", "Art Direction", "Production Design"]),
+        "related_projects": active_projects.exclude(pk=project.pk)[:3],
+        "previous_project": active_projects.filter(order__lt=project.order).last(),
+        "next_project": active_projects.filter(order__gt=project.order).first(),
     })
     return render(request, "website/portfolio_detail.html", context)
 
@@ -85,7 +142,14 @@ def blog_detail(request, slug):
     post = get_object_or_404(BlogPost, slug=slug, active=True, published=True)
     context = site_context()
     context.update({"page_title": post.title, "post": post})
-    context["related_posts"] = BlogPost.objects.filter(active=True, published=True).exclude(pk=post.pk)[:3]
+    published_posts = BlogPost.objects.filter(active=True, published=True).exclude(pk=post.pk)
+    context["previous_post"] = published_posts.filter(
+        published_at__lt=post.published_at
+    ).order_by("-published_at", "-id").first()
+    context["next_post"] = published_posts.filter(
+        published_at__gt=post.published_at
+    ).order_by("published_at", "id").first()
+    context["related_posts"] = published_posts[:3]
     return render(request, "website/blog_detail.html", context)
 
 
@@ -96,15 +160,18 @@ def contact(request):
         name = request.POST.get("name", "").strip()
         email = request.POST.get("email", "").strip()
         phone = request.POST.get("phone", "").strip()
+        company = request.POST.get("company", "").strip()
         project_type = request.POST.get("project_type", "").strip()
         budget = request.POST.get("budget", "").strip()
+        project_timeline = request.POST.get("project_timeline", "").strip()
         message = request.POST.get("message", "").strip()
         if not name or not email or not message:
             messages.error(request, "Please fill in your name, email and message.")
         else:
             submission = ContactSubmission.objects.create(
-                name=name, email=email, phone=phone, project_type=project_type,
-                budget=budget, message=message,
+                name=name, email=email, phone=phone, company=company,
+                project_type=project_type, budget=budget,
+                project_timeline=project_timeline, message=message,
             )
             url = (SiteSettings.objects.first().google_form_url if SiteSettings.objects.first() else "") or getattr(settings, "GOOGLE_FORM_URL", "")
             if url:
@@ -113,8 +180,10 @@ def contact(request):
                     "GOOGLE_FORM_ENTRY_NAME": name,
                     "GOOGLE_FORM_ENTRY_EMAIL": email,
                     "GOOGLE_FORM_ENTRY_PHONE": phone,
+                    "GOOGLE_FORM_ENTRY_COMPANY": company,
                     "GOOGLE_FORM_ENTRY_PROJECT_TYPE": project_type,
                     "GOOGLE_FORM_ENTRY_BUDGET": budget,
+                    "GOOGLE_FORM_ENTRY_TIMELINE": project_timeline,
                     "GOOGLE_FORM_ENTRY_MESSAGE": message,
                 }
                 for key, value in mappings.items():
