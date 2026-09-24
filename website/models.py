@@ -4,10 +4,11 @@ from django.utils.text import slugify
 
 class SiteSettings(models.Model):
     brand_name = models.CharField(max_length=120, default="Nakrani Production")
+    owner_name = models.CharField(max_length=120, default="Hitul Nakrani")
     tagline = models.CharField(max_length=255, default="We combine creativity, strategy and design to create stunning visuals that inspire and engage.")
-    phone = models.CharField(max_length=40, default="+91 98765 43210")
-    email = models.EmailField(default="hello@nakrani.production")
-    city = models.CharField(max_length=120, default="Mumbai, India")
+    phone = models.CharField(max_length=40, default="+91 70162 28333")
+    email = models.EmailField(default="Design.Hitul@gmail.com")
+    city = models.CharField(max_length=120, default="Visnagar, Mehsana, Gujarat, India")
     address = models.CharField(max_length=255, blank=True)
     logo = models.ImageField(upload_to="site/", blank=True)
     favicon = models.ImageField(upload_to="site/", blank=True)

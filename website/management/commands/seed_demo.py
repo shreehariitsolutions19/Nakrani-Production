@@ -24,10 +24,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         SiteSettings.objects.update_or_create(pk=1, defaults={
             "brand_name": "Nakrani Production",
+            "owner_name": "Hitul Nakrani",
             "tagline": "We create stunning visual experiences that inspire and engage. Premium design for premium brands.",
-            "phone": "+91 98765 43210",
-            "email": "hello@nakrani.production",
-            "city": "Mumbai, India",
+            "phone": "+91 70162 28333",
+            "email": "Design.Hitul@gmail.com",
+            "city": "Visnagar, Mehsana, Gujarat, India",
+            "address": "Visnagar, Mehsana, Gujarat, India",
             "meta_title": "Nakrani Production — Premium Graphic Design Agency",
             "meta_description": "Premium graphic design, branding, packaging, print and social media design.",
         })
