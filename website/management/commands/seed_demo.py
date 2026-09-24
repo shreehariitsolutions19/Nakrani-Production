@@ -64,7 +64,7 @@ class Command(BaseCommand):
                 "active": True, "image": self.copy_demo_image(image, "portfolio"),
             })
 
-        Testimonial.objects.update_or_create(client_name="Hitul Nakrani", defaults={
+        Testimonial.objects.update_or_create(client_name="Ravi Patel", defaults={
             "role": "Founder", "company": "Urban Style",
             "quote": "Nakrani Production understood our vision perfectly and delivered a brand identity that truly represents our business. Highly professional and creative team!",
             "rating": 5, "active": True,
