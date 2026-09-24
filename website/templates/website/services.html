@@ -786,7 +786,7 @@
 {% block content %}
 <main>
   <!-- HERO -->
-  <section class="services-hero">
+  <section class="services-hero" style="background-image:linear-gradient(rgba(10,10,10,.76),rgba(10,10,10,.88)),url('{% static 'site/images/hero-bg.webp' %}');background-size:cover;background-position:center;">
     <div class="services-hero-grid">
       <div class="services-hero-copy hero-copy">
         <div class="services-kicker">Services <span>{% if site_settings %}{{ site_settings.brand_name }}{% else %}Nakrani Production{% endif %}</span></div>
