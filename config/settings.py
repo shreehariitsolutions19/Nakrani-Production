@@ -164,53 +164,43 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 if DATABASE_URL:
-
-    # Render / External PostgreSQL Database
-
     DATABASES = {
         "default": dj_database_url.parse(
             DATABASE_URL,
             conn_max_age=600
         )
     }
-
-else:
-
-    # Local PostgreSQL Database
-
+elif os.getenv("POSTGRES_HOST"):
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-
             "NAME": os.getenv(
                 "POSTGRES_DB",
                 "nakrani_production"
             ),
-
             "USER": os.getenv(
                 "POSTGRES_USER",
                 "postgres"
             ),
-
             "PASSWORD": os.getenv(
                 "POSTGRES_PASSWORD",
                 ""
             ),
-
-            "HOST": os.getenv(
-                "POSTGRES_HOST",
-                "127.0.0.1"
-            ),
-
+            "HOST": os.environ["POSTGRES_HOST"],
             "PORT": os.getenv(
                 "POSTGRES_PORT",
                 "5800"
             ),
-
             "CONN_MAX_AGE": 600,
         }
     }
-
+else:
+    DATABASES = {
+        "default": dj_database_url.parse(
+            f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+            conn_max_age=600,
+        )
+    }
 
 # =========================================================
 # PASSWORD VALIDATION
