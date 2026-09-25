@@ -49,7 +49,5 @@ class BlogPostAdmin(admin.ModelAdmin):
 
 @admin.register(ContactSubmission)
 class ContactSubmissionAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "phone", "source", "google_synced", "created_at")
-    readonly_fields = ("created_at", "google_synced")
-    search_fields = ("name", "email", "phone", "message")
-    list_filter = ("google_synced", "source")
+    list_display = ("name", "email", "phone", "city")
+    search_fields = ("name", "email", "phone", "city")

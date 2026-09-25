@@ -320,10 +320,10 @@
         <h2 class="pd-h2 pd-reveal" data-reveal style="--d:.12s">Design <span class="pd-script">Details</span></h2>
       </div>
       <div class="pd-grid-2" data-stagger="2">
-        <div class="pd-reveal" style="--d:.1s"><article class="pd-glass pd-detail"><div class="pd-detail-head"><span class="n">01</span><h3>The Challenge</h3></div><div class="pd-rule"></div><p class="pd-card-text">Balancing practical production with a premium look and feel that stands apart on every touchpoint.</p></article></div>
+        <div class="pd-reveal" style="--d:.1s"><article class="pd-glass pd-detail"><div class="pd-detail-head"><span class="n">01</span><h3>The Challenge</h3></div><div class="pd-rule"></div><p class="pd-card-text">{{ project.challenge|default:"Creating a distinctive visual system for this project." }}</p></article></div>
         <div class="pd-reveal" style="--d:.2s"><article class="pd-glass pd-detail"><div class="pd-detail-head"><span class="n">02</span><h3>The Approach</h3></div><div class="pd-rule"></div><p class="pd-card-text">{{ project.design_details|default:"A considered visual direction shaped around clarity, warmth and flexibility." }}</p></article></div>
-        <div class="pd-reveal" style="--d:.3s"><article class="pd-glass pd-detail"><div class="pd-detail-head"><span class="n">03</span><h3>The Solution</h3></div><div class="pd-rule"></div><p class="pd-card-text">A complete system covering the core mark, typography, colour and real-world applications.</p></article></div>
-        <div class="pd-reveal" style="--d:.4s"><article class="pd-glass pd-detail"><div class="pd-detail-head"><span class="n">04</span><h3>Result</h3></div><div class="pd-rule"></div><p class="pd-card-text">A confident, cohesive voice that reads consistently across print and digital.</p></article></div>
+        <div class="pd-reveal" style="--d:.3s"><article class="pd-glass pd-detail"><div class="pd-detail-head"><span class="n">03</span><h3>The Solution</h3></div><div class="pd-rule"></div><p class="pd-card-text">{{ project.solution|default:"A complete visual system prepared for real-world applications." }}</p></article></div>
+        <div class="pd-reveal" style="--d:.4s"><article class="pd-glass pd-detail"><div class="pd-detail-head"><span class="n">04</span><h3>Result</h3></div><div class="pd-rule"></div><p class="pd-card-text">{{ project.result|default:"A cohesive identity that reads consistently across touchpoints." }}</p></article></div>
       </div>
     </div>
   </section>

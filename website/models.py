@@ -89,6 +89,11 @@ class PortfolioProject(models.Model):
     image = models.ImageField(upload_to="portfolio/", blank=True)
     description = models.TextField(blank=True)
     design_details = models.TextField(blank=True)
+    provided_services = models.TextField(blank=True, help_text="One service per line")
+    challenge = models.TextField(blank=True)
+    solution = models.TextField(blank=True)
+    result = models.TextField(blank=True)
+    gallery_images = models.TextField(blank=True, help_text="One static image path per line")
     client = models.CharField(max_length=160, blank=True)
     year = models.PositiveIntegerField(null=True, blank=True)
     featured = models.BooleanField(default=False)
@@ -105,8 +110,20 @@ class PortfolioProject(models.Model):
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
+    @property
+    def image_url(self):
+        return resolve_image_url(self.image, "site/images/portfolio-hero.webp")
+
     def __str__(self):
         return self.title
+
+    @property
+    def provided_service_list(self):
+        return [item.strip() for item in self.provided_services.splitlines() if item.strip()]
+
+    @property
+    def gallery_image_list(self):
+        return [item.strip() for item in self.gallery_images.splitlines() if item.strip()]
 
 
 class Testimonial(models.Model):
@@ -131,6 +148,7 @@ class BlogPost(models.Model):
     cover_image = models.ImageField(upload_to="blog/", blank=True)
     author = models.CharField(max_length=120, default="Nakrani Production")
     category = models.CharField(max_length=80, default="Design")
+    read_time = models.PositiveSmallIntegerField(default=6)
     published = models.BooleanField(default=True)
     published_at = models.DateTimeField()
     active = models.BooleanField(default=True)
@@ -152,20 +170,8 @@ class BlogPost(models.Model):
 class ContactSubmission(models.Model):
     name = models.CharField(max_length=120)
     email = models.EmailField()
-    phone = models.CharField(max_length=40, blank=True)
-    city = models.CharField(max_length=120, blank=True)
-    company = models.CharField(max_length=160, blank=True)
-    project_type = models.CharField(max_length=120, blank=True)
-    budget = models.CharField(max_length=120, blank=True)
-    project_timeline = models.CharField(max_length=160, blank=True)
-    message = models.TextField(blank=True)
-    status = models.CharField(max_length=30, default="new")
-    source = models.CharField(max_length=40, default="website")
-    google_synced = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ["-created_at"]
+    phone = models.CharField(max_length=40)
+    city = models.CharField(max_length=120)
 
     def __str__(self):
         return f"{self.name} — {self.email}"

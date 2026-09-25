@@ -1,0 +1,552 @@
+[
+  {
+    "model": "website.sitesettings",
+    "pk": 1,
+    "fields": {
+      "brand_name": "Nakrani Production",
+      "owner_name": "Hitul Nakrani",
+      "tagline": "We combine creativity, strategy and design to create stunning visuals that inspire and engage.",
+      "phone": "+91 70162 28333",
+      "email": "Design.Hitul@gmail.com",
+      "city": "Visnagar, Mehsana, Gujarat, India",
+      "address": "Visnagar, Mehsana, Gujarat, India",
+      "logo": "",
+      "favicon": "",
+      "google_form_url": "",
+      "instagram": "https://www.instagram.com/",
+      "linkedin": "https://www.linkedin.com/",
+      "facebook": "https://www.facebook.com/",
+      "twitter": "https://x.com/",
+      "meta_title": "Nakrani Production — Premium Graphic Design Agency",
+      "meta_description": "Premium branding, web, print, packaging and social media design.",
+      "updated_at": "2026-09-25T19:00:33.394Z"
+    }
+  },
+  {
+    "model": "website.service",
+    "pk": 1,
+    "fields": {
+      "title": "Graphic Design",
+      "slug": "graphic-design",
+      "description": "Creative visual communication designed for campaigns, businesses and brands.",
+      "icon_class": "ri-brush-line",
+      "image": "",
+      "features": "Campaign Design\nMarketing Collateral\nBrochures & Flyers\nPoster Design\nPresentation Design\nVisual Assets",
+      "process": "Discover\nStrategy\nDesign\nRefine\nDeliver",
+      "order": 2,
+      "active": true,
+      "created_at": "2026-09-25T19:00:33.237Z",
+      "updated_at": "2026-09-25T19:26:11.125Z"
+    }
+  },
+  {
+    "model": "website.service",
+    "pk": 2,
+    "fields": {
+      "title": "Branding & Identity",
+      "slug": "branding-identity",
+      "description": "Build a distinctive visual identity with logos, typography, colors, guidelines and brand systems.",
+      "icon_class": "ri-palette-line",
+      "image": "",
+      "features": "Logo Design\nColor System\nTypography\nBrand Guidelines\nVisual Language\nBrand Applications",
+      "process": "Discover\nStrategy\nDesign\nRefine\nDeliver",
+      "order": 1,
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.457Z",
+      "updated_at": "2026-09-25T19:26:11.093Z"
+    }
+  },
+  {
+    "model": "website.service",
+    "pk": 3,
+    "fields": {
+      "title": "Print Design",
+      "slug": "print-design",
+      "description": "Professional brochures, flyers, posters, stationery, catalogs and print-ready marketing materials.",
+      "icon_class": "ri-file-list-3-line",
+      "image": "",
+      "features": "Brochures & Catalogs\nFlyers & Posters\nStationery\nEditorial Layouts\nPrint-ready Artwork",
+      "process": "Discover\nStrategy\nDesign\nRefine\nDeliver",
+      "order": 3,
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.478Z",
+      "updated_at": "2026-09-25T19:26:11.130Z"
+    }
+  },
+  {
+    "model": "website.service",
+    "pk": 4,
+    "fields": {
+      "title": "Packaging Design",
+      "slug": "packaging-design",
+      "description": "Packaging concepts that combine strong visual identity with practical communication.",
+      "icon_class": "ri-box-3-line",
+      "image": "",
+      "features": "Packaging Concepts\nProduct Labels\nStructural Design\nPrint Production\nPackaging Guidelines",
+      "process": "Discover\nStrategy\nDesign\nRefine\nDeliver",
+      "order": 4,
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.482Z",
+      "updated_at": "2026-09-25T19:26:11.141Z"
+    }
+  },
+  {
+    "model": "website.service",
+    "pk": 5,
+    "fields": {
+      "title": "Social Media Design",
+      "slug": "social-media-design",
+      "description": "Scroll-stopping social media creatives, campaign graphics and branded content.",
+      "icon_class": "ri-share-line",
+      "image": "",
+      "features": "Social Media Posts\nStory Templates\nCampaign Graphics\nBranded Content\nMotion-ready Assets",
+      "process": "Discover\nStrategy\nDesign\nRefine\nDeliver",
+      "order": 5,
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.486Z",
+      "updated_at": "2026-09-25T19:26:11.147Z"
+    }
+  },
+  {
+    "model": "website.service",
+    "pk": 6,
+    "fields": {
+      "title": "Digital Design",
+      "slug": "digital-design",
+      "description": "Modern digital visuals and creative assets designed for websites and online experiences.",
+      "icon_class": "ri-computer-line",
+      "image": "",
+      "features": "Web Interface Visuals\nDigital Campaigns\nApp UI Assets\nWeb Graphics\nArt Direction",
+      "process": "Discover\nStrategy\nDesign\nRefine\nDeliver",
+      "order": 6,
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.496Z",
+      "updated_at": "2026-09-25T19:26:11.157Z"
+    }
+  },
+  {
+    "model": "website.portfolioproject",
+    "pk": 1,
+    "fields": {
+      "title": "Tivra Brand",
+      "slug": "tivra-brand",
+      "category": "Branding & Identity",
+      "image": "portfolio/6_tivra-brand.jpg",
+      "description": "Tivra came to us as a growing studio with big ambition but a scattered visual presence. We built a complete identity system that gives the brand a confident, premium voice across every touchpoint — from the core mark to the finest print detail.",
+      "design_details": "We leaned into warm copper tones against deep charcoal to create a sense of quiet confidence. The wordmark was refined for clarity while the supporting system stays flexible enough to scale across print, packaging and digital.",
+      "provided_services": "Brand Strategy\nLogo & Identity System\nTypography & Colour\nStationery & Collateral",
+      "challenge": "A growing studio with genuine ambition but a scattered visual presence across print, packaging and digital.",
+      "solution": "A complete identity system covering the core mark, typography, colour and stationery.",
+      "result": "A confident, premium voice that now reads consistently across every touchpoint.",
+      "gallery_images": "site/images/tivra-gallery-1.webp\nsite/images/tivra-gallery-2.webp\nsite/images/tivra-gallery-3.webp",
+      "client": "Tivra",
+      "year": 2025,
+      "featured": true,
+      "order": 1,
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.512Z",
+      "updated_at": "2026-09-25T19:26:11.175Z"
+    }
+  },
+  {
+    "model": "website.portfolioproject",
+    "pk": 2,
+    "fields": {
+      "title": "TATTVA",
+      "slug": "tattva",
+      "category": "Branding & Identity",
+      "image": "portfolio/9_tattva.png",
+      "description": "TATTVA needed an identity that felt rooted and timeless while still feeling modern. We created a refined visual language built around balance, warmth and clarity that carries naturally into signage and print.",
+      "design_details": "The direction pairs a strong geometric mark with generous whitespace and a restrained copper accent, letting the brand feel considered rather than loud.",
+      "provided_services": "Brand Identity\nLogo Design\nSignage & Wayfinding\nPrint Collateral",
+      "challenge": "An identity that needed to feel rooted and timeless while still reading as modern.",
+      "solution": "A refined visual language carrying naturally into signage, wayfinding and print collateral.",
+      "result": "A brand that feels considered rather than loud, equally at home in physical space.",
+      "gallery_images": "site/images/1_branding-mockup.jpg\nsite/images/2_creative-agency-mockup.jpg",
+      "client": "Tattva",
+      "year": 2025,
+      "featured": false,
+      "order": 2,
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.520Z",
+      "updated_at": "2026-09-25T19:26:11.190Z"
+    }
+  },
+  {
+    "model": "website.portfolioproject",
+    "pk": 3,
+    "fields": {
+      "title": "MOON Cosmetics",
+      "slug": "moon-cosmetics",
+      "category": "Packaging & Branding",
+      "image": "portfolio/4_moon-cosmetics.jpg",
+      "description": "MOON Cosmetics wanted packaging that would stand out on a crowded shelf while still feeling understated. We designed a full range system that feels luxurious, tactile and unmistakably premium.",
+      "design_details": "Matte charcoal surfaces meet delicate copper foil detailing, creating a quiet luxury that rewards a closer look.",
+      "provided_services": "Packaging Design\nProduct Label System\nBrand Identity\nArt Direction",
+      "challenge": "Standing out on a crowded shelf while still feeling understated and premium.",
+      "solution": "A full range packaging system with one consistent label and surface language.",
+      "result": "A luxurious, tactile range that feels collectible and unmistakably premium.",
+      "gallery_images": "site/images/3_stationery-mockup.jpg\nsite/images/2_creative-agency-mockup.jpg",
+      "client": "MOON Cosmetics",
+      "year": 2024,
+      "featured": false,
+      "order": 3,
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.532Z",
+      "updated_at": "2026-09-25T19:26:11.198Z"
+    }
+  },
+  {
+    "model": "website.portfolioproject",
+    "pk": 4,
+    "fields": {
+      "title": "Aura Packaging",
+      "slug": "aura-packaging",
+      "category": "Packaging Design",
+      "image": "portfolio/5_aura-packaging.jpg",
+      "description": "Aura needed a packaging system that balanced practicality with a genuinely premium feel. We developed structural concepts and surface treatments that make every unboxing feel intentional.",
+      "design_details": "The system uses a warm copper identity over deep charcoal, with clean typographic hierarchy so each product reads instantly.",
+      "provided_services": "Packaging Concepts\nStructural Design\nPrint Production\nBrand Guidelines",
+      "challenge": "Balancing practical production with a genuinely premium unboxing feel.",
+      "solution": "A warm copper identity over deep charcoal with a clean typographic hierarchy.",
+      "result": "Every unboxing feels intentional and each product reads instantly on shelf.",
+      "gallery_images": "site/images/3_stationery-mockup.jpg\nsite/images/1_branding-mockup.jpg",
+      "client": "Aura",
+      "year": 2024,
+      "featured": false,
+      "order": 4,
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.537Z",
+      "updated_at": "2026-09-25T19:26:11.208Z"
+    }
+  },
+  {
+    "model": "website.portfolioproject",
+    "pk": 5,
+    "fields": {
+      "title": "Lumina Label",
+      "slug": "lumina-label",
+      "category": "Label & Packaging",
+      "image": "portfolio/8_lumina-label.jpg",
+      "description": "Lumina asked for a label system that would elevate a small-batch product into something that feels collectible. The result is a family of labels that share a clear visual signature.",
+      "design_details": "Fine copper linework and restrained typography give the labels a crafted, almost editorial quality.",
+      "provided_services": "Label Design\nPackaging System\nPrint Production\nArt Direction",
+      "challenge": "Elevating a small-batch product into something that feels collectible.",
+      "solution": "A family of labels sharing one clear visual signature across the range.",
+      "result": "A crafted label system that gives the product quiet presence on shelf.",
+      "gallery_images": "site/images/3_stationery-mockup.jpg\nsite/images/5_aura-packaging.jpg",
+      "client": "Lumina",
+      "year": 2024,
+      "featured": false,
+      "order": 5,
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.548Z",
+      "updated_at": "2026-09-25T19:26:11.213Z"
+    }
+  },
+  {
+    "model": "website.portfolioproject",
+    "pk": 6,
+    "fields": {
+      "title": "Cereal Editorial",
+      "slug": "cereal-editorial",
+      "category": "Print & Editorial",
+      "image": "portfolio/7_cereal-editorial.jpg",
+      "description": "Cereal wanted a publication with a strong editorial voice. We built a grid, type system and print identity that lets the content breathe while staying unmistakably designed.",
+      "design_details": "Confident typographic hierarchy and a strict editorial grid are softened with warm copper details throughout.",
+      "provided_services": "Editorial Design\nLayout System\nTypography Direction\nPrint Production",
+      "challenge": "Finding a strong editorial voice that lets the content breathe.",
+      "solution": "A publication identity with a repeatable grid, type system and print language.",
+      "result": "A designed, readable publication that stays unmistakably on-brand.",
+      "gallery_images": "site/images/2_creative-agency-mockup.jpg\nsite/images/1_branding-mockup.jpg",
+      "client": "Cereal",
+      "year": 2024,
+      "featured": false,
+      "order": 6,
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.553Z",
+      "updated_at": "2026-09-25T19:26:11.225Z"
+    }
+  },
+  {
+    "model": "website.portfolioproject",
+    "pk": 7,
+    "fields": {
+      "title": "Verta Mark",
+      "slug": "verta-mark",
+      "category": "Logo Identity",
+      "image": "",
+      "description": "Verta needed a single distinctive mark that could carry a whole brand. We crafted a monogram emblem that stays elegant at any scale and feels premium in foil.",
+      "design_details": "The mark balances geometric precision with a hand-finished foil treatment for depth and warmth.",
+      "provided_services": "Logo Design\nMonogram & Emblem\nFoil & Finishing\nBrand Collateral",
+      "challenge": "Creating a single distinctive mark that could carry an entire brand.",
+      "solution": "A monogram emblem that stays elegant at any scale, with supporting collateral.",
+      "result": "A premium mark that holds its own from favicon to signage.",
+      "gallery_images": "",
+      "client": "Verta",
+      "year": 2025,
+      "featured": false,
+      "order": 7,
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.563Z",
+      "updated_at": "2026-09-25T19:26:11.230Z"
+    }
+  },
+  {
+    "model": "website.portfolioproject",
+    "pk": 8,
+    "fields": {
+      "title": "Nova Identity",
+      "slug": "nova-identity",
+      "category": "Logo & Identity",
+      "image": "",
+      "description": "Nova needed a flexible identity that could grow with the business. We designed a modular mark and a supporting system that stays consistent across every medium.",
+      "design_details": "A clean geometric mark paired with warm copper accents keeps the brand modern without feeling cold.",
+      "provided_services": "Logo Design\nIdentity System\nStationery Design\nBrand Guidelines",
+      "challenge": "Building an identity flexible enough to grow with the business.",
+      "solution": "A modular mark and supporting system spanning stationery and signage.",
+      "result": "A consistent identity that scales effortlessly across every medium.",
+      "gallery_images": "",
+      "client": "Nova",
+      "year": 2025,
+      "featured": false,
+      "order": 8,
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.568Z",
+      "updated_at": "2026-09-25T19:26:11.240Z"
+    }
+  },
+  {
+    "model": "website.portfolioproject",
+    "pk": 9,
+    "fields": {
+      "title": "Pulse Social",
+      "slug": "pulse-social",
+      "category": "Social Media Design",
+      "image": "",
+      "description": "Pulse wanted scroll-stopping content with a consistent look. We built a flexible template system that keeps every post on-brand while staying fresh.",
+      "design_details": "Bold type and a warm copper accent system make each post recognisable at a glance in a crowded feed.",
+      "provided_services": "Social Media Design\nContent Templates\nCampaign Graphics\nMotion-ready Assets",
+      "challenge": "Staying consistent and recognisable inside a fast, crowded feed.",
+      "solution": "A flexible template system covering posts, stories and campaign graphics.",
+      "result": "Content that stays on-brand while still feeling fresh week to week.",
+      "gallery_images": "",
+      "client": "Pulse",
+      "year": 2025,
+      "featured": false,
+      "order": 9,
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.577Z",
+      "updated_at": "2026-09-25T19:26:11.244Z"
+    }
+  },
+  {
+    "model": "website.portfolioproject",
+    "pk": 10,
+    "fields": {
+      "title": "Orbit Digital",
+      "slug": "orbit-digital",
+      "category": "Digital Design",
+      "image": "",
+      "description": "Orbit needed a digital presence as refined as their product. We designed interface visuals and creative assets that feel consistent with their brand across web and app.",
+      "design_details": "Clean layouts with warm copper highlights create a digital experience that feels premium but effortless to use.",
+      "provided_services": "Digital Design\nWeb Interface Visuals\nApp UI Assets\nArt Direction",
+      "challenge": "A digital presence that needed to feel as refined as the product itself.",
+      "solution": "Interface visuals, app assets and campaign graphics sharing one art direction.",
+      "result": "A digital experience that feels consistent across web and app.",
+      "gallery_images": "",
+      "client": "Orbit",
+      "year": 2025,
+      "featured": false,
+      "order": 10,
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.582Z",
+      "updated_at": "2026-09-25T19:26:11.249Z"
+    }
+  },
+  {
+    "model": "website.testimonial",
+    "pk": 1,
+    "fields": {
+      "client_name": "Ravi Patel",
+      "role": "Founder",
+      "company": "Urban Style",
+      "quote": "Nakrani Production understood our vision perfectly and delivered a brand identity that truly represents our business. Highly professional and creative team!",
+      "rating": 5,
+      "photo": "testimonials/10_ravi-patel.jpg",
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.593Z"
+    }
+  },
+  {
+    "model": "website.blogpost",
+    "pk": 1,
+    "fields": {
+      "title": "Why Strong Visual Identity Matters for Modern Brands",
+      "slug": "why-strong-visual-identity-matters",
+      "excerpt": "A strong visual identity is more than a logo — it is the system that makes a brand instantly recognisable, trustworthy and impossible to forget.",
+      "content": "In a market where attention lasts a fraction of a second, a brand is judged long before it is understood. Long before a customer reads a single word, they have already formed an impression from colour, type, spacing and form. That impression is your visual identity at work.\n\nA strong identity is not a single logo file. It is a connected system — a mark, a palette, a type hierarchy and a set of rules — that behaves consistently across packaging, print, digital and social. The stronger the system, the more recognisable the brand becomes with every exposure.\n\nConsistency builds trust\n\nRepetition is how memory forms. When a brand shows up in the same considered way across every touchpoint, audiences start to trust it without being able to explain why. Inconsistency, on the other hand, reads as uncertainty — and uncertainty rarely converts.\n\nGreat visual identity does not just make a brand look good. It makes a brand feel inevitable.\n\nThe most memorable brands treat identity as infrastructure, not decoration. It is the foundation that lets everything else — campaigns, packaging, product, digital — scale without losing its soul.",
+      "cover_image": "blog/1_branding-mockup.jpg",
+      "author": "Nakrani Studio",
+      "category": "Branding",
+      "read_time": 6,
+      "published": true,
+      "published_at": "2026-09-12T03:30:00Z",
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.628Z",
+      "updated_at": "2026-09-25T19:26:11.290Z"
+    }
+  },
+  {
+    "model": "website.blogpost",
+    "pk": 2,
+    "fields": {
+      "title": "How to Build a Memorable Brand Identity",
+      "slug": "how-to-build-a-memorable-brand-identity",
+      "excerpt": "From positioning to palette — the practical foundations that turn a business into a brand people remember.",
+      "content": "Every memorable brand identity starts with clarity before craft. Before a single mark is drawn, we define what the brand stands for, who it speaks to, and what it should feel like in the mind of the audience.\n\nStart with positioning\n\nPositioning gives the visual work a direction. It answers the questions that colour and type must later express: are we warm or sharp, premium or approachable, bold or understated?\n\nOnly then do we move into the mark, the type system and the palette — each decision checked against the positioning so the identity feels inevitable rather than arbitrary.\n\nA brand identity is a decision system disguised as a visual style.",
+      "cover_image": "blog/6_tivra-brand.jpg",
+      "author": "Nakrani Studio",
+      "category": "Branding",
+      "read_time": 6,
+      "published": true,
+      "published_at": "2026-08-28T03:30:00Z",
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.643Z",
+      "updated_at": "2026-09-25T19:26:11.310Z"
+    }
+  },
+  {
+    "model": "website.blogpost",
+    "pk": 3,
+    "fields": {
+      "title": "The Psychology Behind Effective Logo Design",
+      "slug": "psychology-behind-effective-logo-design",
+      "excerpt": "Why the simplest marks are often the strongest, and how shape, balance and negative space shape perception.",
+      "content": "A logo is read in milliseconds, and the brain makes its judgement before the conscious mind catches up. That is why the strongest marks rely on shape and balance rather than detail.\n\nSimplicity is not the absence of thinking\n\nA simple mark is the result of relentless reduction. Every unnecessary line is removed until only the essential idea remains — and that essential idea is what people remember.\n\nNegative space, proportion and optical balance do the quiet work. When they are right, the logo feels stable and confident at any size, from a favicon to a storefront.",
+      "cover_image": "blog/1_branding-mockup.jpg",
+      "author": "Nakrani Studio",
+      "category": "Graphic Design",
+      "read_time": 6,
+      "published": true,
+      "published_at": "2026-08-14T03:30:00Z",
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.650Z",
+      "updated_at": "2026-09-25T19:26:11.315Z"
+    }
+  },
+  {
+    "model": "website.blogpost",
+    "pk": 4,
+    "fields": {
+      "title": "Packaging Design That Gets Noticed",
+      "slug": "packaging-design-that-gets-noticed",
+      "excerpt": "Packaging is the first physical touchpoint of a brand. Here is how to make it work on a crowded shelf.",
+      "content": "Packaging has a hard job: it must attract, inform and reassure — often within a few seconds and a single glance. On a crowded shelf, clarity beats decoration every time.\n\nDesign for the three-foot and the three-inch view\n\nA great pack reads instantly from across the aisle and rewards a closer look in the hand. Hierarchy, contrast and material finish all contribute to that double reading.\n\nPackaging is the only medium your customer holds in their hands before they buy.",
+      "cover_image": "blog/5_aura-packaging.jpg",
+      "author": "Nakrani Studio",
+      "category": "Packaging",
+      "read_time": 6,
+      "published": true,
+      "published_at": "2026-07-30T03:30:00Z",
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.660Z",
+      "updated_at": "2026-09-25T19:26:11.325Z"
+    }
+  },
+  {
+    "model": "website.blogpost",
+    "pk": 5,
+    "fields": {
+      "title": "Designing Social Media Content That Stands Out",
+      "slug": "social-media-content-that-stands-out",
+      "excerpt": "A consistent template system can keep every post on-brand while still feeling fresh in a fast feed.",
+      "content": "Social feeds move fast, and audiences scroll faster. The brands that stand out are not always the loudest — they are the most consistent and recognisable.\n\nBuild a system, not one-offs\n\nA flexible template system keeps posts on-brand without making them repetitive. Clear type, a confident palette and a repeatable grid let content stay fresh while remaining unmistakably yours.\n\nRecognition is the goal. When someone can identify your brand from a thumbnail alone, the design is doing its job.",
+      "cover_image": "blog/2_creative-agency-mockup.jpg",
+      "author": "Nakrani Studio",
+      "category": "Social Media",
+      "read_time": 6,
+      "published": true,
+      "published_at": "2026-07-16T03:30:00Z",
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.666Z",
+      "updated_at": "2026-09-25T19:26:11.331Z"
+    }
+  },
+  {
+    "model": "website.blogpost",
+    "pk": 6,
+    "fields": {
+      "title": "Why Typography Matters in Branding",
+      "slug": "why-typography-matters-in-branding",
+      "excerpt": "Type carries tone before words do. The right typeface can make a brand feel premium, bold or quietly confident.",
+      "content": "Typography is the voice of a brand made visible. Before a reader processes a single word, the shape and weight of the letterforms have already set the tone.\n\nType does the emotional work\n\nA geometric sans speaks differently than a high-contrast serif. Choosing type is choosing a personality — and that choice must align with the positioning of the brand.\n\nScale, spacing and hierarchy then turn that personality into a system that stays legible and considered across every format.",
+      "cover_image": "blog/3_stationery-mockup.jpg",
+      "author": "Nakrani Studio",
+      "category": "Branding",
+      "read_time": 6,
+      "published": true,
+      "published_at": "2026-06-28T03:30:00Z",
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.679Z",
+      "updated_at": "2026-09-25T19:26:11.341Z"
+    }
+  },
+  {
+    "model": "website.blogpost",
+    "pk": 7,
+    "fields": {
+      "title": "From Concept to Creative: Our Design Process",
+      "slug": "from-concept-to-creative-design-process",
+      "excerpt": "A look inside how we move from a first conversation to finished, production-ready creative work.",
+      "content": "Good design rarely arrives fully formed. It is the result of a deliberate process that moves from understanding to exploring, refining and finally delivering.\n\nDiscover, define, design, deliver\n\nWe begin by listening — understanding the brand, the audience and the objective. From there we define a clear creative direction that gives every later decision a purpose.\n\nWith the direction set, we design and refine until the work is resolved, then prepare polished, production-ready assets that hold up in the real world.\n\nA clear process is what turns creativity into something reliable.",
+      "cover_image": "blog/2_creative-agency-mockup.jpg",
+      "author": "Nakrani Studio",
+      "category": "Creative Process",
+      "read_time": 6,
+      "published": true,
+      "published_at": "2026-06-10T03:30:00Z",
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.685Z",
+      "updated_at": "2026-09-25T19:26:11.347Z"
+    }
+  },
+  {
+    "model": "website.blogpost",
+    "pk": 8,
+    "fields": {
+      "title": "Print Design in a Digital-First World",
+      "slug": "print-design-in-a-digital-first-world",
+      "excerpt": "Print is not disappearing — it is becoming a premium, tactile counterpoint to the screen.",
+      "content": "In a world saturated with screens, print has become a rare and tactile signal of quality. Paper, finish and weight communicate in ways a pixel cannot.\n\nPrint rewards the senses\n\nA well-made brochure or catalogue asks to be held and kept. That physical presence creates an intimacy and permanence that digital rarely achieves.\n\nThe strongest brands use print deliberately — as a considered counterpoint to their digital presence, not a replacement for it.",
+      "cover_image": "blog/7_cereal-editorial.jpg",
+      "author": "Nakrani Studio",
+      "category": "Print",
+      "read_time": 6,
+      "published": true,
+      "published_at": "2026-05-22T03:30:00Z",
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.695Z",
+      "updated_at": "2026-09-25T19:26:11.355Z"
+    }
+  },
+  {
+    "model": "website.blogpost",
+    "pk": 9,
+    "fields": {
+      "title": "Building Consistency Across Every Brand Touchpoint",
+      "slug": "building-consistency-across-every-brand-touchpoint",
+      "excerpt": "Consistency is what turns a set of assets into a brand. Here is how to keep every touchpoint aligned.",
+      "content": "A brand is only as strong as its least considered touchpoint. One off-brand post or mismatched label quietly erodes the trust the rest of the identity has built.\n\nGuidelines are a tool, not a rulebook\n\nClear guidelines give a team the confidence to apply the identity correctly — and the freedom to stay creative within it. They are there to enable, not restrict.\n\nConsistency is not repetition. It is recognition.",
+      "cover_image": "blog/6_tivra-brand.jpg",
+      "author": "Nakrani Studio",
+      "category": "Branding",
+      "read_time": 6,
+      "published": true,
+      "published_at": "2026-05-06T03:30:00Z",
+      "active": true,
+      "created_at": "2026-09-25T19:22:42.702Z",
+      "updated_at": "2026-09-25T19:26:11.361Z"
+    }
+  }
+]

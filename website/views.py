@@ -101,27 +101,24 @@ def portfolio_detail(request, slug):
         ],
     }
 
-    gallery = fallback_gallery.get(project.slug, [
+    fallback_images = fallback_gallery.get(project.slug, [
         project.image_url,
         "site/images/portfolio-hero.webp",
         "site/images/services-hero.webp",
     ])
+    gallery = project.gallery_image_list or fallback_images
     if project.image:
-        gallery = [project.image_url] + [item for item in gallery if item != project.image_url][:2]
-
-    service_groups = {
-        "Branding": ["Brand Strategy", "Visual Identity", "Brand System", "Campaign Assets"],
-        "Packaging": ["Packaging Design", "Label Design", "Print Production", "Retail Collateral"],
-        "Identity": ["Brand Identity", "Logo System", "Art Direction", "Brand Guidelines"],
-        "Print Design": ["Editorial Design", "Print Collateral", "Typography Direction", "Production Files"],
-        "Label Design": ["Label Design", "Packaging Mockups", "Print Production", "Retail Art"],
-    }
+        image_name = project.image.name.rsplit("/", 1)[-1]
+        gallery = [project.image_url] + [
+            item for item in gallery
+            if item.rsplit("/", 1)[-1] != image_name
+        ][:3]
 
     context.update({
         "page_title": project.title,
         "project": project,
         "gallery_images": gallery,
-        "project_services": service_groups.get(project.category, ["Brand Strategy", "Identity System", "Art Direction", "Production Design"]),
+        "project_services": project.provided_service_list,
         "related_projects": active_projects.exclude(pk=project.pk)[:3],
         "previous_project": active_projects.filter(order__lt=project.order).last(),
         "next_project": active_projects.filter(order__gt=project.order).first(),
@@ -164,12 +161,11 @@ def contact(request):
         if not name or not email or not phone or not city:
             messages.error(request, "Please fill in your name, email, phone number and city.")
         else:
-            submission = ContactSubmission.objects.create(
+            ContactSubmission.objects.create(
                 name=name,
                 email=email,
                 phone=phone,
                 city=city,
-                message="",
             )
             url = (SiteSettings.objects.first().google_form_url if SiteSettings.objects.first() else "") or getattr(settings, "GOOGLE_FORM_URL", "")
             if url:
@@ -185,10 +181,7 @@ def contact(request):
                     if entry:
                         data[entry] = value
                 try:
-                    response = requests.post(url, data=data, timeout=8)
-                    if response.ok:
-                        submission.google_synced = True
-                        submission.save(update_fields=["google_synced"])
+                    requests.post(url, data=data, timeout=8)
                 except requests.RequestException:
                     pass
             messages.success(request, "Thanks! Your enquiry has been received.")
