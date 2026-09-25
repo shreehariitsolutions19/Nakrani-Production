@@ -22,7 +22,8 @@ AUTH_PASSWORD_VALIDATORS=[]
 LANGUAGE_CODE='en-us'; TIME_ZONE='Asia/Kolkata'; USE_I18N=True; USE_TZ=True
 STATIC_URL='/static/'; STATIC_ROOT=BASE_DIR/'staticfiles'; STATICFILES_DIRS=[BASE_DIR/'website/static']
 STORAGES={'default':{'BACKEND':'django.core.files.storage.FileSystemStorage'},'staticfiles':{'BACKEND':'whitenoise.storage.CompressedManifestStaticFilesStorage'}}
-MEDIA_URL='/media/'; MEDIA_ROOT=BASE_DIR/'media'
+MEDIA_URL=os.getenv('MEDIA_URL','/media/')
+MEDIA_ROOT=Path(os.getenv('MEDIA_ROOT', str(BASE_DIR / 'media')))
 DEFAULT_AUTO_FIELD='django.db.models.BigAutoField'
 GOOGLE_FORM_URL=os.getenv('GOOGLE_FORM_URL','')
 GOOGLE_FORM_ENTRY_NAME=os.getenv('GOOGLE_FORM_ENTRY_NAME','')
