@@ -15,7 +15,10 @@ def resolve_image_url(image_field, fallback_static_path="site/images/portfolio-h
     if (static_images_dir / image_name).exists():
         return static(f"site/images/{image_name}")
 
-    return image_field.url
+    if image_field.storage.exists(image_field.name):
+        return image_field.url
+
+    return static(fallback_static_path)
 
 
 class SiteSettings(models.Model):
@@ -52,7 +55,20 @@ class Service(models.Model):
     icon_class = models.CharField(max_length=80, default="ri-palette-line")
     image = models.ImageField(upload_to="services/", blank=True)
     features = models.TextField(blank=True, help_text="One feature per line")
+    feature_descriptions = models.TextField(
+        blank=True,
+        help_text="One description per feature line",
+    )
     process = models.TextField(blank=True, help_text="One process step per line")
+    process_descriptions = models.TextField(
+        blank=True,
+        help_text="One description per process line",
+    )
+    detail_heading = models.CharField(max_length=180, blank=True)
+    detail_intro = models.TextField(
+        blank=True,
+        help_text="One paragraph per line",
+    )
     order = models.PositiveIntegerField(default=0)
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -73,6 +89,42 @@ class Service(models.Model):
     @property
     def process_list(self):
         return [x.strip() for x in self.process.splitlines() if x.strip()]
+
+    @property
+    def feature_description_list(self):
+        return [x.strip() for x in self.feature_descriptions.splitlines() if x.strip()]
+
+    @property
+    def process_description_list(self):
+        return [x.strip() for x in self.process_descriptions.splitlines() if x.strip()]
+
+    @property
+    def detail_intro_list(self):
+        return [x.strip() for x in self.detail_intro.splitlines() if x.strip()]
+
+    @property
+    def feature_item_list(self):
+        descriptions = self.feature_description_list
+        return [
+            {
+                "title": feature,
+                "description": descriptions[index] if index < len(descriptions) and descriptions[index]
+                else "Thoughtful, production-ready visual work tailored to your brand.",
+            }
+            for index, feature in enumerate(self.feature_list)
+        ]
+
+    @property
+    def process_item_list(self):
+        descriptions = self.process_description_list
+        return [
+            {
+                "title": step,
+                "description": descriptions[index] if index < len(descriptions) and descriptions[index]
+                else "Focused collaboration and careful execution at every stage.",
+            }
+            for index, step in enumerate(self.process_list)
+        ]
 
     @property
     def image_url(self):
@@ -163,8 +215,81 @@ class BlogPost(models.Model):
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
+    @property
+    def image_url(self):
+        return resolve_image_url(
+            self.cover_image,
+            "site/images/blog-detail-hero.webp",
+        )
+
     def __str__(self):
         return self.title
+
+
+class PageContent(models.Model):
+    page = models.CharField(max_length=40)
+    key = models.SlugField(max_length=100, unique=True)
+    value = models.TextField(blank=True)
+    image = models.ImageField(upload_to="page-content/", blank=True)
+    active = models.BooleanField(default=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Page content"
+        verbose_name_plural = "Page content"
+        ordering = ["page", "key"]
+
+    def __str__(self):
+        return f"{self.page}: {self.key}"
+
+
+class PageContentItem(models.Model):
+    page = models.CharField(max_length=40)
+    section = models.CharField(max_length=60)
+    title = models.CharField(max_length=180)
+    eyebrow = models.CharField(max_length=120, blank=True)
+    description = models.TextField(blank=True)
+    value = models.CharField(max_length=180, blank=True)
+    icon_class = models.CharField(max_length=80, blank=True)
+    image = models.ImageField(upload_to="page-content/items/", blank=True)
+    button_text = models.CharField(max_length=80, blank=True)
+    button_url = models.CharField(max_length=255, blank=True)
+    order = models.PositiveIntegerField(default=0)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["page", "section", "order", "id"]
+
+    def __str__(self):
+        return f"{self.page}: {self.section}: {self.title}"
+
+
+class FAQItem(models.Model):
+    page = models.CharField(max_length=40, default="contact")
+    question = models.CharField(max_length=240)
+    answer = models.TextField()
+    order = models.PositiveIntegerField(default=0)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "FAQ item"
+        verbose_name_plural = "FAQ items"
+        ordering = ["page", "order", "id"]
+
+    def __str__(self):
+        return self.question
+
+
+class NewsletterSubscriber(models.Model):
+    email = models.EmailField(unique=True)
+    active = models.BooleanField(default=True)
+    subscribed_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-subscribed_at"]
+
+    def __str__(self):
+        return self.email
 
 
 class ContactSubmission(models.Model):

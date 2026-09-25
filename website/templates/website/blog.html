@@ -26,7 +26,6 @@
   .bl-page a:focus-visible,.bl-page button:focus-visible,.bl-page input:focus-visible{outline:2px solid var(--bl-gold);outline-offset:3px}
 
   .bl-blob{position:absolute;border-radius:50%;background:rgba(200,154,94,.05);filter:blur(64px);pointer-events:none}
-  .bl-parallax{transform:translate3d(var(--px,0px),var(--py,0px),0);transition:transform .3s ease-out}
 
   .bl-js .bl-reveal{opacity:0;transform:translateY(32px);transition:opacity .6s ease-out var(--d,0s),transform .6s ease-out var(--d,0s)}
   .bl-js .bl-reveal.bl-in{opacity:1;transform:none}
@@ -55,10 +54,9 @@
   .bl-ghost span{display:flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;border:1px solid rgba(255,255,255,.2);border-radius:50%;transition:border-color .3s}
   .bl-ghost:hover{color:var(--bl-gold)}
   .bl-ghost:hover span{border-color:rgba(200,154,94,.5)}
-  .bl-hero-visual{position:relative;max-width:28rem;margin:0 auto}
-  .bl-hero-frame{overflow:hidden;border-radius:1rem;border:1px solid var(--bl-line);box-shadow:0 25px 50px -12px rgba(0,0,0,.6)}
-  .bl-hero-frame img{display:block;width:100%;height:420px;object-fit:cover;object-position:top}
-  @media(min-width:768px){.bl-hero-frame img{height:520px}}
+  .bl-hero-visual{position:relative;width:100%;max-width:28rem;aspect-ratio:4/5;margin:0 auto}
+  .bl-hero-frame{height:100%;overflow:hidden;border-radius:1rem;border:1px solid var(--bl-line);box-shadow:0 25px 50px -12px rgba(0,0,0,.6)}
+  .bl-hero-frame img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
   .bl-badge{position:absolute;left:-1.5rem;bottom:-1.5rem;padding:1.25rem 1.5rem;border-radius:.75rem;background:var(--bl-gold);color:#1a1a1a}
   .bl-badge strong{display:block;font-family:Poppins,Inter,sans-serif;font-size:1.875rem;line-height:1.2;font-weight:700}
   .bl-badge>span{display:block;color:rgba(26,26,26,.8);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase}
@@ -187,11 +185,7 @@
         <div data-reveal style="--d:.3s">
           {% if featured_post %}
             <a class="bl-feat-img" href="{% url 'blog_detail' featured_post.slug %}">
-              {% if featured_post.cover_image %}
-                <img src="{{ featured_post.cover_image.url }}" alt="{{ featured_post.title }}">
-              {% else %}
-                <img src="{% static 'site/images/blog-detail-hero.webp' %}" alt="{{ featured_post.title }}">
-              {% endif %}
+              <img src="{{ featured_post.image_url }}" alt="{{ featured_post.title }}">
             </a>
           {% else %}
             <a class="bl-feat-img" href="{% url 'blog' %}">
@@ -243,11 +237,7 @@
           <div class="bl-cell" data-reveal data-category="{{ post.category|lower }}" data-label="{{ post.category }}">
             <a class="bl-card" href="{% url 'blog_detail' post.slug %}">
               <div class="bl-card-img">
-                {% if post.cover_image %}
-                  <img src="{{ post.cover_image.url }}" alt="{{ post.title }} article cover" loading="lazy" decoding="async">
-                {% else %}
-                  <img src="{% static 'site/images/blog-detail-hero.webp' %}" alt="{{ post.title }} article cover" loading="lazy" decoding="async">
-                {% endif %}
+                <img src="{{ post.image_url }}" alt="{{ post.title }} article cover" loading="lazy" decoding="async">
               </div>
               <div class="bl-card-body">
                 <span class="bl-cat">{{ post.category }}</span>
@@ -277,9 +267,9 @@
         <span class="bl-tag" style="margin-bottom:1rem">Newsletter</span>
         <h2 class="bl-h2">Stay <span class="bl-script">Inspired</span>.</h2>
         <p class="bl-text">Get occasional insights, creative ideas and updates from Nakrani Production.</p>
-        {# TODO: connect this form to your newsletter view #}
-        <form class="bl-form" id="blNewsForm" novalidate>
-          <input class="bl-input" type="email" name="email" placeholder="Enter your email" aria-label="Email address" autocomplete="email">
+        <form class="bl-form" id="blNewsForm" method="post" action="{% url 'blog' %}">
+          {% csrf_token %}
+          <input class="bl-input" type="email" name="email" placeholder="Enter your email" aria-label="Email address" autocomplete="email" required>
           <button class="btn-primary" type="submit">Subscribe <i class="ri-arrow-right-line"></i></button>
         </form>
       </div>
@@ -311,22 +301,6 @@
       });
     } else {
       items.forEach(function (el) { el.classList.add('bl-in'); });
-    }
-
-    /* soft mouse parallax (desktop only) */
-    if (!reduce && window.matchMedia('(pointer: fine)').matches) {
-      var layers = document.querySelectorAll('[data-depth]'), raf = 0;
-      window.addEventListener('mousemove', function (ev) {
-        var nx = ev.clientX / window.innerWidth - 0.5, ny = ev.clientY / window.innerHeight - 0.5;
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(function () {
-          layers.forEach(function (l) {
-            var d = parseFloat(l.dataset.depth) || 0;
-            l.style.setProperty('--px', (nx * d * -1.2).toFixed(2) + 'px');
-            l.style.setProperty('--py', (ny * d * -1.2).toFixed(2) + 'px');
-          });
-        });
-      }, { passive: true });
     }
 
     /* badge count-up */
@@ -386,8 +360,6 @@
     });
 
     /* newsletter: not connected to a backend yet */
-    var form = document.getElementById('blNewsForm');
-    if (form) form.addEventListener('submit', function (e) { e.preventDefault(); });
   });
 </script>
 {% endblock %}

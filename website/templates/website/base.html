@@ -69,6 +69,18 @@
       }
       .hero-copy > *, .hero-art { animation: none !important; }
     }
+
+    [data-depth] {
+      transition: translate .25s cubic-bezier(.22, 1, .36, 1);
+      will-change: translate;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-depth] {
+        transition: none;
+        will-change: auto;
+      }
+    }
   </style>
 </head>
 <body>
@@ -122,6 +134,55 @@
   <div class="border-t border-dark-100/50"><div class="section-padding py-6"><div class="footer-bottom"><p>© {% now "Y" %} {% if site_settings %}{{ site_settings.brand_name }}{% else %}Nakrani Production{% endif %}. All rights reserved.</p><div><a href="{% url 'about' %}">Privacy Policy</a><a href="{% url 'about' %}">Terms of Service</a></div></div></div></div>
 </footer>
 <script src="{% static 'site/reference.js' %}"></script>
+<script>
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var layers = Array.prototype.slice.call(document.querySelectorAll('[data-depth]'));
+  if (!layers.length) return;
+
+  var mouseX = 0;
+  var mouseY = 0;
+  var ticking = false;
+
+  function updateParallax() {
+    var viewportCenter = window.innerHeight / 2;
+
+    layers.forEach(function (layer) {
+      var depth = parseFloat(layer.dataset.depth) || 12;
+      var rect = layer.getBoundingClientRect();
+      var scrollOffset = (viewportCenter - (rect.top + rect.height / 2)) * depth * 0.012;
+      var maxScrollOffset = depth * 0.75;
+      scrollOffset = Math.max(-maxScrollOffset, Math.min(maxScrollOffset, scrollOffset));
+      layer.style.translate = (mouseX * depth).toFixed(2) + 'px '
+        + (mouseY * depth + scrollOffset).toFixed(2) + 'px';
+    });
+
+    ticking = false;
+  }
+
+  function scheduleParallax() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(updateParallax);
+  }
+
+  window.addEventListener('mousemove', function (event) {
+    mouseX = (event.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (event.clientY / window.innerHeight - 0.5) * 2;
+    scheduleParallax();
+  }, { passive: true });
+  window.addEventListener('scroll', scheduleParallax, { passive: true });
+  window.addEventListener('resize', scheduleParallax, { passive: true });
+  window.addEventListener('deviceorientation', function (event) {
+    if (event.gamma === null || event.beta === null) return;
+    mouseX = Math.max(-1, Math.min(1, event.gamma / 30));
+    mouseY = Math.max(-1, Math.min(1, (event.beta - 45) / 30));
+    scheduleParallax();
+  }, { passive: true });
+  scheduleParallax();
+})();
+</script>
 <script>
 (function () {
   document.querySelectorAll('[data-stagger]').forEach(function (parent) {

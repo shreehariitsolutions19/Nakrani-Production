@@ -80,18 +80,15 @@
 <style class="sf-hidden">
   /* --- Parallax base state (cards only) --- */
   #parallaxHero .floating-card {
-    --px: 0px;
-    --py: 0px;
     --rot: 0deg;
-    transform: translate(var(--px), var(--py)) rotate(var(--rot));
+    transform: rotate(var(--rot));
     transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
   }
 
-  /* the center card keeps its Tailwind -translate-x-1/2 -translate-y-1/2 centering,
-     then layers the parallax offset and rotation on top of that */
+  /* Preserve center-card positioning while the shared translate property adds parallax. */
   #parallaxHero .floating-card[data-center] {
-    transform: translate(-50%, -50%) translate(var(--px), var(--py)) rotate(var(--rot));
+    transform: translate(-50%, -50%) rotate(var(--rot));
   }
 
   /* =========================================================
@@ -145,53 +142,6 @@
     }
   }
 </style>
-
-<script class="sf-hidden">
-  (function () {
-    const hero = document.getElementById('parallaxHero');
-    if (!hero) return;
-
-    const cards = hero.querySelectorAll('.floating-card');
-    let rafId = null;
-    let targetX = 0;
-    let targetY = 0;
-
-    function applyParallax() {
-      cards.forEach((card) => {
-        const depth = parseFloat(card.dataset.depth) || 20;
-        const px = targetX * depth;
-        const py = targetY * depth;
-        card.style.setProperty('--px', px.toFixed(2) + 'px');
-        card.style.setProperty('--py', py.toFixed(2) + 'px');
-      });
-      rafId = null;
-    }
-
-    function onMove(clientX, clientY) {
-      const rect = hero.getBoundingClientRect();
-      targetX = ((clientX - rect.left) / rect.width - 0.5) * 2;
-      targetY = ((clientY - rect.top) / rect.height - 0.5) * 2;
-      if (!rafId) rafId = requestAnimationFrame(applyParallax);
-    }
-
-    hero.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
-
-    hero.addEventListener('mouseleave', () => {
-      targetX = 0;
-      targetY = 0;
-      if (!rafId) rafId = requestAnimationFrame(applyParallax);
-    });
-
-    if (window.DeviceOrientationEvent) {
-      window.addEventListener('deviceorientation', (e) => {
-        if (e.gamma === null || e.beta === null) return;
-        targetX = Math.max(-1, Math.min(1, e.gamma / 30));
-        targetY = Math.max(-1, Math.min(1, (e.beta - 45) / 30));
-        if (!rafId) rafId = requestAnimationFrame(applyParallax);
-      });
-    }
-  })();
-</script>
 
 <section class="bg-cream-400 py-20 md:py-28">
   <div class="section-padding">

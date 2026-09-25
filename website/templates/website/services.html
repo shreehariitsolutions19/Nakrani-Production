@@ -797,7 +797,7 @@
           <a class="services-work-link" href="{% url 'portfolio' %}"><i class="ri-arrow-right-line"></i> View Our Work</a>
         </div>
       </div>
-      <div class="services-hero-art hero-art">
+      <div class="services-hero-art hero-art" data-depth="14">
         <img src="{% static 'site/images/services-hero.webp' %}" alt="Nakrani Production creative design services">
         <div class="services-count"><strong>{{ services|length }}</strong><span>Core Services</span></div>
       </div>
@@ -909,17 +909,6 @@
     items.forEach(function (el) { io.observe(el); });
   }
 
-  /* Subtle mouse parallax on hero image (desktop only) */
-  var art = document.querySelector('.services-hero-art');
-  var hero = document.querySelector('.services-hero');
-
-  if (art && hero && window.matchMedia('(hover: hover) and (min-width: 1024px)').matches) {
-    hero.addEventListener('mousemove', function (e) {
-      var x = (e.clientX / window.innerWidth - 0.5) * 2;
-      var y = (e.clientY / window.innerHeight - 0.5) * 2;
-      art.style.translate = (x * 14).toFixed(1) + 'px ' + (y * 14).toFixed(1) + 'px';
-    });
-  }
 })();
 </script>
 {% endblock %}

@@ -26,7 +26,6 @@
   .ar-page a:focus-visible{outline:2px solid var(--ar-gold);outline-offset:3px}
 
   .ar-blob{position:absolute;border-radius:50%;background:rgba(200,154,94,.05);filter:blur(64px);pointer-events:none}
-  .ar-parallax{transform:translate3d(var(--px,0px),var(--py,0px),0);transition:transform .3s ease-out}
   .ar-js .ar-reveal{opacity:0;transform:translateY(32px);transition:opacity .6s ease-out var(--d,0s),transform .6s ease-out var(--d,0s),border-color .3s ease}
   .ar-js .ar-reveal.ar-in{opacity:1;transform:none}
 
@@ -166,11 +165,7 @@
 
       <div class="ar-cover ar-parallax hero-art" data-depth="10">
         <div class="ar-cover-frame">
-          {% if post.cover_image %}
-            <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" loading="eager">
-          {% else %}
-            <img src="{% static 'site/images/blog-detail-hero.webp' %}" alt="{{ post.title }}" loading="eager">
-          {% endif %}
+          <img src="{{ post.image_url }}" alt="{{ post.title }}" loading="eager">
         </div>
       </div>
     </div>
@@ -231,11 +226,7 @@
           <div data-reveal style="--d:{{ forloop.counter }}00ms">
             <a class="ar-card" href="{% url 'blog_detail' item.slug %}">
               <div class="ar-card-img">
-                {% if item.cover_image %}
-                  <img src="{{ item.cover_image.url }}" alt="{{ item.title }} article cover" loading="lazy" decoding="async">
-                {% else %}
-                  <img src="{% static 'site/images/blog-detail-hero.webp' %}" alt="{{ item.title }} article cover" loading="lazy" decoding="async">
-                {% endif %}
+                <img src="{{ item.image_url }}" alt="{{ item.title }} article cover" loading="lazy" decoding="async">
               </div>
               <div class="ar-card-body">
                 <span class="ar-cat">{{ item.category }}</span>
@@ -289,20 +280,6 @@
       items.forEach(function (el) { el.classList.add('ar-in'); });
     }
 
-    if (!reduce && window.matchMedia('(pointer: fine)').matches) {
-      var layers = document.querySelectorAll('[data-depth]'), raf = 0;
-      window.addEventListener('mousemove', function (ev) {
-        var nx = ev.clientX / window.innerWidth - 0.5, ny = ev.clientY / window.innerHeight - 0.5;
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(function () {
-          layers.forEach(function (l) {
-            var d = parseFloat(l.dataset.depth) || 0;
-            l.style.setProperty('--px', (nx * d * -1.2).toFixed(2) + 'px');
-            l.style.setProperty('--py', (ny * d * -1.2).toFixed(2) + 'px');
-          });
-        });
-      }, { passive: true });
-    }
   });
 </script>
 {% endblock %}

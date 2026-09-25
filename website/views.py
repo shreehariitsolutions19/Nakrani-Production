@@ -1,10 +1,21 @@
 import requests
 from django.conf import settings
 from django.contrib import messages
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
-from .models import BlogPost, ContactSubmission, PortfolioProject, Service, SiteSettings, Testimonial
+from .models import (
+    BlogPost,
+    ContactSubmission,
+    FAQItem,
+    NewsletterSubscriber,
+    PortfolioProject,
+    Service,
+    SiteSettings,
+    Testimonial,
+)
 
 
 def site_context():
@@ -128,6 +139,20 @@ def portfolio_detail(request, slug):
 
 def blog(request):
     context = site_context()
+    if request.method == "POST":
+        email = request.POST.get("email", "").strip()
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, "Please enter a valid email address.")
+        else:
+            NewsletterSubscriber.objects.update_or_create(
+                email=email,
+                defaults={"active": True},
+            )
+            messages.success(request, "Thanks for subscribing.")
+            return redirect("blog")
+
     context.update({
         "page_title": "Blog",
         "posts": BlogPost.objects.filter(active=True, published=True, published_at__lte=timezone.now()),
@@ -152,7 +177,10 @@ def blog_detail(request, slug):
 
 def contact(request):
     context = site_context()
-    context["page_title"] = "Contact"
+    context.update({
+        "page_title": "Contact",
+        "faqs": FAQItem.objects.filter(page="contact", active=True),
+    })
     if request.method == "POST":
         name = request.POST.get("name", "").strip()
         email = request.POST.get("email", "").strip()

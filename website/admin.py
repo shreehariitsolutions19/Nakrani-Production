@@ -1,7 +1,18 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import BlogPost, ContactSubmission, PortfolioProject, Service, SiteSettings, Testimonial
+from .models import (
+    BlogPost,
+    ContactSubmission,
+    FAQItem,
+    NewsletterSubscriber,
+    PageContent,
+    PageContentItem,
+    PortfolioProject,
+    Service,
+    SiteSettings,
+    Testimonial,
+)
 
 
 @admin.register(SiteSettings)
@@ -14,6 +25,23 @@ class ServiceAdmin(admin.ModelAdmin):
     list_display = ("title", "order", "active")
     list_editable = ("order", "active")
     search_fields = ("title", "description")
+    fieldsets = (
+        (None, {"fields": ("title", "slug", "description", "icon_class", "image")}),
+        (
+            "Service detail content",
+            {
+                "fields": (
+                    "detail_heading",
+                    "detail_intro",
+                    "features",
+                    "feature_descriptions",
+                    "process",
+                    "process_descriptions",
+                )
+            },
+        ),
+        ("Display", {"fields": ("order", "active")}),
+    )
 
 
 @admin.register(PortfolioProject)
@@ -45,6 +73,39 @@ class BlogPostAdmin(admin.ModelAdmin):
     list_filter = ("category", "active")
     prepopulated_fields = {"slug": ("title",)}
     date_hierarchy = "published_at"
+
+
+@admin.register(PageContent)
+class PageContentAdmin(admin.ModelAdmin):
+    list_display = ("page", "key", "active", "updated_at")
+    list_editable = ("active",)
+    search_fields = ("page", "key", "value")
+    list_filter = ("page", "active")
+
+
+@admin.register(PageContentItem)
+class PageContentItemAdmin(admin.ModelAdmin):
+    list_display = ("page", "section", "title", "order", "active")
+    list_editable = ("order", "active")
+    search_fields = ("page", "section", "title", "description")
+    list_filter = ("page", "section", "active")
+
+
+@admin.register(FAQItem)
+class FAQItemAdmin(admin.ModelAdmin):
+    list_display = ("question", "page", "order", "active")
+    list_editable = ("order", "active")
+    search_fields = ("question", "answer", "page")
+    list_filter = ("page", "active")
+
+
+@admin.register(NewsletterSubscriber)
+class NewsletterSubscriberAdmin(admin.ModelAdmin):
+    list_display = ("email", "active", "subscribed_at")
+    list_editable = ("active",)
+    search_fields = ("email",)
+    list_filter = ("active",)
+    readonly_fields = ("subscribed_at",)
 
 
 @admin.register(ContactSubmission)

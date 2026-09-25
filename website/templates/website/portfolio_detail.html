@@ -32,7 +32,6 @@
 
   /* glow blobs + mouse parallax */
   .pd-blob{position:absolute;border-radius:50%;background:rgba(200,154,94,.05);filter:blur(64px);pointer-events:none}
-  .pd-parallax{transform:translate3d(var(--px,0px),var(--py,0px),0);transition:transform .3s ease-out}
 
   /* reveal on scroll */
   .pd-js .pd-reveal{opacity:0;transform:translateY(32px);transition:opacity .6s ease-out var(--d,0s),transform .6s ease-out var(--d,0s),border-color .3s ease}
@@ -341,7 +340,7 @@
           <a class="pd-related pd-reveal" data-reveal style="--d:{{ forloop.counter }}00ms" href="{% url 'portfolio_detail' related.slug %}">
             <div class="frame">
               {% if related.image %}
-                <img src="{{ related.image.url }}" alt="{{ related.title }} — {{ related.category }}" loading="lazy" decoding="async">
+                <img src="{{ related.image_url }}" alt="{{ related.title }} — {{ related.category }}" loading="lazy" decoding="async">
               {% else %}
                 <img src="{% static 'site/images/portfolio-hero.webp' %}" alt="{{ related.title }} — {{ related.category }}" loading="lazy" decoding="async">
               {% endif %}
@@ -426,22 +425,6 @@
       items.forEach(function (el) { io.observe(el); });
     } else {
       items.forEach(function (el) { el.classList.add('pd-in'); });
-    }
-
-    /* soft mouse parallax (desktop only) */
-    if (!reduce && window.matchMedia('(pointer: fine)').matches) {
-      var layers = document.querySelectorAll('[data-depth]'), raf = 0;
-      window.addEventListener('mousemove', function (ev) {
-        var nx = ev.clientX / window.innerWidth - 0.5, ny = ev.clientY / window.innerHeight - 0.5;
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(function () {
-          layers.forEach(function (l) {
-            var d = parseFloat(l.dataset.depth) || 0;
-            l.style.setProperty('--px', (nx * d * -1.2).toFixed(2) + 'px');
-            l.style.setProperty('--py', (ny * d * -1.2).toFixed(2) + 'px');
-          });
-        });
-      }, { passive: true });
     }
 
     /* lightbox */

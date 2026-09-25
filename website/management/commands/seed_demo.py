@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
-from website.models import BlogPost, PortfolioProject, Service, Testimonial
+from website.models import BlogPost, FAQItem, PortfolioProject, Service, Testimonial
 
 
 SERVICES = [
@@ -55,6 +55,29 @@ SERVICES = [
 ]
 
 PROCESS = "Discover\nStrategy\nDesign\nRefine\nDeliver"
+
+CONTACT_FAQS = [
+    (
+        "What type of projects do you work on?",
+        "We work across brand identity, logo design, packaging, print, social media and digital design. Whether you are launching a new brand or refreshing an existing one, we shape the visual system around your goals.",
+    ),
+    (
+        "How does the design process work?",
+        "Every project moves through four clear stages — Strategy, Concept, Design and Delivery. We start by understanding your brand and audience, develop a creative direction, refine it into a complete visual system, and hand over polished final assets.",
+    ),
+    (
+        "How long does a project usually take?",
+        "A focused logo or identity project typically takes two to three weeks, while a complete brand system with print and packaging can take four to six weeks. We always confirm a clear timeline before we begin.",
+    ),
+    (
+        "Do you work with clients remotely?",
+        "Yes — we collaborate with brands anywhere in the world. Our process runs smoothly across email, calls and shared review links, so distance never gets in the way of great work.",
+    ),
+    (
+        "How can I start a project?",
+        "Simply fill in the enquiry form on this page with a few details about your project. We will get back to you within one to two business days with next steps and a tailored proposal.",
+    ),
+]
 
 PROJECTS = [
     {
@@ -390,6 +413,23 @@ class Command(BaseCommand):
                 defaults={
                     **service_data,
                     "process": PROCESS,
+                    "detail_heading": f"{service_data['title']} designed around your brand",
+                    "detail_intro": (
+                        service_data["description"]
+                        + "\nWe bring strategy, thoughtful design and careful production together "
+                        "to create work that is ready to use across your brand."
+                    ),
+                    "feature_descriptions": "\n".join(
+                        f"Carefully developed {feature.strip().lower()} tailored to your brand."
+                        for feature in service_data["features"].splitlines()
+                    ),
+                    "process_descriptions": (
+                        "We learn about your brand, audience and goals."
+                        "\nWe define a clear creative direction and priorities."
+                        "\nWe create the visual work and share it for review."
+                        "\nWe refine the details using your feedback."
+                        "\nWe prepare and deliver the final production-ready files."
+                    ),
                     "order": index,
                     "active": True,
                 },
@@ -435,9 +475,16 @@ class Command(BaseCommand):
                 },
             )
 
+        for index, (question, answer) in enumerate(CONTACT_FAQS, start=1):
+            FAQItem.objects.update_or_create(
+                page="contact",
+                question=question,
+                defaults={"answer": answer, "order": index, "active": True},
+            )
+
         self.stdout.write(
             self.style.SUCCESS(
                 "Preview content is ready: 6 services, 10 portfolio projects, "
-                "1 testimonial and 9 journal articles."
+                "1 testimonial, 9 journal articles and 5 contact FAQs."
             )
         )
