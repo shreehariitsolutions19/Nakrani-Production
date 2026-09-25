@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Pacifico&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Pacifico&display=swap");
 
 *,
 :before,
@@ -76,13 +76,14 @@ html,
     font-feature-settings: normal;
     font-variation-settings: normal;
     -webkit-tap-highlight-color: transparent;
-    font-family: Inter, system-ui, sans-serif;
+    font-family: Manrope, Inter, system-ui, sans-serif;
     line-height: 1.5
 }
 
 body {
     line-height: inherit;
-    margin: 0
+    margin: 0;
+    font-family: Manrope, Inter, system-ui, sans-serif;
 }
 
 a {
@@ -862,11 +863,15 @@ body {
 }
 
 .font-heading {
-    font-family: Poppins, Inter, system-ui, sans-serif
+    font-family: Manrope, Inter, system-ui, sans-serif;
+    letter-spacing: -0.04em;
+    font-weight: 700
 }
 
 .font-script {
-    font-family: Pacifico, cursive
+    font-family: Manrope, Inter, sans-serif;
+    letter-spacing: -0.02em;
+    font-weight: 800
 }
 
 .text-2xl {

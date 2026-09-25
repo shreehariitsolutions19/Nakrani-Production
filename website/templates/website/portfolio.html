@@ -737,7 +737,7 @@
       <div class="p-grid" data-stagger="3">
         {% for project in projects %}
         <a class="p-card" data-reveal="scale" href="{% url 'portfolio_detail' project.slug %}">
-          {% if project.image %}<img src="{{ project.image.url }}" alt="{{ project.title }}" loading="lazy">{% else %}<img src="{% static 'site/images/4_moon-cosmetics.jpg' %}" alt="{{ project.title }}" loading="lazy">{% endif %}
+          <img src="{{ project.image_url }}" alt="{{ project.title }}" loading="lazy">
           <div class="p-card-shade"></div>
           <div class="p-card-info">
             <span class="p-card-cat">{{ project.category }} · {{ project.year|default:"2026" }}</span>
@@ -768,7 +768,7 @@
       <div class="p-flayout">
         <div data-reveal="left">
           <a class="p-fimage" href="{% url 'portfolio_detail' featured_project.slug %}">
-            {% if featured_project.image %}<img data-img-parallax src="{{ featured_project.image.url }}" alt="{{ featured_project.title }} featured project">{% else %}<img data-img-parallax src="{% static 'site/images/4_moon-cosmetics.jpg' %}" alt="{{ featured_project.title }} featured project">{% endif %}
+            <img data-img-parallax src="{{ featured_project.image_url }}" alt="{{ featured_project.title }} featured project">
             <div class="p-fshade"></div>
           </a>
         </div>

@@ -714,7 +714,7 @@
       </div>
 
       <div class="d-art hero-art">
-        {% if service.image %}<img src="{{ service.image.url }}" alt="{{ service.title }} — Nakrani Production service">{% else %}<img src="{% static 'site/images/services-hero.webp' %}" alt="{{ service.title }} — Nakrani Production service">{% endif %}
+        <img src="{{ service.image_url }}" alt="{{ service.title }} — Nakrani Production service">
         <div class="d-badge"><strong>{{ service.order|stringformat:"02d" }}</strong><span>Service</span></div>
       </div>
     </div>
@@ -811,7 +811,7 @@
         {% for project in related_projects %}
         <a class="work-card" data-reveal="scale" href="{% url 'portfolio_detail' project.slug %}">
           <div class="work-image">
-            {% if project.image %}<img src="{{ project.image.url }}" alt="{{ project.title }} — {{ project.category }} project">{% else %}<img src="{% static 'site/images/4_moon-cosmetics.jpg' %}" alt="{{ project.title }} — project">{% endif %}
+            <img src="{{ project.image_url }}" alt="{{ project.title }} — {{ project.category }} project">
             <div class="work-overlay">
               <span class="work-meta">{{ project.category }} · {{ project.year|default:"2026" }}</span>
               <h3>{{ project.title }}</h3>

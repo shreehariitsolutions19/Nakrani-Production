@@ -197,7 +197,7 @@
       <div class="pd-cover pd-parallax hero-art" data-depth="10">
         <div class="pd-cover-frame">
           {% if project.image %}
-            <img src="{{ project.image.url }}" alt="{{ project.title }} — {{ project.category }}" loading="eager">
+            <img src="{{ project.image_url }}" alt="{{ project.title }} — {{ project.category }}" loading="eager">
           {% else %}
             <img src="{% static 'site/images/portfolio-hero.webp' %}" alt="{{ project.title }} — {{ project.category }}" loading="eager">
           {% endif %}
@@ -303,7 +303,7 @@
             {% endfor %}
           {% else %}
             <button type="button" class="pd-thumb pd-thumb--wide" data-lightbox aria-label="Open {{ project.title }} additional image">
-              <img src="{% if project.image %}{{ project.image.url }}{% else %}{% static 'site/images/portfolio-hero.webp' %}{% endif %}" alt="{{ project.title }} additional project visual" loading="lazy" decoding="async">
+              <img src="{{ project.image_url }}" alt="{{ project.title }} additional project visual" loading="lazy" decoding="async">
               <div class="veil"><span class="pd-zoom"><i class="ri-zoom-in-line"></i></span></div>
             </button>
           {% endif %}

@@ -1,5 +1,21 @@
+from pathlib import Path
+
+from django.conf import settings
 from django.db import models
+from django.templatetags.static import static
 from django.utils.text import slugify
+
+
+def resolve_image_url(image_field, fallback_static_path="site/images/portfolio-hero.webp"):
+    if not image_field or not getattr(image_field, "name", ""):
+        return static(fallback_static_path)
+
+    image_name = Path(image_field.name).name
+    static_images_dir = Path(settings.STATICFILES_DIRS[0]) / "site" / "images"
+    if (static_images_dir / image_name).exists():
+        return static(f"site/images/{image_name}")
+
+    return image_field.url
 
 
 class SiteSettings(models.Model):
@@ -57,6 +73,10 @@ class Service(models.Model):
     @property
     def process_list(self):
         return [x.strip() for x in self.process.splitlines() if x.strip()]
+
+    @property
+    def image_url(self):
+        return resolve_image_url(self.image, "site/images/services-hero.webp")
 
     def __str__(self):
         return self.title
@@ -133,11 +153,12 @@ class ContactSubmission(models.Model):
     name = models.CharField(max_length=120)
     email = models.EmailField()
     phone = models.CharField(max_length=40, blank=True)
+    city = models.CharField(max_length=120, blank=True)
     company = models.CharField(max_length=160, blank=True)
     project_type = models.CharField(max_length=120, blank=True)
     budget = models.CharField(max_length=120, blank=True)
     project_timeline = models.CharField(max_length=160, blank=True)
-    message = models.TextField()
+    message = models.TextField(blank=True)
     status = models.CharField(max_length=30, default="new")
     source = models.CharField(max_length=40, default="website")
     google_synced = models.BooleanField(default=False)

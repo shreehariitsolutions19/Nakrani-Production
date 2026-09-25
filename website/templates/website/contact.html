@@ -878,7 +878,7 @@
           {% csrf_token %}
           <div class="c-grid2" data-stagger="2">
             <div class="c-field{% if form and form.name.errors %} has-error{% endif %}" data-reveal>
-              <label for="contact-name">Full Name <b>*</b></label>
+              <label for="contact-name">Name <b>*</b></label>
               <input class="c-input" id="contact-name" name="name" type="text" autocomplete="name" value="{{ request.POST.name|default:'' }}" placeholder="Your full name" required>
               {% if form and form.name.errors %}<span class="c-error">{{ form.name.errors|join:', ' }}</span>{% endif %}
             </div>
@@ -890,51 +890,13 @@
             </div>
 
             <div class="c-field" data-reveal>
-              <label for="contact-phone">Phone</label>
-              <input class="c-input" id="contact-phone" name="phone" type="tel" autocomplete="tel" value="{{ request.POST.phone|default:'' }}" placeholder="+91 00000 00000">
+              <label for="contact-phone">Number <b>*</b></label>
+              <input class="c-input" id="contact-phone" name="phone" type="tel" autocomplete="tel" value="{{ request.POST.phone|default:'' }}" placeholder="+91 00000 00000" required>
             </div>
 
             <div class="c-field" data-reveal>
-              <label for="contact-company">Company / Brand</label>
-              <input class="c-input" id="contact-company" name="company" type="text" autocomplete="organization" value="{{ request.POST.company|default:'' }}" placeholder="Your company or brand">
-            </div>
-
-            <div class="c-field" data-reveal>
-              <label for="contact-type">Project Type</label>
-              <select class="c-select" id="contact-type" name="project_type">
-                <option value="">Select a project type</option>
-                <option {% if request.POST.project_type == 'Brand Identity' %}selected{% endif %}>Brand Identity</option>
-                <option {% if request.POST.project_type == 'Logo Design' %}selected{% endif %}>Logo Design</option>
-                <option {% if request.POST.project_type == 'Packaging' %}selected{% endif %}>Packaging</option>
-                <option {% if request.POST.project_type == 'Print Design' %}selected{% endif %}>Print Design</option>
-                <option {% if request.POST.project_type == 'Social Media' %}selected{% endif %}>Social Media</option>
-                <option {% if request.POST.project_type == 'Digital Design' %}selected{% endif %}>Digital Design</option>
-                <option {% if request.POST.project_type == 'Other' %}selected{% endif %}>Other</option>
-              </select>
-            </div>
-
-            <div class="c-field" data-reveal>
-              <label for="contact-budget">Budget Range</label>
-              <select class="c-select" id="contact-budget" name="budget">
-                <option value="">Select a budget range</option>
-                <option {% if request.POST.budget == 'Under ₹25,000' %}selected{% endif %}>Under ₹25,000</option>
-                <option {% if request.POST.budget == '₹25,000–₹50,000' %}selected{% endif %}>₹25,000–₹50,000</option>
-                <option {% if request.POST.budget == '₹50,000–₹1,00,000' %}selected{% endif %}>₹50,000–₹1,00,000</option>
-                <option {% if request.POST.budget == '₹1,00,000+' %}selected{% endif %}>₹1,00,000+</option>
-                <option {% if request.POST.budget == 'Not Sure Yet' %}selected{% endif %}>Not Sure Yet</option>
-              </select>
-            </div>
-
-            <div class="c-field full" data-reveal>
-              <label for="contact-timeline">Project Timeline</label>
-              <input class="c-input" id="contact-timeline" name="project_timeline" type="text" value="{{ request.POST.project_timeline|default:'' }}" placeholder="e.g. Looking to start in 2 weeks">
-            </div>
-
-            <div class="c-field full{% if form and form.message.errors %} has-error{% endif %}" data-reveal>
-              <label for="contact-message">Tell us about your project <b>*</b></label>
-              <textarea class="c-textarea" id="contact-message" name="message" rows="5" maxlength="500" placeholder="Share your goals, scope and anything we should know..." required>{{ request.POST.message|default:'' }}</textarea>
-              <span class="c-count" id="msgCount">0 / 500</span>
-              {% if form and form.message.errors %}<span class="c-error">{{ form.message.errors|join:', ' }}</span>{% endif %}
+              <label for="contact-city">City <b>*</b></label>
+              <input class="c-input" id="contact-city" name="city" type="text" value="{{ request.POST.city|default:'' }}" placeholder="Your city" required>
             </div>
           </div>
 

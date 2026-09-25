@@ -102,12 +102,12 @@ def portfolio_detail(request, slug):
     }
 
     gallery = fallback_gallery.get(project.slug, [
-        project.image.url if project.image else "site/images/portfolio-hero.webp",
+        project.image_url,
         "site/images/portfolio-hero.webp",
         "site/images/services-hero.webp",
     ])
     if project.image:
-        gallery = [project.image.url] + [item for item in gallery if item != project.image.url][:2]
+        gallery = [project.image_url] + [item for item in gallery if item != project.image_url][:2]
 
     service_groups = {
         "Branding": ["Brand Strategy", "Visual Identity", "Brand System", "Campaign Assets"],
@@ -160,18 +160,16 @@ def contact(request):
         name = request.POST.get("name", "").strip()
         email = request.POST.get("email", "").strip()
         phone = request.POST.get("phone", "").strip()
-        company = request.POST.get("company", "").strip()
-        project_type = request.POST.get("project_type", "").strip()
-        budget = request.POST.get("budget", "").strip()
-        project_timeline = request.POST.get("project_timeline", "").strip()
-        message = request.POST.get("message", "").strip()
-        if not name or not email or not message:
-            messages.error(request, "Please fill in your name, email and message.")
+        city = request.POST.get("city", "").strip()
+        if not name or not email or not phone or not city:
+            messages.error(request, "Please fill in your name, email, phone number and city.")
         else:
             submission = ContactSubmission.objects.create(
-                name=name, email=email, phone=phone, company=company,
-                project_type=project_type, budget=budget,
-                project_timeline=project_timeline, message=message,
+                name=name,
+                email=email,
+                phone=phone,
+                city=city,
+                message="",
             )
             url = (SiteSettings.objects.first().google_form_url if SiteSettings.objects.first() else "") or getattr(settings, "GOOGLE_FORM_URL", "")
             if url:
@@ -180,11 +178,7 @@ def contact(request):
                     "GOOGLE_FORM_ENTRY_NAME": name,
                     "GOOGLE_FORM_ENTRY_EMAIL": email,
                     "GOOGLE_FORM_ENTRY_PHONE": phone,
-                    "GOOGLE_FORM_ENTRY_COMPANY": company,
-                    "GOOGLE_FORM_ENTRY_PROJECT_TYPE": project_type,
-                    "GOOGLE_FORM_ENTRY_BUDGET": budget,
-                    "GOOGLE_FORM_ENTRY_TIMELINE": project_timeline,
-                    "GOOGLE_FORM_ENTRY_MESSAGE": message,
+                    "GOOGLE_FORM_ENTRY_CITY": city,
                 }
                 for key, value in mappings.items():
                     entry = getattr(settings, key, "")
