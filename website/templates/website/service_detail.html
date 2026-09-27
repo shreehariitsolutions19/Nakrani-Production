@@ -787,7 +787,7 @@
       </div>
       <div class="d-showcase-grid">
         {% for video in service.gallery_video_list %}
-        <video class="d-showcase-video" autoplay muted loop controls preload="metadata" playsinline poster="{{ service.image_url }}" aria-label="{{ service.title }} video preview">
+        <video class="d-showcase-video" autoplay muted loop preload="metadata" playsinline poster="{{ service.image_url }}" aria-label="{{ service.title }} video preview">
           <source src="{% static video %}" type="video/mp4">
           Your browser does not support HTML video.
         </video>

@@ -73,8 +73,8 @@ class DynamicContentTests(TestCase):
         self.assertContains(listing, "CGI Ad Creation")
         self.assertContains(detail, "CGI Showcase")
         self.assertContains(detail, "<video")
-        self.assertContains(detail, "controls")
-        self.assertContains(detail, "autoplay muted loop controls")
+        self.assertContains(detail, "autoplay muted loop")
+        self.assertNotContains(detail, "controls")
         self.assertContains(
             detail,
             "/static/site/videos/cgi-helicopter-ad.mp4",
