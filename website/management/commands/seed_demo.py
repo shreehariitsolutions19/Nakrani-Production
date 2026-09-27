@@ -275,16 +275,16 @@ PROJECTS = [
         "image": "vasani-natural-products-billboard.jpeg",
         "gallery_images": "\n".join(
             (
-                "site/images/vasani-natural-logo-board.jpeg",
-                "site/images/vasani-natural-logo-cream.jpeg",
                 "site/images/vasani-natural-brand-mission-vision.jpeg",
-                "site/images/vasani-natural-logo-dark-green.jpeg",
+                "site/images/vasani-natural-logo-board.jpeg",
+                "site/images/vasani-natural-identity-variants.jpeg",
                 "site/images/vasani-natural-color-palette.jpeg",
                 "site/images/vasani-natural-typography.jpeg",
-                "site/images/vasani-natural-identity-variants.jpeg",
+                "site/images/vasani-natural-logo-cream.jpeg",
+                "site/images/vasani-natural-logo-dark-green.jpeg",
+                "site/images/vasani-natural-stationery-packaging.jpeg",
                 "site/images/vasani-natural-billboard-branding.jpeg",
                 "site/images/vasani-natural-thank-you.jpeg",
-                "site/images/vasani-natural-stationery-packaging.jpeg",
                 "site/images/vasani-natural-products-billboard.jpeg",
             )
         ),

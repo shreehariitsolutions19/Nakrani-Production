@@ -120,15 +120,73 @@ def portfolio_detail(request, slug):
     gallery = project.gallery_image_list or fallback_images
     if project.image:
         image_name = project.image.name.rsplit("/", 1)[-1]
-        gallery = [project.image_url] + [
-            item for item in gallery
-            if item.rsplit("/", 1)[-1] != image_name
+        if any(item.rsplit("/", 1)[-1] == image_name for item in gallery):
+            gallery = [
+                item for item in gallery
+                if item.rsplit("/", 1)[-1] != image_name
+            ]
+        else:
+            gallery = [project.image_url] + gallery
+
+    gallery_captions = {
+        "vasani-natural-brand-mission-vision.jpeg": "Brand mission and vision",
+        "vasani-natural-logo-board.jpeg": "Primary logo and brand board",
+        "vasani-natural-identity-variants.jpeg": "Logo variations and visual identity",
+        "vasani-natural-color-palette.jpeg": "Core colour palette",
+        "vasani-natural-typography.jpeg": "Typography and logo applications",
+        "vasani-natural-logo-cream.jpeg": "Logo on the cream colourway",
+        "vasani-natural-logo-dark-green.jpeg": "Logo on the deep green colourway",
+        "vasani-natural-stationery-packaging.jpeg": "Stationery and packaging",
+        "vasani-natural-billboard-branding.jpeg": "Outdoor brand billboard",
+        "vasani-natural-thank-you.jpeg": "Branded thank-you card",
+        "vasani-natural-products-billboard.jpeg": "Natural product billboard",
+    }
+    gallery_cards = [
+        {
+            "path": image,
+            "caption": gallery_captions.get(image.rsplit("/", 1)[-1], ""),
+        }
+        for image in gallery
+    ]
+    if project.slug == "vasani-natural-branding":
+        gallery_sections = [
+            {
+                "eyebrow": "01 / Identity",
+                "title": "Brand Identity",
+                "description": (
+                    "The brand foundation, from its purpose and primary mark to "
+                    "the colour, type and logo variations."
+                ),
+                "images": gallery_cards[:7],
+                "brand_boards": True,
+            },
+            {
+                "eyebrow": "02 / Applications",
+                "title": "Brand Applications",
+                "description": (
+                    "The identity applied to packaging, outdoor advertising and "
+                    "customer-facing brand materials."
+                ),
+                "images": gallery_cards[7:],
+                "brand_boards": True,
+            },
+        ]
+    else:
+        gallery_sections = [
+            {
+                "eyebrow": "Selected Work",
+                "title": "Project Gallery",
+                "description": "",
+                "images": gallery_cards,
+                "brand_boards": False,
+            }
         ]
 
     context.update({
         "page_title": project.title,
         "project": project,
         "gallery_images": gallery,
+        "gallery_sections": gallery_sections,
         "project_services": project.provided_service_list,
         "related_projects": active_projects.exclude(pk=project.pk)[:3],
         "previous_project": active_projects.filter(order__lt=project.order).last(),
