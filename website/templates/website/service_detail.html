@@ -150,33 +150,6 @@
     pointer-events: none;
   }
 
-  /* Big faint brand watermark behind the hero (parallax on scroll) */
-  .d-watermark {
-    position: absolute;
-    left: 4%;
-    top: 50%;
-    z-index: 2;
-    transform: translateY(calc(-50% + var(--py, 0px)));
-    font-family: Poppins, sans-serif;
-    font-weight: 800;
-    font-size: clamp(5rem, 17vw, 16rem);
-    line-height: .9;
-    letter-spacing: -.04em;
-    color: rgba(200,154,94,.055);
-    white-space: nowrap;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .d-watermark small {
-    display: block;
-    margin-top: .4em;
-    font-size: .16em;
-    font-weight: 500;
-    letter-spacing: 1.1em;
-    color: rgba(255,255,255,.05);
-  }
-
   .d-hero-grid {
     position: relative;
     z-index: 2;
@@ -767,8 +740,6 @@
   <section class="d-hero">
     <div class="d-hero-bg" style="background-image:url('{% static 'site/images/hero-bg.webp' %}');"></div>
     <div class="d-hero-shade"></div>
-    <div class="d-watermark" aria-hidden="true">{{ service.title|upper }}<small>NAKRANI PRODUCTION</small></div>
-
     <div class="d-hero-grid">
       <div class="d-hero-copy hero-copy">
         <nav class="d-breadcrumb" aria-label="Breadcrumb">
@@ -998,7 +969,6 @@
   /* Scroll progress bar + hero parallax + mouse parallax */
   var bar   = document.getElementById('scrollProgress');
   var hero  = document.querySelector('.d-hero');
-  var mark  = document.querySelector('.d-watermark');
   var copy = document.querySelector('.d-hero-copy');
   var ticking = false;
 
@@ -1009,7 +979,6 @@
     if (bar) bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(y / max, 1) : 0) + ')';
 
     if (hero && y < window.innerHeight * 1.3) {
-      if (mark) mark.style.setProperty('--py', (y * 0.18).toFixed(1) + 'px');
       if (copy) {
         copy.style.translate = '0 ' + (y * 0.1).toFixed(1) + 'px';
         copy.style.opacity = Math.max(1 - y / (window.innerHeight * 0.85), 0).toFixed(2);
