@@ -120,12 +120,15 @@ def portfolio_detail(request, slug):
     gallery = project.gallery_image_list or fallback_images
     if project.image:
         image_name = project.image.name.rsplit("/", 1)[-1]
-        if any(item.rsplit("/", 1)[-1] == image_name for item in gallery):
+        if (
+            project.slug != "vasani-natural-branding"
+            and any(item.rsplit("/", 1)[-1] == image_name for item in gallery)
+        ):
             gallery = [
                 item for item in gallery
                 if item.rsplit("/", 1)[-1] != image_name
             ]
-        else:
+        elif not any(item.rsplit("/", 1)[-1] == image_name for item in gallery):
             gallery = [project.image_url] + gallery
 
     gallery_captions = {
@@ -154,20 +157,10 @@ def portfolio_detail(request, slug):
                 "eyebrow": "01 / Identity",
                 "title": "Brand Identity",
                 "description": (
-                    "The brand foundation, from its purpose and primary mark to "
-                    "the colour, type and logo variations."
+                    "The complete Vasani Natural identity, from its purpose and "
+                    "visual system to packaging, stationery and outdoor campaigns."
                 ),
-                "images": gallery_cards[:7],
-                "brand_boards": True,
-            },
-            {
-                "eyebrow": "02 / Applications",
-                "title": "Brand Applications",
-                "description": (
-                    "The identity applied to packaging, outdoor advertising and "
-                    "customer-facing brand materials."
-                ),
-                "images": gallery_cards[7:],
+                "images": gallery_cards,
                 "brand_boards": True,
             },
         ]

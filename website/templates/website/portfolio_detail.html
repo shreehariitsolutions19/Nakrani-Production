@@ -159,15 +159,29 @@
   /* lightbox */
   .pd-lightbox{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:rgba(0,0,0,.92);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
   .pd-lightbox.open{opacity:1;visibility:visible}
-  .pd-lb-stage{margin:0;text-align:center;transform:scale(.97);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+  .pd-lb-stage{max-width:min(92vw,1100px);max-height:calc(100vh - 4rem);margin:0;text-align:center;transform:scale(.97);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+  @supports(height:100dvh){.pd-lb-stage{max-height:calc(100dvh - 4rem)}}
   .pd-lightbox.open .pd-lb-stage{transform:none}
-  .pd-lb-stage img{display:block;max-width:min(92vw,1100px);max-height:80vh;border-radius:.75rem;object-fit:contain;background:#111}
+  .pd-lb-stage img{display:block;width:auto;height:auto;max-width:100%;max-height:calc(100vh - 7rem);margin:0 auto;border-radius:.75rem;object-fit:contain;background:#111}
+  @supports(height:100dvh){.pd-lb-stage img{max-height:calc(100dvh - 7rem)}}
   .pd-lb-count{margin-top:.75rem;color:rgba(255,255,255,.6);font-size:.8rem;letter-spacing:.1em}
   .pd-lb-btn{position:absolute;display:flex;align-items:center;justify-content:center;width:2.75rem;height:2.75rem;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(17,17,17,.8);color:#fff;font-size:1.1rem;cursor:pointer;transition:border-color .3s}
   .pd-lb-btn:hover{border-color:rgba(200,154,94,.6)}
   .pd-lb-close{top:1.25rem;right:1.25rem}
   .pd-lb-prev,.pd-lb-next{top:50%;margin-top:-1.375rem}
   .pd-lb-prev{left:1rem}.pd-lb-next{right:1rem}
+
+  @media(max-width:640px){
+    .pd-lightbox{padding:1rem}
+    .pd-lb-stage{max-width:100%;max-height:calc(100vh - 3rem)}
+    .pd-lb-stage img{max-height:calc(100vh - 6rem)}
+    @supports(height:100dvh){
+      .pd-lb-stage{max-height:calc(100dvh - 3rem)}
+      .pd-lb-stage img{max-height:calc(100dvh - 6rem)}
+    }
+    .pd-lb-btn{width:2.5rem;height:2.5rem}
+    .pd-lb-prev{left:.5rem}.pd-lb-next{right:.5rem}
+  }
 
   @media(prefers-reduced-motion:reduce){
     .pd-js .pd-reveal{opacity:1;transform:none;transition:none}

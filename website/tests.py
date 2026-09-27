@@ -124,7 +124,7 @@ class DynamicContentTests(TestCase):
                 )
                 self.assertContains(response, "data-depth=")
 
-    def test_vasani_natural_brand_project_renders_curated_gallery_without_duplicate_cover(self):
+    def test_vasani_natural_brand_project_shows_all_images_in_identity_gallery(self):
         data = next(item for item in PROJECTS if item["slug"] == "vasani-natural-branding")
         gallery_images = data["gallery_images"].splitlines()
         project = PortfolioProject.objects.create(
@@ -146,15 +146,17 @@ class DynamicContentTests(TestCase):
         response = self.client.get(reverse("portfolio_detail", args=[project.slug]))
 
         self.assertEqual(len(gallery_images), 11)
-        self.assertEqual(len(response.context["gallery_images"]), 10)
+        self.assertEqual(len(response.context["gallery_images"]), 11)
+        self.assertEqual(len(response.context["gallery_sections"]), 1)
+        self.assertEqual(len(response.context["gallery_sections"][0]["images"]), 11)
         self.assertContains(response, "Brand Identity")
-        self.assertContains(response, "Brand Applications")
+        self.assertNotContains(response, "Brand Applications")
         self.assertContains(response, "pd-cover-frame--vasani")
         self.assertEqual(
             response.content.decode().count(
                 "/static/site/images/vasani-natural-products-billboard.jpeg"
             ),
-            1,
+            2,
         )
         for image_path in gallery_images:
             asset_path = image_path.removeprefix("site/images/")
