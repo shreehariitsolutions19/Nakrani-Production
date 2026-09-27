@@ -163,6 +163,39 @@ class DynamicContentTests(TestCase):
                 )
                 self.assertContains(response, "data-depth=")
 
+    def test_services_heroes_match_portfolio_background_treatment(self):
+        service = Service.objects.create(
+            title="Branding & Identity",
+            slug="branding-identity",
+            description="Build a distinctive brand identity.",
+        )
+        for path, background_class, shade_class in (
+            (
+                reverse("services"),
+                "services-hero-bg",
+                "services-hero-shade",
+            ),
+            (
+                reverse("service_detail", args=[service.slug]),
+                "d-hero-bg",
+                "d-hero-shade",
+            ),
+        ):
+            with self.subTest(path=path):
+                response = self.client.get(path)
+                self.assertContains(response, f'class="{background_class}"')
+                self.assertContains(response, "opacity: .2")
+                self.assertContains(response, f'class="{shade_class}"')
+                self.assertContains(
+                    response,
+                    "linear-gradient(to bottom, rgba(10,10,10,.8), "
+                    "rgba(10,10,10,.6), rgba(10,10,10,.9))",
+                )
+                self.assertContains(
+                    response,
+                    "/static/site/images/hero-bg.webp",
+                )
+
     def test_vasani_natural_brand_project_shows_all_images_in_identity_gallery(self):
         data = next(item for item in PROJECTS if item["slug"] == "vasani-natural-branding")
         gallery_images = data["gallery_images"].splitlines()
