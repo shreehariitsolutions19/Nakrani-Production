@@ -273,40 +273,12 @@
         <h2 class="pd-h2 pd-reveal" data-reveal style="--d:.1s">Project <span class="pd-script">Gallery</span></h2>
       </div>
       <div class="pd-grid-3" data-stagger="3">
-        {% for image in gallery_images|slice:":3" %}
+        {% for image in gallery_images %}
           <button type="button" class="pd-thumb pd-reveal" data-reveal style="--d:{{ forloop.counter }}00ms" data-lightbox aria-label="Open {{ project.title }} image {{ forloop.counter }}">
             <div class="frame"><img src="{% if image|slice:':5' == 'site/' %}{% static image %}{% else %}{{ image }}{% endif %}" alt="{{ project.title }} project image {{ forloop.counter }}" loading="lazy" decoding="async"></div>
             <div class="veil"><span class="pd-zoom"><i class="ri-zoom-in-line"></i></span></div>
           </button>
         {% endfor %}
-      </div>
-    </div>
-  </section>
-
-  <!-- ADDITIONAL IMAGERY -->
-  <section class="pd-section">
-    <div class="pd-blob pd-parallax" data-depth="12" style="top:33%;right:0;width:440px;height:440px"></div>
-    <div class="pd-shell">
-      <div class="pd-section-head">
-        <span class="pd-tag pd-reveal" data-reveal>Additional Imagery</span>
-        <h2 class="pd-h2 pd-reveal" data-reveal style="--d:.15s">More From This <span class="pd-script">Project</span></h2>
-      </div>
-      <div class="pd-reveal" data-reveal style="--d:.3s">
-        {% with extra=gallery_images|slice:"3:4" %}
-          {% if extra %}
-            {% for image in extra %}
-              <button type="button" class="pd-thumb pd-thumb--wide" data-lightbox aria-label="Open {{ project.title }} additional image">
-                <img src="{% if image|slice:':5' == 'site/' %}{% static image %}{% else %}{{ image }}{% endif %}" alt="{{ project.title }} additional project visual" loading="lazy" decoding="async">
-                <div class="veil"><span class="pd-zoom"><i class="ri-zoom-in-line"></i></span></div>
-              </button>
-            {% endfor %}
-          {% else %}
-            <button type="button" class="pd-thumb pd-thumb--wide" data-lightbox aria-label="Open {{ project.title }} additional image">
-              <img src="{{ project.image_url }}" alt="{{ project.title }} additional project visual" loading="lazy" decoding="async">
-              <div class="veil"><span class="pd-zoom"><i class="ri-zoom-in-line"></i></span></div>
-            </button>
-          {% endif %}
-        {% endwith %}
       </div>
     </div>
   </section>

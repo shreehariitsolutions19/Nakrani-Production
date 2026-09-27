@@ -240,6 +240,56 @@ PROJECTS = [
         "gallery_images": "",
         "featured": False,
     },
+    {
+        "title": "Vasani Natural",
+        "slug": "vasani-natural-branding",
+        "category": "Branding & Identity",
+        "description": (
+            "A complete brand identity for Vasani Natural, a natural-products company. "
+            "The supplied work brings the leaf-led wordmark into a consistent system "
+            "across brand guidelines, product packaging and outdoor advertising."
+        ),
+        "design_details": (
+            "A leaf motif and two-tone green wordmark establish the natural identity. "
+            "Cream and deep forest-green backgrounds carry the system across logo "
+            "variations, typography and colour references."
+        ),
+        "provided_services": (
+            "Brand Strategy\nLogo & Visual Identity\nTypography & Colour System\n"
+            "Packaging & Product Mockups\nOutdoor Advertising"
+        ),
+        "challenge": (
+            "Create one recognizable identity for a natural-products company and "
+            "apply it consistently to brand boards, product labels and large-format advertising."
+        ),
+        "solution": (
+            "A leaf-led Vasani Natural wordmark paired with a green-and-cream palette, "
+            "coordinated typography, sesame oil and raw honey packaging, and billboard concepts."
+        ),
+        "result": (
+            "A cohesive brand presentation spanning the logo system, brand guidelines, "
+            "product mockups and outdoor advertising concepts."
+        ),
+        "client": "Vasani Natural",
+        "year": 2026,
+        "image": "vasani-natural-products-billboard.jpeg",
+        "gallery_images": "\n".join(
+            (
+                "site/images/vasani-natural-logo-board.jpeg",
+                "site/images/vasani-natural-logo-cream.jpeg",
+                "site/images/vasani-natural-brand-mission-vision.jpeg",
+                "site/images/vasani-natural-logo-dark-green.jpeg",
+                "site/images/vasani-natural-color-palette.jpeg",
+                "site/images/vasani-natural-typography.jpeg",
+                "site/images/vasani-natural-identity-variants.jpeg",
+                "site/images/vasani-natural-billboard-branding.jpeg",
+                "site/images/vasani-natural-thank-you.jpeg",
+                "site/images/vasani-natural-stationery-packaging.jpeg",
+                "site/images/vasani-natural-products-billboard.jpeg",
+            )
+        ),
+        "featured": True,
+    },
 ]
 
 BLOG_POSTS = [
@@ -484,7 +534,7 @@ class Command(BaseCommand):
 
         self.stdout.write(
             self.style.SUCCESS(
-                "Preview content is ready: 6 services, 10 portfolio projects, "
+                "Preview content is ready: 6 services, 11 portfolio projects, "
                 "1 testimonial, 9 journal articles and 5 contact FAQs."
             )
         )

@@ -123,7 +123,7 @@ def portfolio_detail(request, slug):
         gallery = [project.image_url] + [
             item for item in gallery
             if item.rsplit("/", 1)[-1] != image_name
-        ][:3]
+        ]
 
     context.update({
         "page_title": project.title,

@@ -1,7 +1,11 @@
+from pathlib import Path
+
+from django.conf import settings
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone
 
+from .management.commands.seed_demo import PROJECTS
 from .models import BlogPost, FAQItem, NewsletterSubscriber, PortfolioProject, Service
 
 
@@ -119,6 +123,35 @@ class DynamicContentTests(TestCase):
                     "window.addEventListener('scroll', scheduleParallax",
                 )
                 self.assertContains(response, "data-depth=")
+
+    def test_vasani_natural_brand_project_includes_all_gallery_images(self):
+        data = next(item for item in PROJECTS if item["slug"] == "vasani-natural-branding")
+        gallery_images = data["gallery_images"].splitlines()
+        project = PortfolioProject.objects.create(
+            title=data["title"],
+            slug=data["slug"],
+            category=data["category"],
+            description=data["description"],
+            design_details=data["design_details"],
+            provided_services=data["provided_services"],
+            challenge=data["challenge"],
+            solution=data["solution"],
+            result=data["result"],
+            client=data["client"],
+            year=data["year"],
+            image=f"portfolio/{data['image']}",
+            gallery_images=data["gallery_images"],
+        )
+
+        response = self.client.get(reverse("portfolio_detail", args=[project.slug]))
+
+        self.assertEqual(len(gallery_images), 11)
+        for image_path in gallery_images:
+            asset_path = image_path.removeprefix("site/images/")
+            self.assertTrue(
+                (Path(settings.STATICFILES_DIRS[0]) / "site" / "images" / asset_path).is_file()
+            )
+            self.assertContains(response, f"/static/{image_path}")
 
     def test_contact_page_renders_active_database_faqs(self):
         FAQItem.objects.create(
