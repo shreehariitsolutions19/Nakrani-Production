@@ -54,6 +54,18 @@ class Service(models.Model):
     description = models.TextField()
     icon_class = models.CharField(max_length=80, default="ri-palette-line")
     image = models.ImageField(upload_to="services/", blank=True)
+    gallery_images = models.TextField(
+        blank=True,
+        help_text="One static image path per line",
+    )
+    gallery_image_descriptions = models.TextField(
+        blank=True,
+        help_text="One image description per gallery image line",
+    )
+    gallery_videos = models.TextField(
+        blank=True,
+        help_text="One static video path per line",
+    )
     features = models.TextField(blank=True, help_text="One feature per line")
     feature_descriptions = models.TextField(
         blank=True,
@@ -101,6 +113,31 @@ class Service(models.Model):
     @property
     def detail_intro_list(self):
         return [x.strip() for x in self.detail_intro.splitlines() if x.strip()]
+
+    @property
+    def gallery_image_list(self):
+        return [x.strip() for x in self.gallery_images.splitlines() if x.strip()]
+
+    @property
+    def gallery_image_item_list(self):
+        descriptions = [
+            x.strip() for x in self.gallery_image_descriptions.splitlines()
+        ]
+        return [
+            {
+                "path": image,
+                "description": (
+                    descriptions[index]
+                    if index < len(descriptions) and descriptions[index]
+                    else f"{self.title} production image {index + 1}"
+                ),
+            }
+            for index, image in enumerate(self.gallery_image_list)
+        ]
+
+    @property
+    def gallery_video_list(self):
+        return [x.strip() for x in self.gallery_videos.splitlines() if x.strip()]
 
     @property
     def feature_item_list(self):

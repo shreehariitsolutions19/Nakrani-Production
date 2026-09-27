@@ -5,7 +5,7 @@ from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone
 
-from .management.commands.seed_demo import PROJECTS
+from .management.commands.seed_demo import PROJECTS, SERVICES
 from .models import BlogPost, FAQItem, NewsletterSubscriber, PortfolioProject, Service
 
 
@@ -62,6 +62,43 @@ class DynamicContentTests(TestCase):
 
         self.assertContains(listing, "/static/site/images/1_branding-mockup.jpg")
         self.assertContains(detail, "/static/site/images/1_branding-mockup.jpg")
+
+    def test_cgi_ad_service_shows_image_gallery_and_playable_video(self):
+        data = next(item for item in SERVICES if item["slug"] == "cgi-ad-creation")
+        service = Service.objects.create(**data, order=7)
+
+        listing = self.client.get(reverse("services"))
+        detail = self.client.get(reverse("service_detail", args=[service.slug]))
+
+        self.assertContains(listing, "CGI Ad Creation")
+        self.assertContains(detail, "CGI Showcase")
+        self.assertContains(detail, "<video")
+        self.assertContains(detail, "controls")
+        self.assertContains(detail, "autoplay muted loop controls")
+        self.assertContains(
+            detail,
+            "/static/site/videos/cgi-helicopter-ad.mp4",
+        )
+        self.assertContains(
+            detail,
+            "/static/site/images/cgi-helicopter-ad-poster.jpeg",
+        )
+        for image_path in service.gallery_image_list:
+            self.assertTrue(
+                (
+                    Path(settings.STATICFILES_DIRS[0])
+                    / Path(*image_path.split("/"))
+                ).is_file()
+            )
+            self.assertContains(detail, f"/static/{image_path}")
+        self.assertTrue(
+            (
+                Path(settings.STATICFILES_DIRS[0])
+                / "site"
+                / "videos"
+                / "cgi-helicopter-ad.mp4"
+            ).is_file()
+        )
 
     def test_portfolio_related_work_uses_static_image_fallback_and_scroll_parallax(self):
         PortfolioProject.objects.create(

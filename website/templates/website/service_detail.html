@@ -336,6 +336,58 @@
     line-height: 1.85;
   }
 
+  .d-showcase-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .d-showcase-video {
+    width: 100%;
+    max-width: 420px;
+    max-height: 740px;
+    margin: 0 auto;
+    aspect-ratio: 9 / 16;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 1rem;
+    background: #050505;
+    object-fit: contain;
+  }
+
+  .d-showcase-images {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .d-showcase-image {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: .875rem;
+    background: #111;
+  }
+
+  .d-showcase-image img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+  }
+
+  .d-showcase-image figcaption {
+    padding: .75rem;
+    color: #bbb;
+    font-size: .8rem;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 900px) {
+    .d-showcase-grid { grid-template-columns: minmax(260px, .72fr) minmax(0, 1.28fr); }
+    .d-showcase-images { gap: 1.25rem; }
+  }
+
 
   /* =========================================================
      GLASS CARDS (deliverables / process / more services)
@@ -724,6 +776,34 @@
     </div>
 
   </section>
+
+  {% if service.gallery_video_list or service.gallery_image_item_list %}
+  <section class="d-section d-dark">
+    <div class="d-inner">
+      <div class="d-head" data-reveal>
+        <span class="d-label">CGI Showcase</span>
+        <h2>Image &amp; <span class="d-script">Motion</span></h2>
+        <p>Watch the finished CGI advertisement and explore the 3D setup and edit behind it.</p>
+      </div>
+      <div class="d-showcase-grid">
+        {% for video in service.gallery_video_list %}
+        <video class="d-showcase-video" autoplay muted loop controls preload="metadata" playsinline poster="{{ service.image_url }}" aria-label="{{ service.title }} video preview">
+          <source src="{% static video %}" type="video/mp4">
+          Your browser does not support HTML video.
+        </video>
+        {% endfor %}
+        <div class="d-showcase-images">
+          {% for image in service.gallery_image_item_list %}
+          <figure class="d-showcase-image">
+            <img src="{% static image.path %}" alt="{{ image.description }}" loading="lazy" decoding="async">
+            <figcaption>{{ image.description }}</figcaption>
+          </figure>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
 
   <!-- ABOUT THIS SERVICE -->
   <section class="d-section d-mid">

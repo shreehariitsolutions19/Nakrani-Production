@@ -26,7 +26,28 @@ class ServiceAdmin(admin.ModelAdmin):
     list_editable = ("order", "active")
     search_fields = ("title", "description")
     fieldsets = (
-        (None, {"fields": ("title", "slug", "description", "icon_class", "image")}),
+        (
+            None,
+            {
+                "fields": (
+                    "title",
+                    "slug",
+                    "description",
+                    "icon_class",
+                    "image",
+                )
+            },
+        ),
+        (
+            "Service showcase media",
+            {
+                "fields": (
+                    "gallery_images",
+                    "gallery_image_descriptions",
+                    "gallery_videos",
+                )
+            },
+        ),
         (
             "Service detail content",
             {

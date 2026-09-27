@@ -52,6 +52,59 @@ SERVICES = [
         "icon_class": "ri-computer-line",
         "features": "Web Interface Visuals\nDigital Campaigns\nApp UI Assets\nWeb Graphics\nArt Direction",
     },
+    {
+        "title": "CGI Ad Creation",
+        "slug": "cgi-ad-creation",
+        "description": (
+            "Create cinematic CGI advertisements with custom 3D scenes, product "
+            "visuals, animation and polished stills for digital campaigns."
+        ),
+        "icon_class": "ri-movie-2-line",
+        "image": "services/cgi-helicopter-ad-poster.jpeg",
+        "features": (
+            "CGI Advertising Stills\n3D Product Visualisation\n"
+            "Animated Product Films\nVirtual Scene Design\n"
+            "Social Media CGI Assets"
+        ),
+        "feature_descriptions": (
+            "High-impact CGI key visuals for campaigns, launches and promotions.\n"
+            "Detailed three-dimensional product scenes and camera-ready renders.\n"
+            "Short-form animated advertisements with cinematic motion.\n"
+            "Custom environments, props and lighting designed around the concept.\n"
+            "Optimised image and video exports for social and digital channels."
+        ),
+        "process": (
+            "Concept & Storyboard\n3D Scene Setup\nAnimation & Lighting\n"
+            "Rendering & Edit\nFinal Delivery"
+        ),
+        "process_descriptions": (
+            "Shape the campaign idea, audience and visual direction.\n"
+            "Build the scene, product elements, camera and environment.\n"
+            "Animate key actions and refine materials, light and composition.\n"
+            "Render the film and polish the cut, sound and still frames.\n"
+            "Prepare final image and video files for the required platforms."
+        ),
+        "detail_heading": "CGI ads made to move your audience",
+        "detail_intro": (
+            "We create custom CGI advertisements that turn product stories into "
+            "memorable moving visuals.\n"
+            "Every project can include both finished still images and a polished "
+            "video, composed for the campaign and the platforms where it will appear."
+        ),
+        "gallery_images": (
+            "site/images/cgi-helicopter-scene-side.jpeg\n"
+            "site/images/cgi-helicopter-camera-layout.jpeg\n"
+            "site/images/cgi-helicopter-render-settings.jpeg\n"
+            "site/images/cgi-helicopter-edit-timeline.jpeg"
+        ),
+        "gallery_image_descriptions": (
+            "3D helicopter scene and environment\n"
+            "Camera framing and scene composition\n"
+            "Blender render and lighting setup\n"
+            "Video edit and animation timeline"
+        ),
+        "gallery_videos": "site/videos/cgi-helicopter-ad.mp4",
+    },
 ]
 
 PROCESS = "Discover\nStrategy\nDesign\nRefine\nDeliver"
@@ -462,23 +515,31 @@ class Command(BaseCommand):
                 slug=service_data["slug"],
                 defaults={
                     **service_data,
-                    "process": PROCESS,
-                    "detail_heading": f"{service_data['title']} designed around your brand",
-                    "detail_intro": (
+                    "process": service_data.get("process", PROCESS),
+                    "detail_heading": service_data.get(
+                        "detail_heading",
+                        f"{service_data['title']} designed around your brand",
+                    ),
+                    "detail_intro": service_data.get(
+                        "detail_intro",
                         service_data["description"]
                         + "\nWe bring strategy, thoughtful design and careful production together "
-                        "to create work that is ready to use across your brand."
+                        "to create work that is ready to use across your brand.",
                     ),
-                    "feature_descriptions": "\n".join(
-                        f"Carefully developed {feature.strip().lower()} tailored to your brand."
-                        for feature in service_data["features"].splitlines()
+                    "feature_descriptions": service_data.get(
+                        "feature_descriptions",
+                        "\n".join(
+                            f"Carefully developed {feature.strip().lower()} tailored to your brand."
+                            for feature in service_data["features"].splitlines()
+                        ),
                     ),
-                    "process_descriptions": (
+                    "process_descriptions": service_data.get(
+                        "process_descriptions",
                         "We learn about your brand, audience and goals."
                         "\nWe define a clear creative direction and priorities."
                         "\nWe create the visual work and share it for review."
                         "\nWe refine the details using your feedback."
-                        "\nWe prepare and deliver the final production-ready files."
+                        "\nWe prepare and deliver the final production-ready files.",
                     ),
                     "order": index,
                     "active": True,
@@ -534,7 +595,7 @@ class Command(BaseCommand):
 
         self.stdout.write(
             self.style.SUCCESS(
-                "Preview content is ready: 6 services, 11 portfolio projects, "
+                "Preview content is ready: 7 services, 11 portfolio projects, "
                 "1 testimonial, 9 journal articles and 5 contact FAQs."
             )
         )
