@@ -58,6 +58,7 @@
   @media(min-width:768px){.pd-cover{margin-top:4rem}}
   .pd-cover-frame{overflow:hidden;border-radius:1rem;border:1px solid var(--pd-line);box-shadow:0 25px 50px -12px rgba(0,0,0,.6)}
   .pd-cover img{display:block;width:100%;height:auto;object-fit:contain;object-position:center}
+  .pd-cover-frame--vasani img{transform:scale(1.15);transform-origin:left center}
 
   /* overview */
   .pd-two{display:grid;gap:3rem}
@@ -202,7 +203,7 @@
       </div>
 
       <div class="pd-cover pd-parallax hero-art" data-depth="10">
-        <div class="pd-cover-frame">
+        <div class="pd-cover-frame{% if project.slug == 'vasani-natural-branding' %} pd-cover-frame--vasani{% endif %}">
           {% if project.image %}
             <img src="{{ project.image_url }}" alt="{{ project.title }} — {{ project.category }}" loading="eager">
           {% else %}

@@ -149,6 +149,7 @@ class DynamicContentTests(TestCase):
         self.assertEqual(len(response.context["gallery_images"]), 10)
         self.assertContains(response, "Brand Identity")
         self.assertContains(response, "Brand Applications")
+        self.assertContains(response, "pd-cover-frame--vasani")
         self.assertEqual(
             response.content.decode().count(
                 "/static/site/images/vasani-natural-products-billboard.jpeg"
