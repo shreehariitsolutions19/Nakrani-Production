@@ -20,7 +20,9 @@ def update_site_settings(apps, schema_editor):
     site_settings.email = "Design.Hitul@gmail.com"
     site_settings.city = "Visnagar, Mehsana, Gujarat, India"
     site_settings.address = "Visnagar, Mehsana, Gujarat, India"
-    site_settings.save(update_fields=["owner_name", "phone", "email", "city", "address", "updated_at"])
+    site_settings.save(
+        update_fields=["owner_name", "phone", "email", "city", "address", "updated_at"]
+    )
 
 
 class Migration(migrations.Migration):

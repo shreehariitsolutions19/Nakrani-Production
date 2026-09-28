@@ -6,38 +6,40 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('website', '0013_align_contact_submission_state'),
+        ("website", "0013_align_contact_submission_state"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='blogpost',
-            name='read_time',
+            model_name="blogpost",
+            name="read_time",
             field=models.PositiveSmallIntegerField(default=6),
         ),
         migrations.AddField(
-            model_name='portfolioproject',
-            name='challenge',
+            model_name="portfolioproject",
+            name="challenge",
             field=models.TextField(blank=True),
         ),
         migrations.AddField(
-            model_name='portfolioproject',
-            name='gallery_images',
-            field=models.TextField(blank=True, help_text='One static image path per line'),
+            model_name="portfolioproject",
+            name="gallery_images",
+            field=models.TextField(
+                blank=True, help_text="One static image path per line"
+            ),
         ),
         migrations.AddField(
-            model_name='portfolioproject',
-            name='provided_services',
-            field=models.TextField(blank=True, help_text='One service per line'),
+            model_name="portfolioproject",
+            name="provided_services",
+            field=models.TextField(blank=True, help_text="One service per line"),
         ),
         migrations.AddField(
-            model_name='portfolioproject',
-            name='result',
+            model_name="portfolioproject",
+            name="result",
             field=models.TextField(blank=True),
         ),
         migrations.AddField(
-            model_name='portfolioproject',
-            name='solution',
+            model_name="portfolioproject",
+            name="solution",
             field=models.TextField(blank=True),
         ),
     ]

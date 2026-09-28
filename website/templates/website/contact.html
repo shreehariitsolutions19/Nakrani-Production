@@ -1,8 +1,7 @@
-{% extends 'website/base.html' %}
+{% extends "website/base.html" %}
 {% load static %}
-
 {% block content %}
-<style>
+    <style>
   /* =========================================================
      SCROLL PROGRESS BAR
      ========================================================= */
@@ -773,226 +772,296 @@
     }
     .js-reveal [data-reveal] { opacity: 1; translate: none; scale: 1; }
   }
-</style>
-
-<div id="scrollProgress" aria-hidden="true"></div>
-
-<div class="c-page">
-
-  <!-- =====================================================
+    </style>
+    <div id="scrollProgress" aria-hidden="true"></div>
+    <div class="c-page">
+        <!-- =====================================================
        HERO
        ===================================================== -->
-  <section class="c-hero">
-    <div class="c-hero-bg" style="background-image:url({% static 'site/images/hero-bg.webp' %});"></div>
-    <div class="c-hero-shade"></div>
-    <div class="c-glow" data-depth="16" style="top:6rem;right:4rem;width:18rem;height:18rem;"></div>
-    <div class="c-glow" data-depth="9" style="bottom:4rem;left:4rem;width:24rem;height:24rem;"></div>
-
-    <div class="c-hero-grid">
-      <div class="c-hero-copy hero-copy">
-        <div class="c-kicker"><b>Contact</b><span>{% if site_settings %}{{ site_settings.owner_name }}{% else %}Hitul Nakrani{% endif %}</span></div>
-        <h1>Let's Create Something <span class="c-script">Remarkable</span>.</h1>
-        <p class="c-hero-desc">Have a project, idea or brand that needs a fresh visual direction? Tell us about it.</p>
-        <div class="c-links">
-          <a class="c-link" href="mailto:{% if site_settings %}{{ site_settings.email }}{% else %}Design.Hitul@gmail.com{% endif %}">
-            <span class="c-link-icon"><i class="ri-mail-line"></i></span>
-            {% if site_settings %}{{ site_settings.email }}{% else %}Design.Hitul@gmail.com{% endif %}
-          </a>
-          <a class="c-link" href="tel:{% if site_settings %}{{ site_settings.phone }}{% else %}+917016228333{% endif %}">
-            <span class="c-link-icon"><i class="ri-phone-line"></i></span>
-            {% if site_settings %}{{ site_settings.phone }}{% else %}+91 70162 28333{% endif %}
-          </a>
-        </div>
-      </div>
-
-      <div class="c-art hero-art" data-depth="14">
-        <div class="c-photo">
-          <img src="{% static 'site/images/contact-hero.webp' %}" alt="Nakrani Production creative consultation">
-        </div>
-        <div class="c-badge">
-          <strong>&lt;24h</strong>
-          <span>Reply Time</span>
-        </div>
-      </div>
-    </div>
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
-      <span class="text-xs uppercase tracking-widest" style="writing-mode:vertical-lr">Scroll Down</span>
-      <div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div>
-    </div>
-
-  </section>
-
-
-  <!-- =====================================================
+        <section class="c-hero">
+            <div class="c-hero-bg"
+                 style="background-image:url({% static 'site/images/hero-bg.webp' %})"></div>
+            <div class="c-hero-shade"></div>
+            <div class="c-glow"
+                 data-depth="16"
+                 style="top:6rem;
+                        right:4rem;
+                        width:18rem;
+                        height:18rem"></div>
+            <div class="c-glow"
+                 data-depth="9"
+                 style="bottom:4rem;
+                        left:4rem;
+                        width:24rem;
+                        height:24rem"></div>
+            <div class="c-hero-grid">
+                <div class="c-hero-copy hero-copy">
+                    <div class="c-kicker"><b>Contact</b><span>{% if site_settings %}{{ site_settings.owner_name }}{% else %}Hitul Nakrani{% endif %}</span></div>
+                    <h1>Let's Create Something <span class="c-script">Remarkable</span>.</h1>
+                    <p class="c-hero-desc">Have a project, idea or brand that needs a fresh visual direction? Tell us about it.</p>
+                    <div class="c-links">
+                        <a class="c-link"
+                           href="mailto:{% if site_settings %}{{ site_settings.email }}{% else %}Design.Hitul@gmail.com{% endif %}">
+                            <span class="c-link-icon"><i class="ri-mail-line"></i></span>
+                            {% if site_settings %}{{ site_settings.email }}{% else %}Design.Hitul@gmail.com{% endif %}
+                        </a>
+                        <a class="c-link"
+                           href="tel:{% if site_settings %}{{ site_settings.phone }}{% else %}+917016228333{% endif %}">
+                            <span class="c-link-icon"><i class="ri-phone-line"></i></span>
+                            {% if site_settings %}{{ site_settings.phone }}{% else %}+91 70162 28333{% endif %}
+                        </a>
+                    </div>
+                </div>
+                <div class="c-art hero-art" data-depth="14">
+                    <div class="c-photo">
+                        <img src="{% static 'site/images/contact-hero.webp' %}"
+                             alt="Nakrani Production creative consultation">
+                    </div>
+                    <div class="c-badge">
+                        <strong>&lt;24h</strong>
+                        <span>Reply Time</span>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
+                <span class="text-xs uppercase tracking-widest"
+                      style="writing-mode:vertical-lr">Scroll Down</span>
+                <div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div>
+            </div>
+        </section>
+        <!-- =====================================================
        GET IN TOUCH
        ===================================================== -->
-  <section class="c-section c-dark c-touch">
-    <div class="c-glow" data-depth="12" style="top:0;right:0;width:520px;height:520px;"></div>
-    <div class="c-inner c-touch-grid">
-      <div class="c-touch-copy">
-        <span class="c-label" data-reveal>Get in Touch</span>
-        <h2 class="c-h2" data-reveal style="--d:.1s">Let's Start a <span class="c-script">Conversation</span></h2>
-        <p class="c-lead" data-reveal style="--d:.2s">Tell us about your brand and what you are trying to build. Whether it is a full identity or a single piece of design, we would love to hear the idea.</p>
-        <div class="c-social" data-reveal style="--d:.3s">
-          <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
-          <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="ri-linkedin-line"></i></a>
-          <a href="https://behance.net/" target="_blank" rel="noopener noreferrer" aria-label="Behance"><i class="ri-behance-line"></i></a>
-        </div>
-      </div>
-
-      <div class="c-touch-cards" data-stagger="3">
-        <a class="c-glass c-hover c-touch-card" data-reveal href="mailto:{% if site_settings %}{{ site_settings.email }}{% else %}Design.Hitul@gmail.com{% endif %}">
-          <span class="c-icon"><i class="ri-mail-line"></i></span>
-          <small>Email</small>
-          <p>{% if site_settings %}{{ site_settings.email }}{% else %}Design.Hitul@gmail.com{% endif %}</p>
-        </a>
-        <a class="c-glass c-hover c-touch-card" data-reveal href="tel:{% if site_settings %}{{ site_settings.phone }}{% else %}+917016228333{% endif %}">
-          <span class="c-icon"><i class="ri-phone-line"></i></span>
-          <small>Phone</small>
-          <p>{% if site_settings %}{{ site_settings.phone }}{% else %}+91 70162 28333{% endif %}</p>
-        </a>
-        <div class="c-glass c-hover c-touch-card" data-reveal>
-          <span class="c-icon"><i class="ri-map-pin-line"></i></span>
-          <small>Studio</small>
-          <p>{% if site_settings and site_settings.address %}{{ site_settings.address }}{% else %}Visnagar, Mehsana, Gujarat, India{% endif %}</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- =====================================================
+        <section class="c-section c-dark c-touch">
+            <div class="c-glow"
+                 data-depth="12"
+                 style="top:0;
+                        right:0;
+                        width:520px;
+                        height:520px"></div>
+            <div class="c-inner c-touch-grid">
+                <div class="c-touch-copy">
+                    <span class="c-label" data-reveal>Get in Touch</span>
+                    <h2 class="c-h2"
+                        data-reveal
+                        style="--d:.1s">Let's Start a <span class="c-script">Conversation</span></h2>
+                    <p class="c-lead" data-reveal style="--d:.2s">Tell us about your brand and what you are trying to build. Whether it is a full identity or a single piece of design, we would love to hear the idea.</p>
+                    <div class="c-social" data-reveal style="--d:.3s">
+                        <a href="https://instagram.com/"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+                        <a href="https://linkedin.com/"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label="LinkedIn"><i class="ri-linkedin-line"></i></a>
+                        <a href="https://behance.net/"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label="Behance"><i class="ri-behance-line"></i></a>
+                    </div>
+                </div>
+                <div class="c-touch-cards" data-stagger="3">
+                    <a class="c-glass c-hover c-touch-card"
+                       data-reveal
+                       href="mailto:{% if site_settings %}{{ site_settings.email }}{% else %}Design.Hitul@gmail.com{% endif %}">
+                        <span class="c-icon"><i class="ri-mail-line"></i></span>
+                        <small>Email</small>
+                        <p>{% if site_settings %}{{ site_settings.email }}{% else %}Design.Hitul@gmail.com{% endif %}</p>
+                    </a>
+                    <a class="c-glass c-hover c-touch-card"
+                       data-reveal
+                       href="tel:{% if site_settings %}{{ site_settings.phone }}{% else %}+917016228333{% endif %}">
+                        <span class="c-icon"><i class="ri-phone-line"></i></span>
+                        <small>Phone</small>
+                        <p>{% if site_settings %}{{ site_settings.phone }}{% else %}+91 70162 28333{% endif %}</p>
+                    </a>
+                    <div class="c-glass c-hover c-touch-card" data-reveal>
+                        <span class="c-icon"><i class="ri-map-pin-line"></i></span>
+                        <small>Studio</small>
+                        <p>{% if site_settings and site_settings.address %}{{ site_settings.address }}{% else %}Visnagar, Mehsana, Gujarat, India{% endif %}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- =====================================================
        PROJECT ENQUIRY FORM
        ===================================================== -->
-  <section class="c-section c-mid" id="enquiry-form">
-    <div class="c-glow" data-depth="10" style="top:50%;left:50%;width:640px;height:640px;margin:-320px 0 0 -320px;"></div>
-    <div class="c-inner">
-      <div class="c-form-wrap">
-        <div class="c-head">
-          <span class="c-label" data-reveal>Project Enquiry</span>
-          <h2 class="c-h2" data-reveal style="--d:.1s">Tell Us About Your <span class="c-script">Project</span></h2>
-          <p class="c-lead" data-reveal style="--d:.2s">Share a few details and we will craft the right creative direction for your brand.</p>
-        </div>
-
-        <form class="c-glass c-form" id="project-enquiry-form" method="post" novalidate data-reveal="scale" style="--d:.1s">
-          {% csrf_token %}
-          <div class="c-grid2" data-stagger="2">
-            <div class="c-field{% if form and form.name.errors %} has-error{% endif %}" data-reveal>
-              <label for="contact-name">Name <b>*</b></label>
-              <input class="c-input" id="contact-name" name="name" type="text" autocomplete="name" value="{{ request.POST.name|default:'' }}" placeholder="Your full name" required>
-              {% if form and form.name.errors %}<span class="c-error">{{ form.name.errors|join:', ' }}</span>{% endif %}
+        <section class="c-section c-mid" id="enquiry-form">
+            <div class="c-glow"
+                 data-depth="10"
+                 style="top:50%;
+                        left:50%;
+                        width:640px;
+                        height:640px;
+                        margin:-320px 0 0 -320px"></div>
+            <div class="c-inner">
+                <div class="c-form-wrap">
+                    <div class="c-head">
+                        <span class="c-label" data-reveal>Project Enquiry</span>
+                        <h2 class="c-h2"
+                            data-reveal
+                            style="--d:.1s">Tell Us About Your <span class="c-script">Project</span></h2>
+                        <p class="c-lead"
+                           data-reveal
+                           style="--d:.2s">Share a few details and we will craft the right creative direction for your brand.</p>
+                    </div>
+                    <form class="c-glass c-form"
+                          id="project-enquiry-form"
+                          method="post"
+                          novalidate
+                          data-reveal="scale"
+                          style="--d:.1s">
+                        {% csrf_token %}
+                        <div class="c-grid2" data-stagger="2">
+                            <div class="c-field{% if form and form.name.errors %} has-error{% endif %}"
+                                 data-reveal>
+                                <label for="contact-name">Name <b>*</b></label>
+                                <input class="c-input"
+                                       id="contact-name"
+                                       name="name"
+                                       type="text"
+                                       autocomplete="name"
+                                       value="{{ request.POST.name|default:'' }}"
+                                       placeholder="Your full name"
+                                       required>
+                                {% if form and form.name.errors %}<span class="c-error">{{ form.name.errors|join:', ' }}</span>{% endif %}
+                            </div>
+                            <div class="c-field{% if form and form.email.errors %} has-error{% endif %}"
+                                 data-reveal>
+                                <label for="contact-email">Email <b>*</b></label>
+                                <input class="c-input"
+                                       id="contact-email"
+                                       name="email"
+                                       type="email"
+                                       autocomplete="email"
+                                       value="{{ request.POST.email|default:'' }}"
+                                       placeholder="you@email.com"
+                                       required>
+                                {% if form and form.email.errors %}<span class="c-error">{{ form.email.errors|join:', ' }}</span>{% endif %}
+                            </div>
+                            <div class="c-field" data-reveal>
+                                <label for="contact-phone">Number <b>*</b></label>
+                                <input class="c-input"
+                                       id="contact-phone"
+                                       name="phone"
+                                       type="tel"
+                                       autocomplete="tel"
+                                       value="{{ request.POST.phone|default:'' }}"
+                                       placeholder="+91 00000 00000"
+                                       required>
+                            </div>
+                            <div class="c-field" data-reveal>
+                                <label for="contact-city">City <b>*</b></label>
+                                <input class="c-input"
+                                       id="contact-city"
+                                       name="city"
+                                       type="text"
+                                       value="{{ request.POST.city|default:'' }}"
+                                       placeholder="Your city"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="c-submit-row">
+                            <button class="btn-primary" type="submit"><span class="c-btn-text">Send Enquiry</span> <i class="ri-send-plane-line"></i></button>
+                            <p class="c-required"><b>*</b> Required fields</p>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <div class="c-field{% if form and form.email.errors %} has-error{% endif %}" data-reveal>
-              <label for="contact-email">Email <b>*</b></label>
-              <input class="c-input" id="contact-email" name="email" type="email" autocomplete="email" value="{{ request.POST.email|default:'' }}" placeholder="you@email.com" required>
-              {% if form and form.email.errors %}<span class="c-error">{{ form.email.errors|join:', ' }}</span>{% endif %}
-            </div>
-
-            <div class="c-field" data-reveal>
-              <label for="contact-phone">Number <b>*</b></label>
-              <input class="c-input" id="contact-phone" name="phone" type="tel" autocomplete="tel" value="{{ request.POST.phone|default:'' }}" placeholder="+91 00000 00000" required>
-            </div>
-
-            <div class="c-field" data-reveal>
-              <label for="contact-city">City <b>*</b></label>
-              <input class="c-input" id="contact-city" name="city" type="text" value="{{ request.POST.city|default:'' }}" placeholder="Your city" required>
-            </div>
-          </div>
-
-          <div class="c-submit-row">
-            <button class="btn-primary" type="submit"><span class="c-btn-text">Send Enquiry</span> <i class="ri-send-plane-line"></i></button>
-            <p class="c-required"><b>*</b> Required fields</p>
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- =====================================================
+        </section>
+        <!-- =====================================================
        WHY WORK WITH US
        ===================================================== -->
-  <section class="c-section c-dark">
-    <div class="c-inner">
-      <div class="c-head">
-        <span class="c-label" data-reveal>Why Nakrani</span>
-        <h2 class="c-h2" data-reveal style="--d:.1s">Why Work With Us</h2>
-        <p class="c-lead" data-reveal style="--d:.2s">A design partner that cares about the idea behind the visuals, not just the way they look.</p>
-      </div>
-
-      <div class="c-why-grid" data-stagger="3">
-        <article class="c-glass c-hover c-why-card" data-reveal>
-          <span class="c-icon"><i class="ri-lightbulb-line"></i></span>
-          <h3>Thoughtful Design</h3>
-          <i class="c-line"></i>
-          <p>We focus on ideas that communicate clearly and create recognition.</p>
-        </article>
-        <article class="c-glass c-hover c-why-card" data-reveal>
-          <span class="c-icon"><i class="ri-team-line"></i></span>
-          <h3>Collaborative Process</h3>
-          <i class="c-line"></i>
-          <p>We work closely with clients throughout the creative process.</p>
-        </article>
-        <article class="c-glass c-hover c-why-card" data-reveal>
-          <span class="c-icon"><i class="ri-focus-3-line"></i></span>
-          <h3>Attention to Detail</h3>
-          <i class="c-line"></i>
-          <p>Every visual element is refined with purpose.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- =====================================================
+        <section class="c-section c-dark">
+            <div class="c-inner">
+                <div class="c-head">
+                    <span class="c-label" data-reveal>Why Nakrani</span>
+                    <h2 class="c-h2" data-reveal style="--d:.1s">Why Work With Us</h2>
+                    <p class="c-lead"
+                       data-reveal
+                       style="--d:.2s">A design partner that cares about the idea behind the visuals, not just the way they look.</p>
+                </div>
+                <div class="c-why-grid" data-stagger="3">
+                    <article class="c-glass c-hover c-why-card" data-reveal>
+                        <span class="c-icon"><i class="ri-lightbulb-line"></i></span>
+                        <h3>Thoughtful Design</h3>
+                        <i class="c-line"></i>
+                        <p>We focus on ideas that communicate clearly and create recognition.</p>
+                    </article>
+                    <article class="c-glass c-hover c-why-card" data-reveal>
+                        <span class="c-icon"><i class="ri-team-line"></i></span>
+                        <h3>Collaborative Process</h3>
+                        <i class="c-line"></i>
+                        <p>We work closely with clients throughout the creative process.</p>
+                    </article>
+                    <article class="c-glass c-hover c-why-card" data-reveal>
+                        <span class="c-icon"><i class="ri-focus-3-line"></i></span>
+                        <h3>Attention to Detail</h3>
+                        <i class="c-line"></i>
+                        <p>Every visual element is refined with purpose.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <!-- =====================================================
        FAQ
        ===================================================== -->
-  <section class="c-section c-mid">
-    <div class="c-inner">
-      <div class="c-faq-wrap">
-        <div class="c-head">
-          <span class="c-label" data-reveal>FAQ</span>
-          <h2 class="c-h2" data-reveal style="--d:.1s">Questions, <span class="c-script">Answered</span></h2>
-          <p class="c-lead" data-reveal style="--d:.2s">Everything you might want to know before we start working together.</p>
-        </div>
-
-        <div class="c-faq-list" data-stagger="5">
-          {% for faq in faqs %}
-          <div class="c-glass c-faq{% if forloop.first %} is-open{% endif %}" data-reveal>
-            <button class="c-faq-q" type="button" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
-              <span class="c-faq-text">{{ faq.question }}</span>
-              <span class="c-faq-icon"><i class="ri-add-line"></i></span>
-            </button>
-            <div class="c-faq-a"><div><p>{{ faq.answer }}</p></div></div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- =====================================================
+        <section class="c-section c-mid">
+            <div class="c-inner">
+                <div class="c-faq-wrap">
+                    <div class="c-head">
+                        <span class="c-label" data-reveal>FAQ</span>
+                        <h2 class="c-h2"
+                            data-reveal
+                            style="--d:.1s">Questions, <span class="c-script">Answered</span></h2>
+                        <p class="c-lead"
+                           data-reveal
+                           style="--d:.2s">Everything you might want to know before we start working together.</p>
+                    </div>
+                    <div class="c-faq-list" data-stagger="5">
+                        {% for faq in faqs %}
+                            <div class="c-glass c-faq{% if forloop.first %} is-open{% endif %}"
+                                 data-reveal>
+                                <button class="c-faq-q"
+                                        type="button"
+                                        aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+                                    <span class="c-faq-text">{{ faq.question }}</span>
+                                    <span class="c-faq-icon"><i class="ri-add-line"></i></span>
+                                </button>
+                                <div class="c-faq-a">
+                                    <div>
+                                        <p>{{ faq.answer }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- =====================================================
        CTA
        ===================================================== -->
-  <section class="c-section c-dark c-cta">
-    <div class="c-glow c-cta-glow" aria-hidden="true"></div>
-    <div class="c-inner">
-      <div class="c-cta-inner">
-        <span class="c-label" data-reveal>Let's Begin</span>
-        <h2 class="c-h2" data-reveal style="--d:.15s">Ready When You <span class="c-script">Are</span>.</h2>
-        <p class="c-lead" data-reveal style="--d:.3s">Tell us about your idea and let's shape it into something worth remembering.</p>
-        <div data-reveal style="--d:.45s">
-          <a class="btn-primary" href="#enquiry-form" data-scroll-form>Start a Conversation <i class="ri-arrow-right-line"></i></a>
-        </div>
-      </div>
+        <section class="c-section c-dark c-cta">
+            <div class="c-glow c-cta-glow" aria-hidden="true"></div>
+            <div class="c-inner">
+                <div class="c-cta-inner">
+                    <span class="c-label" data-reveal>Let's Begin</span>
+                    <h2 class="c-h2" data-reveal style="--d:.15s">Ready When You <span class="c-script">Are</span>.</h2>
+                    <p class="c-lead"
+                       data-reveal
+                       style="--d:.3s">Tell us about your idea and let's shape it into something worth remembering.</p>
+                    <div data-reveal style="--d:.45s">
+                        <a class="btn-primary"
+                           href="#enquiry-form"
+                           data-scroll-form>Start a Conversation <i class="ri-arrow-right-line"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-  </section>
-
-</div>
-
-<script>
+    <script>
 (function () {
   document.documentElement.classList.add('js-reveal');
 
@@ -1124,5 +1193,5 @@
     });
   }
 })();
-</script>
+    </script>
 {% endblock %}

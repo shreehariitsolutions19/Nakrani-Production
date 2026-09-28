@@ -87,8 +87,7 @@ class DynamicContentTests(TestCase):
         for image_path in service.gallery_image_list:
             self.assertTrue(
                 (
-                    Path(settings.STATICFILES_DIRS[0])
-                    / Path(*image_path.split("/"))
+                    Path(settings.STATICFILES_DIRS[0]) / Path(*image_path.split("/"))
                 ).is_file()
             )
             self.assertContains(detail, f"/static/{image_path}")
@@ -101,7 +100,9 @@ class DynamicContentTests(TestCase):
             ).is_file()
         )
 
-    def test_portfolio_related_work_uses_static_image_fallback_and_scroll_parallax(self):
+    def test_portfolio_related_work_uses_static_image_fallback_and_scroll_parallax(
+        self,
+    ):
         PortfolioProject.objects.create(
             title="Orbit project",
             slug="orbit-project",
@@ -119,8 +120,12 @@ class DynamicContentTests(TestCase):
         response = self.client.get(reverse("portfolio_detail", args=["orbit-project"]))
 
         self.assertContains(response, "/static/site/images/6_tivra-brand.jpg")
-        self.assertContains(response, "window.addEventListener('scroll', scheduleParallax")
-        self.assertContains(response, "layer.style.translate = (mouseX * depth).toFixed(2)")
+        self.assertContains(
+            response, "window.addEventListener('scroll', scheduleParallax"
+        )
+        self.assertContains(
+            response, "layer.style.translate = (mouseX * depth).toFixed(2)"
+        )
 
     def test_all_site_pages_include_shared_scroll_parallax(self):
         service = Service.objects.create(
@@ -196,7 +201,9 @@ class DynamicContentTests(TestCase):
                 )
 
     def test_vasani_natural_brand_project_shows_all_images_in_identity_gallery(self):
-        data = next(item for item in PROJECTS if item["slug"] == "vasani-natural-branding")
+        data = next(
+            item for item in PROJECTS if item["slug"] == "vasani-natural-branding"
+        )
         gallery_images = data["gallery_images"].splitlines()
         project = PortfolioProject.objects.create(
             title=data["title"],
@@ -232,10 +239,14 @@ class DynamicContentTests(TestCase):
         for image_path in gallery_images:
             asset_path = image_path.removeprefix("site/images/")
             self.assertTrue(
-                (Path(settings.STATICFILES_DIRS[0]) / "site" / "images" / asset_path).is_file()
+                (
+                    Path(settings.STATICFILES_DIRS[0]) / "site" / "images" / asset_path
+                ).is_file()
             )
             self.assertContains(response, f"/static/{image_path}")
-        self.assertContains(response, "/static/site/images/vasani-natural-products-billboard.jpeg")
+        self.assertContains(
+            response, "/static/site/images/vasani-natural-products-billboard.jpeg"
+        )
 
     def test_contact_page_renders_active_database_faqs(self):
         FAQItem.objects.create(

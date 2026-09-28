@@ -9,25 +9,33 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="service",
             name="created_at",
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now),
+            field=models.DateTimeField(
+                auto_now_add=True, default=django.utils.timezone.now
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name="service",
             name="updated_at",
-            field=models.DateTimeField(auto_now=True, default=django.utils.timezone.now),
+            field=models.DateTimeField(
+                auto_now=True, default=django.utils.timezone.now
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name="portfolioproject",
             name="created_at",
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now),
+            field=models.DateTimeField(
+                auto_now_add=True, default=django.utils.timezone.now
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name="portfolioproject",
             name="updated_at",
-            field=models.DateTimeField(auto_now=True, default=django.utils.timezone.now),
+            field=models.DateTimeField(
+                auto_now=True, default=django.utils.timezone.now
+            ),
             preserve_default=False,
         ),
     ]

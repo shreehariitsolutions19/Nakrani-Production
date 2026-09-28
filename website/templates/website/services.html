@@ -1,8 +1,7 @@
-{% extends 'website/base.html' %}
+{% extends "website/base.html" %}
 {% load static %}
-
 {% block extra_head %}
-<style>
+    <style>
   /* =========================================================
      REVEAL ON SCROLL (uses individual `translate` so it never
      conflicts with hover `transform`)
@@ -795,108 +794,131 @@
       translate: none;
     }
   }
-</style>
+    </style>
 {% endblock %}
-
 {% block content %}
-<main>
-  <!-- HERO -->
-  <section class="services-hero">
-    <div class="services-hero-bg" style="background-image:url('{% static 'site/images/hero-bg.webp' %}');"></div>
-    <div class="services-hero-shade"></div>
-    <div class="services-hero-grid">
-      <div class="services-hero-copy hero-copy">
-        <div class="services-kicker">Services <span>{% if site_settings %}{{ site_settings.brand_name }}{% else %}Nakrani Production{% endif %}</span></div>
-        <h1>Creative Services Built Around Your <span class="services-script">Brand</span></h1>
-        <p>From identity to digital communication, we create visual systems that make brands clearer, stronger and more memorable.</p>
-        <div class="services-actions">
-          <a class="btn-primary" href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
-          <a class="services-work-link" href="{% url 'portfolio' %}"><i class="ri-arrow-right-line"></i> View Our Work</a>
+    <main>
+        <!-- HERO -->
+        <section class="services-hero">
+            <div class="services-hero-bg"
+                 style="background-image:url('{% static 'site/images/hero-bg.webp' %}')"></div>
+            <div class="services-hero-shade"></div>
+            <div class="services-hero-grid">
+                <div class="services-hero-copy hero-copy">
+                    <div class="services-kicker">Services <span>{% if site_settings %}{{ site_settings.brand_name }}{% else %}Nakrani Production{% endif %}</span></div>
+                    <h1>Creative Services Built Around Your <span class="services-script">Brand</span></h1>
+                    <p>From identity to digital communication, we create visual systems that make brands clearer, stronger and more memorable.</p>
+                    <div class="services-actions">
+                        <a class="btn-primary"
+                           href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
+                        <a class="services-work-link"
+                           href="{% url 'portfolio' %}"><i class="ri-arrow-right-line"></i> View Our Work</a>
+                    </div>
+                </div>
+                <div class="services-hero-art hero-art" data-depth="14">
+                    <img src="{% static 'site/images/services-hero.webp' %}"
+                         alt="Nakrani Production creative design services">
+                    <div class="services-count"><strong>{{ services|length }}</strong><span>Core Services</span></div>
+                </div>
+            </div>
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
+                <span class="text-xs uppercase tracking-widest"
+                      style="writing-mode:vertical-lr">Scroll Down</span>
+                <div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div>
+            </div>
+        </section>
+        <!-- OUR SERVICES -->
+        <section class="services-section">
+            <div class="services-section-inner">
+                <div class="services-heading" data-reveal>
+                    <span class="services-label">What We Do</span>
+                    <h2>Our Services</h2>
+                    <p>A full creative toolkit — from the first spark of an identity to the finished, production-ready asset.</p>
+                </div>
+                <div class="services-cards" data-stagger="3">
+                    {% for service in services %}
+                        <article class="service-card-new" data-reveal>
+                            <div class="service-card-top">
+                                <span class="service-card-icon-wrap"><i class="service-card-icon {{ service.icon_class }}"></i></span>
+                                <span class="service-card-number">{{ forloop.counter|stringformat:"02d" }}</span>
+                            </div>
+                            <h3>{{ service.title }}</h3>
+                            <p>{{ service.description }}</p>
+                            <a class="service-card-link"
+                               href="{% url 'service_detail' service.slug %}">View Service <i class="ri-arrow-right-line"></i></a>
+                        </article>
+{% empty %}<p>No services available.</p>{% endfor %}
+    </div>
+    </div>
+    </section>
+    <!-- PROCESS -->
+    <section class="services-section process-section">
+        <div class="services-section-inner">
+            <div class="process-heading" data-reveal>
+                <span class="services-label">How It Works</span>
+                <h2>From Idea to Impact</h2>
+                <p>A focused four-step process that takes your brand from a rough idea to a finished, effective visual system.</p>
+            </div>
+            <div class="process-list" data-stagger="4">
+                <div class="process-step" data-reveal>
+                    <span class="number">01</span>
+                    <h3>Strategy</h3>
+                    <i class="process-line"></i>
+                    <p>Understand the brand, audience and objective.</p>
+                </div>
+                <div class="process-step" data-reveal>
+                    <span class="number">02</span>
+                    <h3>Concept</h3>
+                    <i class="process-line"></i>
+                    <p>Develop the creative direction and visual concept.</p>
+                </div>
+                <div class="process-step" data-reveal>
+                    <span class="number">03</span>
+                    <h3>Design</h3>
+                    <i class="process-line"></i>
+                    <p>Turn the concept into a refined visual system.</p>
+                </div>
+                <div class="process-step" data-reveal>
+                    <span class="number">04</span>
+                    <h3>Delivery</h3>
+                    <i class="process-line"></i>
+                    <p>Prepare polished, production-ready final assets.</p>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="services-hero-art hero-art" data-depth="14">
-        <img src="{% static 'site/images/services-hero.webp' %}" alt="Nakrani Production creative design services">
-        <div class="services-count"><strong>{{ services|length }}</strong><span>Core Services</span></div>
-      </div>
-    </div>
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
-      <span class="text-xs uppercase tracking-widest" style="writing-mode:vertical-lr">Scroll Down</span>
-      <div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div>
-    </div>
-  </section>
-
-  <!-- OUR SERVICES -->
-  <section class="services-section">
-    <div class="services-section-inner">
-      <div class="services-heading" data-reveal>
-        <span class="services-label">What We Do</span>
-        <h2>Our Services</h2>
-        <p>A full creative toolkit — from the first spark of an identity to the finished, production-ready asset.</p>
-      </div>
-      <div class="services-cards" data-stagger="3">
-        {% for service in services %}
-        <article class="service-card-new" data-reveal>
-          <div class="service-card-top">
-            <span class="service-card-icon-wrap"><i class="service-card-icon {{ service.icon_class }}"></i></span>
-            <span class="service-card-number">{{ forloop.counter|stringformat:"02d" }}</span>
-          </div>
-          <h3>{{ service.title }}</h3>
-          <p>{{ service.description }}</p>
-          <a class="service-card-link" href="{% url 'service_detail' service.slug %}">View Service <i class="ri-arrow-right-line"></i></a>
-        </article>
-        {% empty %}<p>No services available.</p>{% endfor %}
-      </div>
-    </div>
-  </section>
-
-  <!-- PROCESS -->
-  <section class="services-section process-section">
-    <div class="services-section-inner">
-      <div class="process-heading" data-reveal>
-        <span class="services-label">How It Works</span>
-        <h2>From Idea to Impact</h2>
-        <p>A focused four-step process that takes your brand from a rough idea to a finished, effective visual system.</p>
-      </div>
-      <div class="process-list" data-stagger="4">
-        <div class="process-step" data-reveal><span class="number">01</span><h3>Strategy</h3><i class="process-line"></i><p>Understand the brand, audience and objective.</p></div>
-        <div class="process-step" data-reveal><span class="number">02</span><h3>Concept</h3><i class="process-line"></i><p>Develop the creative direction and visual concept.</p></div>
-        <div class="process-step" data-reveal><span class="number">03</span><h3>Design</h3><i class="process-line"></i><p>Turn the concept into a refined visual system.</p></div>
-        <div class="process-step" data-reveal><span class="number">04</span><h3>Delivery</h3><i class="process-line"></i><p>Prepare polished, production-ready final assets.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CAPABILITIES -->
-  <section class="services-section capabilities-section">
-    <div class="services-section-inner">
-      <div class="capabilities-heading" data-reveal>
-        <div><span class="services-label">Featured Capabilities</span><h2>Everything Your Brand Needs, In One Studio</h2></div>
-      </div>
-      <div class="capability-list" data-stagger="8">
-        <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>01</span><h3>Brand Identity</h3></div><i class="ri-arrow-right-up-line"></i></a>
-        <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>02</span><h3>Logo Design</h3></div><i class="ri-arrow-right-up-line"></i></a>
-        <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>03</span><h3>Packaging</h3></div><i class="ri-arrow-right-up-line"></i></a>
-        <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>04</span><h3>Print</h3></div><i class="ri-arrow-right-up-line"></i></a>
-        <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>05</span><h3>Social Media</h3></div><i class="ri-arrow-right-up-line"></i></a>
-        <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>06</span><h3>Marketing Creatives</h3></div><i class="ri-arrow-right-up-line"></i></a>
-        <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>07</span><h3>Digital Graphics</h3></div><i class="ri-arrow-right-up-line"></i></a>
-        <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>08</span><h3>Art Direction</h3></div><i class="ri-arrow-right-up-line"></i></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="services-cta">
-    <div class="services-cta-inner" data-reveal>
-      <span class="services-label">Start a Project</span>
-      <h2>Have a Project in <span class="services-script">Mind</span>?</h2>
-      <p>Let's turn your idea into a visual experience.</p>
-      <a class="btn-primary" href="{% url 'contact' %}">Let's Talk <i class="ri-arrow-right-line"></i></a>
-    </div>
-  </section>
-</main>
-
-<script>
+    </section>
+    <!-- CAPABILITIES -->
+    <section class="services-section capabilities-section">
+        <div class="services-section-inner">
+            <div class="capabilities-heading" data-reveal>
+                <div>
+                    <span class="services-label">Featured Capabilities</span>
+                    <h2>Everything Your Brand Needs, In One Studio</h2>
+                </div>
+            </div>
+            <div class="capability-list" data-stagger="8">
+                <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>01</span><h3>Brand Identity</h3></div><i class="ri-arrow-right-up-line"></i></a>
+                <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>02</span><h3>Logo Design</h3></div><i class="ri-arrow-right-up-line"></i></a>
+                <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>03</span><h3>Packaging</h3></div><i class="ri-arrow-right-up-line"></i></a>
+                <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>04</span><h3>Print</h3></div><i class="ri-arrow-right-up-line"></i></a>
+                <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>05</span><h3>Social Media</h3></div><i class="ri-arrow-right-up-line"></i></a>
+                <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>06</span><h3>Marketing Creatives</h3></div><i class="ri-arrow-right-up-line"></i></a>
+                <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>07</span><h3>Digital Graphics</h3></div><i class="ri-arrow-right-up-line"></i></a>
+                <a class="capability-link" data-reveal href="{% url 'contact' %}"><div class="capability-name"><span>08</span><h3>Art Direction</h3></div><i class="ri-arrow-right-up-line"></i></a>
+            </div>
+        </div>
+    </section>
+    <!-- CTA -->
+    <section class="services-cta">
+        <div class="services-cta-inner" data-reveal>
+            <span class="services-label">Start a Project</span>
+            <h2>Have a Project in <span class="services-script">Mind</span>?</h2>
+            <p>Let's turn your idea into a visual experience.</p>
+            <a class="btn-primary" href="{% url 'contact' %}">Let's Talk <i class="ri-arrow-right-line"></i></a>
+        </div>
+    </section>
+    </main>
+    <script>
 (function () {
   document.documentElement.classList.add('js-reveal');
 
@@ -927,5 +949,5 @@
   }
 
 })();
-</script>
+    </script>
 {% endblock %}

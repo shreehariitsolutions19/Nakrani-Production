@@ -1,8 +1,7 @@
-{% extends 'website/base.html' %}
+{% extends "website/base.html" %}
 {% load static %}
-
 {% block content %}
-<style>
+    <style>
   /* =========================================================
      SCROLL PROGRESS BAR
      ========================================================= */
@@ -674,147 +673,165 @@
     .js-reveal [data-reveal] { opacity: 1; translate: none; scale: 1; }
     .js-reveal .p-card img { scale: 1; }
   }
-</style>
-
-<div id="scrollProgress" aria-hidden="true"></div>
-
-<div class="p-page">
-
-  <!-- =====================================================
+    </style>
+    <div id="scrollProgress" aria-hidden="true"></div>
+    <div class="p-page">
+        <!-- =====================================================
        HERO
        ===================================================== -->
-  <section class="p-hero">
-    <div class="p-hero-bg" style="background-image:url({% static 'site/images/hero-bg.webp' %});"></div>
-    <div class="p-hero-shade"></div>
-    <div class="p-glow" data-depth="16" style="top:6rem;right:4rem;width:18rem;height:18rem;"></div>
-    <div class="p-glow" data-depth="9" style="bottom:4rem;left:4rem;width:24rem;height:24rem;"></div>
-
-    <div class="p-hero-grid">
-      <div class="p-hero-copy hero-copy">
-        <div class="p-kicker"><b>Portfolio</b><span>{% if site_settings %}{{ site_settings.brand_name }}{% else %}Nakrani Production{% endif %}</span></div>
-        <h1>Selected <span class="p-script">Work</span></h1>
-        <p class="p-hero-desc">A collection of visual identities, packaging, print designs and creative projects crafted by Nakrani Production.</p>
-        <div class="p-actions">
-          <a class="btn-primary" href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
-          <a class="p-services-link" href="{% url 'services' %}"><i class="ri-arrow-right-line"></i> Our Services</a>
-        </div>
-      </div>
-
-      <div class="p-art hero-art" data-depth="14">
-        <div class="p-photo">
-          <img src="{% static 'site/images/portfolio-hero.webp' %}" alt="Nakrani Production selected work portfolio">
-        </div>
-        <div class="p-badge">
-          <strong><span data-count="50">50</span>+</strong>
-          <span>Projects Delivered</span>
-        </div>
-      </div>
-    </div>
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
-      <span class="text-xs uppercase tracking-widest" style="writing-mode:vertical-lr">Scroll Down</span>
-      <div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div>
-    </div>
-
-  </section>
-
-
-  <!-- =====================================================
+        <section class="p-hero">
+            <div class="p-hero-bg"
+                 style="background-image:url({% static 'site/images/hero-bg.webp' %})"></div>
+            <div class="p-hero-shade"></div>
+            <div class="p-glow"
+                 data-depth="16"
+                 style="top:6rem;
+                        right:4rem;
+                        width:18rem;
+                        height:18rem"></div>
+            <div class="p-glow"
+                 data-depth="9"
+                 style="bottom:4rem;
+                        left:4rem;
+                        width:24rem;
+                        height:24rem"></div>
+            <div class="p-hero-grid">
+                <div class="p-hero-copy hero-copy">
+                    <div class="p-kicker"><b>Portfolio</b><span>{% if site_settings %}{{ site_settings.brand_name }}{% else %}Nakrani Production{% endif %}</span></div>
+                    <h1>Selected <span class="p-script">Work</span></h1>
+                    <p class="p-hero-desc">A collection of visual identities, packaging, print designs and creative projects crafted by Nakrani Production.</p>
+                    <div class="p-actions">
+                        <a class="btn-primary"
+                           href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
+                        <a class="p-services-link"
+                           href="{% url 'services' %}"><i class="ri-arrow-right-line"></i> Our Services</a>
+                    </div>
+                </div>
+                <div class="p-art hero-art" data-depth="14">
+                    <div class="p-photo">
+                        <img src="{% static 'site/images/portfolio-hero.webp' %}"
+                             alt="Nakrani Production selected work portfolio">
+                    </div>
+                    <div class="p-badge">
+                        <strong><span data-count="50">50</span>+</strong>
+                        <span>Projects Delivered</span>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
+                <span class="text-xs uppercase tracking-widest"
+                      style="writing-mode:vertical-lr">Scroll Down</span>
+                <div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div>
+            </div>
+        </section>
+        <!-- =====================================================
        RECENT PROJECTS
        ===================================================== -->
-  <section class="p-section p-mid" id="projects">
-    <div class="p-inner">
-      <div class="p-head">
-        <span class="p-label" data-reveal>Our Work</span>
-        <h2 class="p-h2" data-reveal style="--d:.1s">Recent Projects</h2>
-        <p class="p-lead" data-reveal style="--d:.2s">Explore a selection of identities, packaging, print and digital work crafted for brands that want to be remembered.</p>
-      </div>
-
-      <div class="p-filters" data-reveal style="--d:.3s">
-        <a class="p-filter {% if not selected_category %}active{% endif %}" href="{% url 'portfolio' %}#projects">All</a>
-        {% for category in categories %}<a class="p-filter {% if selected_category|lower == category|lower %}active{% endif %}" href="?category={{ category|urlencode }}#projects">{{ category }}</a>{% endfor %}
-      </div>
-
-      <div class="p-grid" data-stagger="3">
-        {% for project in projects %}
-        <a class="p-card" data-reveal="scale" href="{% url 'portfolio_detail' project.slug %}">
-          <img src="{{ project.image_url }}" alt="{{ project.title }}" loading="lazy">
-          <div class="p-card-shade"></div>
-          <div class="p-card-info">
-            <span class="p-card-cat">{{ project.category }} · {{ project.year|default:"2026" }}</span>
-            <h3>{{ project.title }}</h3>
-            <span class="p-card-link">View Project <i class="ri-arrow-right-line"></i></span>
-          </div>
-        </a>
-        {% empty %}
-        <p class="p-empty">No projects found.</p>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-
-
-  <!-- =====================================================
+        <section class="p-section p-mid" id="projects">
+            <div class="p-inner">
+                <div class="p-head">
+                    <span class="p-label" data-reveal>Our Work</span>
+                    <h2 class="p-h2" data-reveal style="--d:.1s">Recent Projects</h2>
+                    <p class="p-lead" data-reveal style="--d:.2s">Explore a selection of identities, packaging, print and digital work crafted for brands that want to be remembered.</p>
+                </div>
+                <div class="p-filters" data-reveal style="--d:.3s">
+                    <a class="p-filter {% if not selected_category %}active{% endif %}"
+                       href="{% url 'portfolio' %}#projects">All</a>
+                    {% for category in categories %}<a class="p-filter {% if selected_category|lower == category|lower %}active{% endif %}"
+   href="?category={{ category|urlencode }}#projects">{{ category }}</a>{% endfor %}
+                </div>
+                <div class="p-grid" data-stagger="3">
+                    {% for project in projects %}
+                        <a class="p-card"
+                           data-reveal="scale"
+                           href="{% url 'portfolio_detail' project.slug %}">
+                            <img src="{{ project.image_url }}"
+                                 alt="{{ project.title }}"
+                                 loading="lazy">
+                            <div class="p-card-shade"></div>
+                            <div class="p-card-info">
+                                <span class="p-card-cat">{{ project.category }} · {{ project.year|default:"2026" }}</span>
+                                <h3>{{ project.title }}</h3>
+                                <span class="p-card-link">View Project <i class="ri-arrow-right-line"></i></span>
+                            </div>
+                        </a>
+                    {% empty %}
+                        <p class="p-empty">No projects found.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <!-- =====================================================
        FEATURED PROJECT
        ===================================================== -->
-  {% if featured_project %}
-  <section class="p-section p-dark">
-    <div class="p-glow" data-depth="12" style="top:33%;right:0;width:500px;height:500px;"></div>
-    <div class="p-inner">
-      <div class="p-fhead">
-        <span class="p-label" data-reveal>Featured Project</span>
-        <h2 class="p-h2" data-reveal style="--d:.15s">A closer look at the work we're <span class="p-script">proudest</span> of.</h2>
-      </div>
-
-      <div class="p-flayout">
-        <div data-reveal="left">
-          <a class="p-fimage" href="{% url 'portfolio_detail' featured_project.slug %}">
-            <img data-img-parallax data-depth="8" src="{{ featured_project.image_url }}" alt="{{ featured_project.title }} featured project">
-            <div class="p-fshade"></div>
-          </a>
-        </div>
-
-        <div class="p-fcopy" data-stagger="5">
-          <div class="p-fmeta" data-reveal="right">
-            <b>{{ featured_project.category }}</b>
-            <span>{{ featured_project.client|default:"Selected Client" }} · {{ featured_project.year|default:"2026" }}</span>
-          </div>
-          <h3 data-reveal="right">{{ featured_project.title }}</h3>
-          <p data-reveal="right">{{ featured_project.description|default:"A considered visual system built to give the brand a confident, memorable presence across every touchpoint." }}</p>
-          {% if featured_project.design_details %}
-          <ul class="p-flist" data-reveal="right">
-            {% for detail in featured_project.design_details.splitlines %}<li><i class="ri-check-line"></i>{{ detail }}</li>{% endfor %}
-          </ul>
-          {% endif %}
-          <div data-reveal="right">
-            <a class="p-flink" href="{% url 'portfolio_detail' featured_project.slug %}"><span><i class="ri-arrow-right-line"></i></span> View Full Project</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  {% endif %}
-
-
-  <!-- =====================================================
+        {% if featured_project %}
+            <section class="p-section p-dark">
+                <div class="p-glow"
+                     data-depth="12"
+                     style="top:33%;
+                            right:0;
+                            width:500px;
+                            height:500px"></div>
+                <div class="p-inner">
+                    <div class="p-fhead">
+                        <span class="p-label" data-reveal>Featured Project</span>
+                        <h2 class="p-h2"
+                            data-reveal
+                            style="--d:.15s">A closer look at the work we're <span class="p-script">proudest</span> of.</h2>
+                    </div>
+                    <div class="p-flayout">
+                        <div data-reveal="left">
+                            <a class="p-fimage"
+                               href="{% url 'portfolio_detail' featured_project.slug %}">
+                                <img data-img-parallax
+                                     data-depth="8"
+                                     src="{{ featured_project.image_url }}"
+                                     alt="{{ featured_project.title }} featured project">
+                                <div class="p-fshade"></div>
+                            </a>
+                        </div>
+                        <div class="p-fcopy" data-stagger="5">
+                            <div class="p-fmeta" data-reveal="right">
+                                <b>{{ featured_project.category }}</b>
+                                <span>{{ featured_project.client|default:"Selected Client" }} · {{ featured_project.year|default:"2026" }}</span>
+                            </div>
+                            <h3 data-reveal="right">{{ featured_project.title }}</h3>
+                            <p data-reveal="right">{{ featured_project.description|default:"A considered visual system built to give the brand a confident, memorable presence across every touchpoint." }}</p>
+                            {% if featured_project.design_details %}
+                                <ul class="p-flist" data-reveal="right">
+                                    {% for detail in featured_project.design_details.splitlines %}<li><i class="ri-check-line"></i>{{ detail }}</li>{% endfor %}
+                                </ul>
+                            {% endif %}
+                            <div data-reveal="right">
+                                <a class="p-flink"
+                                   href="{% url 'portfolio_detail' featured_project.slug %}"><span><i class="ri-arrow-right-line"></i></span> View Full Project</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+        <!-- =====================================================
        CTA
        ===================================================== -->
-  <section class="p-section p-dark p-cta">
-    <div class="p-glow p-cta-glow" aria-hidden="true"></div>
-    <div class="p-inner">
-      <div class="p-cta-inner">
-        <span class="p-label" data-reveal>Start a Project</span>
-        <h2 class="p-h2" data-reveal style="--d:.15s">Have a Project Worth <span class="p-script">Showing</span>?</h2>
-        <p class="p-lead" data-reveal style="--d:.3s">Let's build something your audience remembers.</p>
-        <div data-reveal style="--d:.45s">
-          <a class="btn-primary" href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
-        </div>
-      </div>
+        <section class="p-section p-dark p-cta">
+            <div class="p-glow p-cta-glow" aria-hidden="true"></div>
+            <div class="p-inner">
+                <div class="p-cta-inner">
+                    <span class="p-label" data-reveal>Start a Project</span>
+                    <h2 class="p-h2"
+                        data-reveal
+                        style="--d:.15s">Have a Project Worth <span class="p-script">Showing</span>?</h2>
+                    <p class="p-lead" data-reveal style="--d:.3s">Let's build something your audience remembers.</p>
+                    <div data-reveal style="--d:.45s">
+                        <a class="btn-primary"
+                           href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-  </section>
-
-</div>
-
-<script>
+    <script>
 (function () {
   document.documentElement.classList.add('js-reveal');
 
@@ -896,5 +913,5 @@
     }, 700);
   });
 })();
-</script>
+    </script>
 {% endblock %}

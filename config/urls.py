@@ -3,16 +3,35 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from django.contrib.sitemaps.views import sitemap
-from website.sitemaps import StaticViewSitemap, ServiceSitemap, PortfolioSitemap, BlogSitemap
+from website.sitemaps import (
+    StaticViewSitemap,
+    ServiceSitemap,
+    PortfolioSitemap,
+    BlogSitemap,
+)
 
 from website import views
 
-sitemaps = {"static": StaticViewSitemap, "services": ServiceSitemap, "portfolio": PortfolioSitemap, "blog": BlogSitemap}
+sitemaps = {
+    "static": StaticViewSitemap,
+    "services": ServiceSitemap,
+    "portfolio": PortfolioSitemap,
+    "blog": BlogSitemap,
+}
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django-sitemap"),
-    path("robots.txt", lambda request: __import__("django.http", fromlist=["HttpResponse"]).HttpResponse("User-agent: *\nAllow: /\nSitemap: /sitemap.xml\n", content_type="text/plain"), name="robots"),
+    path(
+        "robots.txt",
+        lambda request: __import__(
+            "django.http", fromlist=["HttpResponse"]
+        ).HttpResponse(
+            "User-agent: *\nAllow: /\nSitemap: /sitemap.xml\n",
+            content_type="text/plain",
+        ),
+        name="robots",
+    ),
     path("", views.home, name="home"),
     path("about/", views.about, name="about"),
     path("services/", views.services, name="services"),

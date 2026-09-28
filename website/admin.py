@@ -75,7 +75,10 @@ class PortfolioProjectAdmin(admin.ModelAdmin):
     @admin.display(description="Image")
     def thumb(self, obj):
         if obj.image:
-            return format_html('<img src="{}" width="58" height="42" style="object-fit:cover;border-radius:6px;" />', obj.image.url)
+            return format_html(
+                '<img src="{}" width="58" height="42" style="object-fit:cover;border-radius:6px;" />',
+                obj.image.url,
+            )
         return "—"
 
 

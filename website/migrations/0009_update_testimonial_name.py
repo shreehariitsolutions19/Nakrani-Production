@@ -3,7 +3,9 @@ from django.db import migrations
 
 def update_testimonial_name(apps, schema_editor):
     Testimonial = apps.get_model("website", "Testimonial")
-    Testimonial.objects.filter(client_name="Ravi Patel").update(client_name="Hitul Nakrani")
+    Testimonial.objects.filter(client_name="Ravi Patel").update(
+        client_name="Hitul Nakrani"
+    )
 
 
 class Migration(migrations.Migration):

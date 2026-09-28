@@ -10,11 +10,33 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="SiteSettings",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
-                ("brand_name", models.CharField(default="Nakrani Production", max_length=120)),
-                ("tagline", models.CharField(default="We create stunning visual experiences that inspire and engage.", max_length=255)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "brand_name",
+                    models.CharField(default="Nakrani Production", max_length=120),
+                ),
+                (
+                    "tagline",
+                    models.CharField(
+                        default="We create stunning visual experiences that inspire and engage.",
+                        max_length=255,
+                    ),
+                ),
                 ("phone", models.CharField(default="+91 98765 43210", max_length=40)),
-                ("email", models.EmailField(default="hello@nakrani.production", max_length=254)),
+                (
+                    "email",
+                    models.EmailField(
+                        default="hello@nakrani.production", max_length=254
+                    ),
+                ),
                 ("city", models.CharField(default="Mumbai, India", max_length=120)),
                 ("google_form_url", models.URLField(blank=True)),
                 ("instagram", models.URLField(blank=True)),
@@ -22,15 +44,29 @@ class Migration(migrations.Migration):
                 ("twitter", models.URLField(blank=True)),
                 ("updated_at", models.DateTimeField(auto_now=True)),
             ],
-            options={"verbose_name": "Site settings", "verbose_name_plural": "Site settings"},
+            options={
+                "verbose_name": "Site settings",
+                "verbose_name_plural": "Site settings",
+            },
         ),
         migrations.CreateModel(
             name="Service",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("title", models.CharField(max_length=120)),
                 ("description", models.TextField()),
-                ("icon_class", models.CharField(default="ri-palette-line", max_length=80)),
+                (
+                    "icon_class",
+                    models.CharField(default="ri-palette-line", max_length=80),
+                ),
                 ("order", models.PositiveIntegerField(default=0)),
                 ("active", models.BooleanField(default=True)),
             ],
@@ -39,7 +75,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="PortfolioProject",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("title", models.CharField(max_length=160)),
                 ("category", models.CharField(max_length=80)),
                 ("image", models.ImageField(blank=True, upload_to="portfolio/")),
@@ -52,7 +96,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Testimonial",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("client_name", models.CharField(max_length=120)),
                 ("role", models.CharField(blank=True, max_length=120)),
                 ("quote", models.TextField()),
@@ -64,7 +116,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="BlogPost",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("title", models.CharField(max_length=180)),
                 ("slug", models.SlugField(max_length=190, unique=True)),
                 ("excerpt", models.TextField(max_length=320)),
@@ -81,7 +141,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="ContactSubmission",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("name", models.CharField(max_length=120)),
                 ("email", models.EmailField(max_length=254)),
                 ("phone", models.CharField(blank=True, max_length=40)),

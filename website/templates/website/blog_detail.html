@@ -1,9 +1,8 @@
-{% extends 'website/base.html' %}
+{% extends "website/base.html" %}
 {% load static %}
-
 {% block extra_head %}
-<script>document.documentElement.classList.add('ar-js');</script>
-<style>
+    <script>document.documentElement.classList.add('ar-js');</script>
+    <style>
   :root{--ar-bg:#0a0a0a;--ar-alt:#1a1a1a;--ar-gold:#c89a5e;--ar-gold-dk:#b0884e;--ar-muted:#8a8a8a;--ar-line:rgba(255,255,255,.1)}
   body{background:var(--ar-bg)}
   .ar-page{background:var(--ar-bg);color:#fff;overflow-x:hidden}
@@ -131,140 +130,165 @@
     .ar-js .ar-reveal{opacity:1;transform:none;transition:none}
     .ar-parallax,.ar-card,.ar-card-img img{transition:none!important;transform:none!important}
   }
-</style>
+    </style>
 {% endblock %}
-
 {% block content %}
-<main class="ar-page">
-
-  <!-- HERO -->
-  <section class="ar-hero">
-    <div class="ar-hero-bg" style="background-image:url('{% static 'site/images/hero-bg.webp' %}')"></div>
-    <div class="ar-hero-fade"></div>
-    <div class="ar-blob ar-parallax" data-depth="16" style="top:6rem;right:4rem;width:18rem;height:18rem"></div>
-    <div class="ar-blob ar-parallax" data-depth="9" style="bottom:2.5rem;left:2.5rem;width:24rem;height:24rem"></div>
-
-    <div class="ar-shell ar-hero-inner ar-hero-grid">
-      <div class="hero-copy">
-        <nav class="ar-crumb" aria-label="Breadcrumb">
-          <a href="{% url 'blog' %}">Blog</a>
-          <span class="sep">/</span>
-          <span class="current">{{ post.category }}</span>
-        </nav>
-
-        <div class="ar-head">
-          <span class="ar-pill">{{ post.category }}</span>
-          <h1 class="ar-title">{{ post.title }}</h1>
-          <div class="ar-meta">
-            <span><i class="ri-user-3-line"></i>{{ post.author|default:"Nakrani Studio" }}</span>
-            <span><i class="ri-calendar-line"></i>{{ post.published_at|date:'F j, Y' }}</span>
-            <span><i class="ri-time-line"></i>{{ post.read_time|default:"6" }} min read</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="ar-cover ar-parallax hero-art" data-depth="10">
-        <div class="ar-cover-frame">
-          <img src="{{ post.image_url }}" alt="{{ post.title }}" loading="eager">
-        </div>
-      </div>
-    </div>
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
-      <span class="text-xs uppercase tracking-widest" style="writing-mode:vertical-lr">Scroll Down</span>
-      <div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div>
-    </div>
-  </section>
-
-  <!-- ARTICLE -->
-  <section class="ar-section ar-section--alt" style="padding-bottom:0">
-    <div class="ar-shell">
-      <div class="ar-narrow" style="padding-bottom:5rem">
-        <a class="ar-circle-link ar-back-top" href="{% url 'blog' %}"><span><i class="ri-arrow-left-line"></i></span>Back to Blog</a>
-        {# Plain-text content. If your content is written as HTML (e.g. CKEditor), change linebreaks to safe. #}
-        <article class="ar-content">
-          {{ post.content|linebreaks }}
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- PREVIOUS / NEXT + RELATED -->
-  <section class="ar-section--alt" style="background:var(--ar-alt)">
-    <div class="ar-shell">
-      <div class="ar-navwrap">
-        {% if previous_post or next_post %}
-        <div class="ar-nav">
-          {% if previous_post %}
-            <a class="ar-glass ar-nav-card" data-reveal href="{% url 'blog_detail' previous_post.slug %}" aria-label="Previous article: {{ previous_post.title }}">
-              <span class="ar-nav-arrow"><i class="ri-arrow-left-line"></i></span>
-              <span><span class="ar-nav-label">Previous Article</span><span class="ar-nav-title">{{ previous_post.title }}</span></span>
-            </a>
-          {% else %}
-            <span class="ar-nav-card is-empty" aria-hidden="true"></span>
-          {% endif %}
-          {% if next_post %}
-            <a class="ar-glass ar-nav-card next" data-reveal style="--d:.12s" href="{% url 'blog_detail' next_post.slug %}" aria-label="Next article: {{ next_post.title }}">
-              <span><span class="ar-nav-label">Next Article</span><span class="ar-nav-title">{{ next_post.title }}</span></span>
-              <span class="ar-nav-arrow"><i class="ri-arrow-right-line"></i></span>
-            </a>
-          {% endif %}
-        </div>
-        {% endif %}
-        <div class="ar-back" data-reveal style="--d:.24s">
-          <a class="ar-circle-link" href="{% url 'blog' %}"><span><i class="ri-arrow-left-line"></i></span>Back to Blog</a>
-        </div>
-      </div>
-
-      {% if related_posts %}
-      <div class="ar-related">
-        <div class="ar-related-head">
-          <span class="ar-tag" data-reveal style="--d:.1s">Keep Reading</span>
-          <h2 class="ar-h2" data-reveal style="--d:.2s">Related <span class="ar-script">Articles</span></h2>
-        </div>
-        <div class="ar-grid">
-          {% for item in related_posts %}
-          <div data-reveal style="--d:{{ forloop.counter }}00ms">
-            <a class="ar-card" href="{% url 'blog_detail' item.slug %}">
-              <div class="ar-card-img">
-                <img src="{{ item.image_url }}" alt="{{ item.title }} article cover" loading="lazy" decoding="async">
-              </div>
-              <div class="ar-card-body">
-                <span class="ar-cat">{{ item.category }}</span>
-                <h3>{{ item.title }}</h3>
-                <p>{{ item.excerpt|truncatewords:24 }}</p>
-                <div class="ar-card-foot">
-                  <time>{{ item.published_at|date:'F j, Y' }}</time>
-                  <span class="ar-more">Read More <i class="ri-arrow-right-line"></i></span>
+    <main class="ar-page">
+        <!-- HERO -->
+        <section class="ar-hero">
+            <div class="ar-hero-bg"
+                 style="background-image:url('{% static 'site/images/hero-bg.webp' %}')"></div>
+            <div class="ar-hero-fade"></div>
+            <div class="ar-blob ar-parallax"
+                 data-depth="16"
+                 style="top:6rem;
+                        right:4rem;
+                        width:18rem;
+                        height:18rem"></div>
+            <div class="ar-blob ar-parallax"
+                 data-depth="9"
+                 style="bottom:2.5rem;
+                        left:2.5rem;
+                        width:24rem;
+                        height:24rem"></div>
+            <div class="ar-shell ar-hero-inner ar-hero-grid">
+                <div class="hero-copy">
+                    <nav class="ar-crumb" aria-label="Breadcrumb">
+                        <a href="{% url 'blog' %}">Blog</a>
+                        <span class="sep">/</span>
+                        <span class="current">{{ post.category }}</span>
+                    </nav>
+                    <div class="ar-head">
+                        <span class="ar-pill">{{ post.category }}</span>
+                        <h1 class="ar-title">{{ post.title }}</h1>
+                        <div class="ar-meta">
+                            <span><i class="ri-user-3-line"></i>{{ post.author|default:"Nakrani Studio" }}</span>
+                            <span><i class="ri-calendar-line"></i>{{ post.published_at|date:'F j, Y' }}</span>
+                            <span><i class="ri-time-line"></i>{{ post.read_time|default:"6" }} min read</span>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </a>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-      {% endif %}
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="ar-section">
-    <div class="ar-blob ar-parallax" data-depth="14" style="top:50%;left:50%;width:600px;height:600px;margin:-300px 0 0 -300px"></div>
-    <div class="ar-shell">
-      <div class="ar-cta">
-        <span class="ar-tag" data-reveal>Start a Project</span>
-        <h2 class="ar-h2" data-reveal style="--d:.15s">Let's work <span class="ar-script">together</span></h2>
-        <p class="ar-text" data-reveal style="--d:.3s">Let's turn your idea into a visual experience your audience remembers.</p>
-        <div data-reveal style="--d:.45s">
-          <a class="btn-primary" href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
+                <div class="ar-cover ar-parallax hero-art" data-depth="10">
+                    <div class="ar-cover-frame">
+                        <img src="{{ post.image_url }}" alt="{{ post.title }}" loading="eager">
+                    </div>
+                </div>
+            </div>
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
+                <span class="text-xs uppercase tracking-widest"
+                      style="writing-mode:vertical-lr">Scroll Down</span>
+                <div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div>
+            </div>
+        </section>
+        <!-- ARTICLE -->
+        <section class="ar-section ar-section--alt" style="padding-bottom:0">
+            <div class="ar-shell">
+                <div class="ar-narrow" style="padding-bottom:5rem">
+                    <a class="ar-circle-link ar-back-top"
+                       href="{% url 'blog' %}"><span><i class="ri-arrow-left-line"></i></span>Back to Blog</a>
+                    {# Plain-text content. If your content is written as HTML (e.g. CKEditor), change linebreaks to safe. #}
+                    <article class="ar-content">{{ post.content|linebreaks }}</article>
+                </div>
+            </div>
+        </section>
+        <!-- PREVIOUS / NEXT + RELATED -->
+        <section class="ar-section--alt" style="background:var(--ar-alt)">
+            <div class="ar-shell">
+                <div class="ar-navwrap">
+                    {% if previous_post or next_post %}
+                        <div class="ar-nav">
+                            {% if previous_post %}
+                                <a class="ar-glass ar-nav-card"
+                                   data-reveal
+                                   href="{% url 'blog_detail' previous_post.slug %}"
+                                   aria-label="Previous article: {{ previous_post.title }}">
+                                    <span class="ar-nav-arrow"><i class="ri-arrow-left-line"></i></span>
+                                    <span><span class="ar-nav-label">Previous Article</span><span class="ar-nav-title">{{ previous_post.title }}</span></span>
+                                </a>
+                            {% else %}
+                                <span class="ar-nav-card is-empty" aria-hidden="true"></span>
+                            {% endif %}
+                            {% if next_post %}
+                                <a class="ar-glass ar-nav-card next"
+                                   data-reveal
+                                   style="--d:.12s"
+                                   href="{% url 'blog_detail' next_post.slug %}"
+                                   aria-label="Next article: {{ next_post.title }}">
+                                    <span><span class="ar-nav-label">Next Article</span><span class="ar-nav-title">{{ next_post.title }}</span></span>
+                                    <span class="ar-nav-arrow"><i class="ri-arrow-right-line"></i></span>
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    <div class="ar-back" data-reveal style="--d:.24s">
+                        <a class="ar-circle-link"
+                           href="{% url 'blog' %}"><span><i class="ri-arrow-left-line"></i></span>Back to Blog</a>
+                    </div>
+                </div>
+                {% if related_posts %}
+                    <div class="ar-related">
+                        <div class="ar-related-head">
+                            <span class="ar-tag" data-reveal style="--d:.1s">Keep Reading</span>
+                            <h2 class="ar-h2"
+                                data-reveal
+                                style="--d:.2s">Related <span class="ar-script">Articles</span></h2>
+                        </div>
+                        <div class="ar-grid">
+                            {% for item in related_posts %}
+                                <div data-reveal style="--d:{{ forloop.counter }}00ms">
+                                    <a class="ar-card" href="{% url 'blog_detail' item.slug %}">
+                                        <div class="ar-card-img">
+                                            <img src="{{ item.image_url }}"
+                                                 alt="{{ item.title }} article cover"
+                                                 loading="lazy"
+                                                 decoding="async">
+                                        </div>
+                                        <div class="ar-card-body">
+                                            <span class="ar-cat">{{ item.category }}</span>
+                                            <h3>{{ item.title }}</h3>
+                                            <p>{{ item.excerpt|truncatewords:24 }}</p>
+                                            <div class="ar-card-foot">
+                                                <time>{{ item.published_at|date:'F j, Y' }}</time>
+                                                <span class="ar-more">Read More <i class="ri-arrow-right-line"></i></span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+        <!-- CTA -->
+        <section class="ar-section">
+            <div class="ar-blob ar-parallax"
+                 data-depth="14"
+                 style="top:50%;
+                        left:50%;
+                        width:600px;
+                        height:600px;
+                        margin:-300px 0 0 -300px"></div>
+            <div class="ar-shell">
+                <div class="ar-cta">
+                    <span class="ar-tag" data-reveal>Start a Project</span>
+                    <h2 class="ar-h2"
+                        data-reveal
+                        style="--d:.15s">Let's work <span class="ar-script">together</span></h2>
+                    <p class="ar-text"
+                       data-reveal
+                       style="--d:.3s">Let's turn your idea into a visual experience your audience remembers.</p>
+                    <div data-reveal style="--d:.45s">
+                        <a class="btn-primary"
+                           href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 {% endblock %}
-
 {% block extra_js %}
-<script>
+    <script>
   document.addEventListener('DOMContentLoaded', function () {
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -281,5 +305,5 @@
     }
 
   });
-</script>
+    </script>
 {% endblock %}

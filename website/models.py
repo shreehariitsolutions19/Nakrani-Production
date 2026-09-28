@@ -6,7 +6,9 @@ from django.templatetags.static import static
 from django.utils.text import slugify
 
 
-def resolve_image_url(image_field, fallback_static_path="site/images/portfolio-hero.webp"):
+def resolve_image_url(
+    image_field, fallback_static_path="site/images/portfolio-hero.webp"
+):
     if not image_field or not getattr(image_field, "name", ""):
         return static(fallback_static_path)
 
@@ -24,7 +26,10 @@ def resolve_image_url(image_field, fallback_static_path="site/images/portfolio-h
 class SiteSettings(models.Model):
     brand_name = models.CharField(max_length=120, default="Nakrani Production")
     owner_name = models.CharField(max_length=120, default="Hitul Nakrani")
-    tagline = models.CharField(max_length=255, default="We combine creativity, strategy and design to create stunning visuals that inspire and engage.")
+    tagline = models.CharField(
+        max_length=255,
+        default="We combine creativity, strategy and design to create stunning visuals that inspire and engage.",
+    )
     phone = models.CharField(max_length=40, default="+91 70162 28333")
     email = models.EmailField(default="Design.Hitul@gmail.com")
     city = models.CharField(max_length=120, default="Visnagar, Mehsana, Gujarat, India")
@@ -36,8 +41,12 @@ class SiteSettings(models.Model):
     linkedin = models.URLField(blank=True)
     facebook = models.URLField(blank=True)
     twitter = models.URLField(blank=True)
-    meta_title = models.CharField(max_length=180, default="Nakrani Production — Premium Graphic Design Agency")
-    meta_description = models.TextField(default="Premium branding, web, print, packaging and social media design.")
+    meta_title = models.CharField(
+        max_length=180, default="Nakrani Production — Premium Graphic Design Agency"
+    )
+    meta_description = models.TextField(
+        default="Premium branding, web, print, packaging and social media design."
+    )
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -120,9 +129,7 @@ class Service(models.Model):
 
     @property
     def gallery_image_item_list(self):
-        descriptions = [
-            x.strip() for x in self.gallery_image_descriptions.splitlines()
-        ]
+        descriptions = [x.strip() for x in self.gallery_image_descriptions.splitlines()]
         return [
             {
                 "path": image,
@@ -145,8 +152,11 @@ class Service(models.Model):
         return [
             {
                 "title": feature,
-                "description": descriptions[index] if index < len(descriptions) and descriptions[index]
-                else "Thoughtful, production-ready visual work tailored to your brand.",
+                "description": (
+                    descriptions[index]
+                    if index < len(descriptions) and descriptions[index]
+                    else "Thoughtful, production-ready visual work tailored to your brand."
+                ),
             }
             for index, feature in enumerate(self.feature_list)
         ]
@@ -157,8 +167,11 @@ class Service(models.Model):
         return [
             {
                 "title": step,
-                "description": descriptions[index] if index < len(descriptions) and descriptions[index]
-                else "Focused collaboration and careful execution at every stage.",
+                "description": (
+                    descriptions[index]
+                    if index < len(descriptions) and descriptions[index]
+                    else "Focused collaboration and careful execution at every stage."
+                ),
             }
             for index, step in enumerate(self.process_list)
         ]
@@ -182,7 +195,9 @@ class PortfolioProject(models.Model):
     challenge = models.TextField(blank=True)
     solution = models.TextField(blank=True)
     result = models.TextField(blank=True)
-    gallery_images = models.TextField(blank=True, help_text="One static image path per line")
+    gallery_images = models.TextField(
+        blank=True, help_text="One static image path per line"
+    )
     client = models.CharField(max_length=160, blank=True)
     year = models.PositiveIntegerField(null=True, blank=True)
     featured = models.BooleanField(default=False)
@@ -208,11 +223,15 @@ class PortfolioProject(models.Model):
 
     @property
     def provided_service_list(self):
-        return [item.strip() for item in self.provided_services.splitlines() if item.strip()]
+        return [
+            item.strip() for item in self.provided_services.splitlines() if item.strip()
+        ]
 
     @property
     def gallery_image_list(self):
-        return [item.strip() for item in self.gallery_images.splitlines() if item.strip()]
+        return [
+            item.strip() for item in self.gallery_images.splitlines() if item.strip()
+        ]
 
 
 class Testimonial(models.Model):

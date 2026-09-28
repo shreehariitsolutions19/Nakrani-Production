@@ -1,8 +1,7 @@
-{% extends 'website/base.html' %}
+{% extends "website/base.html" %}
 {% load static %}
-
 {% block extra_head %}
-<style>
+    <style>
   /* =========================================================
      SCROLL PROGRESS BAR
      ========================================================= */
@@ -728,215 +727,225 @@
     }
     .js-reveal [data-reveal] { opacity: 1; translate: none; scale: 1; }
   }
-</style>
+    </style>
 {% endblock %}
-
 {% block content %}
-<div id="scrollProgress" aria-hidden="true"></div>
-
-<main>
-
-  <!-- HERO -->
-  <section class="d-hero">
-    <div class="d-hero-bg" style="background-image:url('{% static 'site/images/hero-bg.webp' %}');"></div>
-    <div class="d-hero-shade"></div>
-    <div class="d-hero-grid">
-      <div class="d-hero-copy hero-copy">
-        <nav class="d-breadcrumb" aria-label="Breadcrumb">
-          <a href="{% url 'services' %}">Services</a><span>/</span><span class="current">{{ service.title }}</span>
-        </nav>
-        <h1>{{ service.title.split|slice:":-1"|join:" " }} <span class="d-script">{{ service.title.split|last }}</span></h1>
-        <p>{{ service.description }}</p>
-        <div class="d-actions">
-          <a class="btn-primary" href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
-          <a class="d-work-link" href="{% url 'portfolio' %}"><i class="ri-arrow-right-line"></i> View Our Work</a>
-        </div>
-      </div>
-
-      <div class="d-art hero-art" data-depth="12">
-        <img src="{{ service.image_url }}" alt="{{ service.title }} — Nakrani Production service">
-        <div class="d-badge"><strong>{{ service.order|stringformat:"02d" }}</strong><span>Service</span></div>
-      </div>
-    </div>
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
-      <span class="text-xs uppercase tracking-widest" style="writing-mode:vertical-lr">Scroll Down</span>
-      <div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div>
-    </div>
-
-  </section>
-
-  {% if service.gallery_video_list or service.gallery_image_item_list %}
-  <section class="d-section d-dark">
-    <div class="d-inner">
-      <div class="d-head" data-reveal>
-        <span class="d-label">CGI Showcase</span>
-        <h2>Image &amp; <span class="d-script">Motion</span></h2>
-        <p>Watch the finished CGI advertisement and explore the 3D setup and edit behind it.</p>
-      </div>
-      <div class="d-showcase-grid">
-        {% for video in service.gallery_video_list %}
-        <video class="d-showcase-video" autoplay muted loop preload="metadata" playsinline poster="{{ service.image_url }}" aria-label="{{ service.title }} video preview">
-          <source src="{% static video %}" type="video/mp4">
-          Your browser does not support HTML video.
-        </video>
-        {% endfor %}
-        <div class="d-showcase-images">
-          {% for image in service.gallery_image_item_list %}
-          <figure class="d-showcase-image">
-            <img src="{% static image.path %}" alt="{{ image.description }}" loading="lazy" decoding="async">
-            <figcaption>{{ image.description }}</figcaption>
-          </figure>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-  </section>
-  {% endif %}
-
-  <!-- ABOUT THIS SERVICE -->
-  <section class="d-section d-mid">
-    <div class="d-inner d-about-grid">
-      <div data-reveal="left">
-        <span class="d-label">About This Service</span>
-        <h2>{{ service.detail_heading|default:"Design that communicates before it decorates." }}</h2>
-        <div class="d-about-line"></div>
-      </div>
-      <div class="d-about-copy" data-stagger="3">
-        {% if service.detail_intro_list %}
-        {% for paragraph in service.detail_intro_list %}
-        <p data-reveal="right">{{ paragraph }}</p>
-        {% endfor %}
-        {% else %}
-        <p data-reveal="right">{{ service.description }} We turn ideas into clear, confident visuals that carry a message without needing a caption.</p>
-        <p data-reveal="right">From campaign work to day-to-day collateral, we build a visual vocabulary that stays consistent across every piece — so each asset reinforces the brand rather than diluting it.</p>
-        <p data-reveal="right">Everything we deliver is considered, refined and ready to use, whether it lives on a screen, a page or a wall.</p>
-        {% endif %}
-      </div>
-    </div>
-  </section>
-
-  <!-- DELIVERABLES -->
-  <section class="d-section d-dark">
-    <div class="d-inner">
-      <div class="d-head" data-reveal>
-        <span class="d-label">Deliverables</span>
-        <h2>What's <span class="d-script">Included</span></h2>
-        <p>Everything you receive as part of the {{ service.title }} service, prepared to a production-ready standard.</p>
-      </div>
-      <div class="g-grid g-3" data-stagger="3">
-        {% for feature in service.feature_item_list %}
-        <article class="g-card" data-reveal>
-          <span class="g-icon"><i class="{% cycle 'ri-quill-pen-line' 'ri-palette-line' 'ri-font-size-2' 'ri-book-2-line' 'ri-shapes-line' 'ri-layout-grid-line' %}"></i></span>
-          <h3>{{ feature.title }}</h3>
-          <i class="g-line"></i>
-          <p>{{ feature.description }}</p>
-        </article>
-        {% empty %}
-        <article class="g-card" data-reveal>
-          <span class="g-icon"><i class="{{ service.icon_class }}"></i></span>
-          <h3>{{ service.title }}</h3>
-          <i class="g-line"></i>
-          <p>{{ service.description }}</p>
-        </article>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-
-  <!-- PROCESS -->
-  <section class="d-section d-mid">
-    <div class="d-inner">
-      <div class="d-head" data-reveal>
-        <span class="d-label">How We Work</span>
-        <h2>A Process Built Around Clarity</h2>
-        <p>A focused five-step process that takes your brand from a rough idea to a finished, effective visual system.</p>
-      </div>
-      <div class="g-grid g-5" data-stagger="5">
-        {% for step in service.process_item_list %}
-        <div class="g-card" data-reveal>
-          <span class="g-num">{{ forloop.counter|stringformat:"02d" }}</span>
-          <h3>{{ step.title }}</h3>
-          <i class="g-line"></i>
-          <p>{{ step.description }}</p>
-        </div>
-        {% empty %}
-        <div class="g-card" data-reveal>
-          <span class="g-num">01</span>
-          <h3>Discover</h3>
-          <i class="g-line"></i>
-          <p>Understand the brand, audience and objective.</p>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-
-  <!-- SELECTED WORK -->
-  <section class="d-section d-dark">
-    <div class="d-inner">
-      <div class="d-work-head" data-reveal>
-        <div>
-          <span class="d-label">Selected Work</span>
-          <h2>Work Created With <span class="d-script">Purpose</span></h2>
-        </div>
-        <a class="btn-outline" href="{% url 'portfolio' %}">View Portfolio <i class="ri-arrow-right-line"></i></a>
-      </div>
-      <div class="work-grid" data-stagger="3">
-        {% for project in related_projects %}
-        <a class="work-card" data-reveal="scale" href="{% url 'portfolio_detail' project.slug %}">
-          <div class="work-image">
-            <img src="{{ project.image_url }}" alt="{{ project.title }} — {{ project.category }} project">
-            <div class="work-overlay">
-              <span class="work-meta">{{ project.category }} · {{ project.year|default:"2026" }}</span>
-              <h3>{{ project.title }}</h3>
+    <div id="scrollProgress" aria-hidden="true"></div>
+    <main>
+        <!-- HERO -->
+        <section class="d-hero">
+            <div class="d-hero-bg"
+                 style="background-image:url('{% static 'site/images/hero-bg.webp' %}')"></div>
+            <div class="d-hero-shade"></div>
+            <div class="d-hero-grid">
+                <div class="d-hero-copy hero-copy">
+                    <nav class="d-breadcrumb" aria-label="Breadcrumb">
+                        <a href="{% url 'services' %}">Services</a><span>/</span><span class="current">{{ service.title }}</span>
+                    </nav>
+                    <h1>{{ service.title.split|slice:":-1"|join:" " }} <span class="d-script">{{ service.title.split|last }}</span></h1>
+                    <p>{{ service.description }}</p>
+                    <div class="d-actions">
+                        <a class="btn-primary"
+                           href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
+                        <a class="d-work-link"
+                           href="{% url 'portfolio' %}"><i class="ri-arrow-right-line"></i> View Our Work</a>
+                    </div>
+                </div>
+                <div class="d-art hero-art" data-depth="12">
+                    <img src="{{ service.image_url }}"
+                         alt="{{ service.title }} — Nakrani Production service">
+                    <div class="d-badge"><strong>{{ service.order|stringformat:"02d" }}</strong><span>Service</span></div>
+                </div>
             </div>
-            <i class="work-arrow ri-arrow-right-up-line"></i>
-          </div>
-        </a>
-        {% empty %}
-        <p class="d-empty">More projects are on the way.</p>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-
-  <!-- MORE SERVICES -->
-  <section class="d-section d-mid">
-    <div class="d-inner">
-      <div class="d-head" data-reveal>
-        <span class="d-label">More Services</span>
-        <h2>Explore More Services</h2>
-        <p>A full creative toolkit — from the first spark of an identity to the finished, production-ready asset.</p>
-      </div>
-      <div class="g-grid g-3" data-stagger="3">
-        {% for item in services %}{% if item.pk != service.pk %}
-        <a class="g-card more-card" data-reveal href="{% url 'service_detail' item.slug %}">
-          <div class="more-top">
-            <span class="g-icon"><i class="{{ item.icon_class }}"></i></span>
-            <span class="more-num">{{ forloop.counter|stringformat:"02d" }}</span>
-          </div>
-          <h3>{{ item.title }}</h3>
-          <p>{{ item.description }}</p>
-          <span class="more-link">View Service <i class="ri-arrow-right-line"></i></span>
-        </a>
-        {% endif %}{% endfor %}
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="d-cta">
-    <div class="d-cta-inner" data-reveal>
-      <span class="d-label">Start a Project</span>
-      <h2>Let's work <span class="d-script">together</span></h2>
-      <p>Let's turn your idea into a visual experience.</p>
-      <a class="btn-primary" href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
-    </div>
-  </section>
-
-</main>
-
-<script>
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
+                <span class="text-xs uppercase tracking-widest"
+                      style="writing-mode:vertical-lr">Scroll Down</span>
+                <div class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"></div>
+            </div>
+        </section>
+        {% if service.gallery_video_list or service.gallery_image_item_list %}
+            <section class="d-section d-dark">
+                <div class="d-inner">
+                    <div class="d-head" data-reveal>
+                        <span class="d-label">CGI Showcase</span>
+                        <h2>Image &amp; <span class="d-script">Motion</span></h2>
+                        <p>Watch the finished CGI advertisement and explore the 3D setup and edit behind it.</p>
+                    </div>
+                    <div class="d-showcase-grid">
+                        {% for video in service.gallery_video_list %}
+                            <video class="d-showcase-video"
+                                   autoplay
+                                   muted
+                                   loop
+                                   preload="metadata"
+                                   playsinline
+                                   poster="{{ service.image_url }}"
+                                   aria-label="{{ service.title }} video preview">
+                                <source src="{% static video %}" type="video/mp4">
+                                Your browser does not support HTML video.
+                            </video>
+                        {% endfor %}
+                        <div class="d-showcase-images">
+                            {% for image in service.gallery_image_item_list %}
+                                <figure class="d-showcase-image">
+                                    <img src="{% static image.path %}"
+                                         alt="{{ image.description }}"
+                                         loading="lazy"
+                                         decoding="async">
+                                    <figcaption>{{ image.description }}</figcaption>
+                                </figure>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+        <!-- ABOUT THIS SERVICE -->
+        <section class="d-section d-mid">
+            <div class="d-inner d-about-grid">
+                <div data-reveal="left">
+                    <span class="d-label">About This Service</span>
+                    <h2>{{ service.detail_heading|default:"Design that communicates before it decorates." }}</h2>
+                    <div class="d-about-line"></div>
+                </div>
+                <div class="d-about-copy" data-stagger="3">
+                    {% if service.detail_intro_list %}
+                        {% for paragraph in service.detail_intro_list %}
+                            <p data-reveal="right">{{ paragraph }}</p>
+                        {% endfor %}
+                    {% else %}
+                        <p data-reveal="right">{{ service.description }} We turn ideas into clear, confident visuals that carry a message without needing a caption.</p>
+                        <p data-reveal="right">From campaign work to day-to-day collateral, we build a visual vocabulary that stays consistent across every piece — so each asset reinforces the brand rather than diluting it.</p>
+                        <p data-reveal="right">Everything we deliver is considered, refined and ready to use, whether it lives on a screen, a page or a wall.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        <!-- DELIVERABLES -->
+        <section class="d-section d-dark">
+            <div class="d-inner">
+                <div class="d-head" data-reveal>
+                    <span class="d-label">Deliverables</span>
+                    <h2>What's <span class="d-script">Included</span></h2>
+                    <p>Everything you receive as part of the {{ service.title }} service, prepared to a production-ready standard.</p>
+                </div>
+                <div class="g-grid g-3" data-stagger="3">
+                    {% for feature in service.feature_item_list %}
+                        <article class="g-card" data-reveal>
+                            <span class="g-icon"><i class="{% cycle 'ri-quill-pen-line' 'ri-palette-line' 'ri-font-size-2' 'ri-book-2-line' 'ri-shapes-line' 'ri-layout-grid-line' %}"></i></span>
+                            <h3>{{ feature.title }}</h3>
+                            <i class="g-line"></i>
+                            <p>{{ feature.description }}</p>
+                        </article>
+                    {% empty %}
+                        <article class="g-card" data-reveal>
+                            <span class="g-icon"><i class="{{ service.icon_class }}"></i></span>
+                            <h3>{{ service.title }}</h3>
+                            <i class="g-line"></i>
+                            <p>{{ service.description }}</p>
+                        </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <!-- PROCESS -->
+        <section class="d-section d-mid">
+            <div class="d-inner">
+                <div class="d-head" data-reveal>
+                    <span class="d-label">How We Work</span>
+                    <h2>A Process Built Around Clarity</h2>
+                    <p>A focused five-step process that takes your brand from a rough idea to a finished, effective visual system.</p>
+                </div>
+                <div class="g-grid g-5" data-stagger="5">
+                    {% for step in service.process_item_list %}
+                        <div class="g-card" data-reveal>
+                            <span class="g-num">{{ forloop.counter|stringformat:"02d" }}</span>
+                            <h3>{{ step.title }}</h3>
+                            <i class="g-line"></i>
+                            <p>{{ step.description }}</p>
+                        </div>
+                    {% empty %}
+                        <div class="g-card" data-reveal>
+                            <span class="g-num">01</span>
+                            <h3>Discover</h3>
+                            <i class="g-line"></i>
+                            <p>Understand the brand, audience and objective.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <!-- SELECTED WORK -->
+        <section class="d-section d-dark">
+            <div class="d-inner">
+                <div class="d-work-head" data-reveal>
+                    <div>
+                        <span class="d-label">Selected Work</span>
+                        <h2>Work Created With <span class="d-script">Purpose</span></h2>
+                    </div>
+                    <a class="btn-outline"
+                       href="{% url 'portfolio' %}">View Portfolio <i class="ri-arrow-right-line"></i></a>
+                </div>
+                <div class="work-grid" data-stagger="3">
+                    {% for project in related_projects %}
+                        <a class="work-card"
+                           data-reveal="scale"
+                           href="{% url 'portfolio_detail' project.slug %}">
+                            <div class="work-image">
+                                <img src="{{ project.image_url }}"
+                                     alt="{{ project.title }} — {{ project.category }} project">
+                                <div class="work-overlay">
+                                    <span class="work-meta">{{ project.category }} · {{ project.year|default:"2026" }}</span>
+                                    <h3>{{ project.title }}</h3>
+                                </div>
+                                <i class="work-arrow ri-arrow-right-up-line"></i>
+                            </div>
+                        </a>
+                    {% empty %}
+                        <p class="d-empty">More projects are on the way.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <!-- MORE SERVICES -->
+        <section class="d-section d-mid">
+            <div class="d-inner">
+                <div class="d-head" data-reveal>
+                    <span class="d-label">More Services</span>
+                    <h2>Explore More Services</h2>
+                    <p>A full creative toolkit — from the first spark of an identity to the finished, production-ready asset.</p>
+                </div>
+                <div class="g-grid g-3" data-stagger="3">
+                    {% for item in services %}
+                        {% if item.pk != service.pk %}
+                            <a class="g-card more-card"
+                               data-reveal
+                               href="{% url 'service_detail' item.slug %}">
+                                <div class="more-top">
+                                    <span class="g-icon"><i class="{{ item.icon_class }}"></i></span>
+                                    <span class="more-num">{{ forloop.counter|stringformat:"02d" }}</span>
+                                </div>
+                                <h3>{{ item.title }}</h3>
+                                <p>{{ item.description }}</p>
+                                <span class="more-link">View Service <i class="ri-arrow-right-line"></i></span>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <!-- CTA -->
+        <section class="d-cta">
+            <div class="d-cta-inner" data-reveal>
+                <span class="d-label">Start a Project</span>
+                <h2>Let's work <span class="d-script">together</span></h2>
+                <p>Let's turn your idea into a visual experience.</p>
+                <a class="btn-primary"
+                   href="{% url 'contact' %}">Start a Project <i class="ri-arrow-right-line"></i></a>
+            </div>
+        </section>
+    </main>
+    <script>
 (function () {
   document.documentElement.classList.add('js-reveal');
 
@@ -996,5 +1005,5 @@
 
   frame();
 })();
-</script>
+    </script>
 {% endblock %}

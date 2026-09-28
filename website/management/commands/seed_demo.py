@@ -8,7 +8,6 @@ from django.utils import timezone
 
 from website.models import BlogPost, FAQItem, PortfolioProject, Service, Testimonial
 
-
 SERVICES = [
     {
         "title": "Branding & Identity",
@@ -498,9 +497,20 @@ class Command(BaseCommand):
     def copy_demo_image(self, filename, folder):
         if not filename:
             return ""
-        source = Path(settings.BASE_DIR) / "website" / "static" / "site" / "images" / filename
+        source = (
+            Path(settings.BASE_DIR)
+            / "website"
+            / "static"
+            / "site"
+            / "images"
+            / filename
+        )
         if not source.exists():
-            self.stderr.write(self.style.WARNING(f"Preview image is not available locally: {filename}"))
+            self.stderr.write(
+                self.style.WARNING(
+                    f"Preview image is not available locally: {filename}"
+                )
+            )
             return ""
         destination_dir = Path(settings.MEDIA_ROOT) / folder
         destination_dir.mkdir(parents=True, exist_ok=True)

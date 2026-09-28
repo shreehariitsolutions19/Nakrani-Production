@@ -29,11 +29,17 @@ def site_context():
 
 def home(request):
     context = site_context()
-    context.update({
-        "page_title": "Home",
-        "featured_projects": PortfolioProject.objects.filter(active=True, featured=True)[:6],
-        "posts": BlogPost.objects.filter(active=True, published=True, published_at__lte=timezone.now())[:3],
-    })
+    context.update(
+        {
+            "page_title": "Home",
+            "featured_projects": PortfolioProject.objects.filter(
+                active=True, featured=True
+            )[:6],
+            "posts": BlogPost.objects.filter(
+                active=True, published=True, published_at__lte=timezone.now()
+            )[:3],
+        }
+    )
     return render(request, "website/home.html", context)
 
 
@@ -63,21 +69,29 @@ def portfolio(request):
     projects = PortfolioProject.objects.filter(active=True)
     if selected_category:
         projects = projects.filter(category__iexact=selected_category)
-    context.update({
-        "page_title": "Portfolio",
-        "projects": projects,
-        "selected_category": selected_category,
-        "categories": PortfolioProject.objects.filter(active=True).values_list("category", flat=True).distinct(),
-        "featured_project": PortfolioProject.objects.filter(active=True, featured=True).first()
+    context.update(
+        {
+            "page_title": "Portfolio",
+            "projects": projects,
+            "selected_category": selected_category,
+            "categories": PortfolioProject.objects.filter(active=True)
+            .values_list("category", flat=True)
+            .distinct(),
+            "featured_project": PortfolioProject.objects.filter(
+                active=True, featured=True
+            ).first()
             or PortfolioProject.objects.filter(active=True).first(),
-    })
+        }
+    )
     return render(request, "website/portfolio.html", context)
 
 
 def portfolio_detail(request, slug):
     project = get_object_or_404(PortfolioProject, slug=slug, active=True)
     context = site_context()
-    active_projects = PortfolioProject.objects.filter(active=True).order_by("order", "id")
+    active_projects = PortfolioProject.objects.filter(active=True).order_by(
+        "order", "id"
+    )
 
     fallback_gallery = {
         "moon-cosmetics": [
@@ -112,21 +126,22 @@ def portfolio_detail(request, slug):
         ],
     }
 
-    fallback_images = fallback_gallery.get(project.slug, [
-        project.image_url,
-        "site/images/portfolio-hero.webp",
-        "site/images/services-hero.webp",
-    ])
+    fallback_images = fallback_gallery.get(
+        project.slug,
+        [
+            project.image_url,
+            "site/images/portfolio-hero.webp",
+            "site/images/services-hero.webp",
+        ],
+    )
     gallery = project.gallery_image_list or fallback_images
     if project.image:
         image_name = project.image.name.rsplit("/", 1)[-1]
-        if (
-            project.slug != "vasani-natural-branding"
-            and any(item.rsplit("/", 1)[-1] == image_name for item in gallery)
+        if project.slug != "vasani-natural-branding" and any(
+            item.rsplit("/", 1)[-1] == image_name for item in gallery
         ):
             gallery = [
-                item for item in gallery
-                if item.rsplit("/", 1)[-1] != image_name
+                item for item in gallery if item.rsplit("/", 1)[-1] != image_name
             ]
         elif not any(item.rsplit("/", 1)[-1] == image_name for item in gallery):
             gallery = [project.image_url] + gallery
@@ -175,16 +190,18 @@ def portfolio_detail(request, slug):
             }
         ]
 
-    context.update({
-        "page_title": project.title,
-        "project": project,
-        "gallery_images": gallery,
-        "gallery_sections": gallery_sections,
-        "project_services": project.provided_service_list,
-        "related_projects": active_projects.exclude(pk=project.pk)[:3],
-        "previous_project": active_projects.filter(order__lt=project.order).last(),
-        "next_project": active_projects.filter(order__gt=project.order).first(),
-    })
+    context.update(
+        {
+            "page_title": project.title,
+            "project": project,
+            "gallery_images": gallery,
+            "gallery_sections": gallery_sections,
+            "project_services": project.provided_service_list,
+            "related_projects": active_projects.exclude(pk=project.pk)[:3],
+            "previous_project": active_projects.filter(order__lt=project.order).last(),
+            "next_project": active_projects.filter(order__gt=project.order).first(),
+        }
+    )
     return render(request, "website/portfolio_detail.html", context)
 
 
@@ -204,10 +221,14 @@ def blog(request):
             messages.success(request, "Thanks for subscribing.")
             return redirect("blog")
 
-    context.update({
-        "page_title": "Blog",
-        "posts": BlogPost.objects.filter(active=True, published=True, published_at__lte=timezone.now()),
-    })
+    context.update(
+        {
+            "page_title": "Blog",
+            "posts": BlogPost.objects.filter(
+                active=True, published=True, published_at__lte=timezone.now()
+            ),
+        }
+    )
     return render(request, "website/blog.html", context)
 
 
@@ -215,30 +236,40 @@ def blog_detail(request, slug):
     post = get_object_or_404(BlogPost, slug=slug, active=True, published=True)
     context = site_context()
     context.update({"page_title": post.title, "post": post})
-    published_posts = BlogPost.objects.filter(active=True, published=True).exclude(pk=post.pk)
-    context["previous_post"] = published_posts.filter(
-        published_at__lt=post.published_at
-    ).order_by("-published_at", "-id").first()
-    context["next_post"] = published_posts.filter(
-        published_at__gt=post.published_at
-    ).order_by("published_at", "id").first()
+    published_posts = BlogPost.objects.filter(active=True, published=True).exclude(
+        pk=post.pk
+    )
+    context["previous_post"] = (
+        published_posts.filter(published_at__lt=post.published_at)
+        .order_by("-published_at", "-id")
+        .first()
+    )
+    context["next_post"] = (
+        published_posts.filter(published_at__gt=post.published_at)
+        .order_by("published_at", "id")
+        .first()
+    )
     context["related_posts"] = published_posts[:3]
     return render(request, "website/blog_detail.html", context)
 
 
 def contact(request):
     context = site_context()
-    context.update({
-        "page_title": "Contact",
-        "faqs": FAQItem.objects.filter(page="contact", active=True),
-    })
+    context.update(
+        {
+            "page_title": "Contact",
+            "faqs": FAQItem.objects.filter(page="contact", active=True),
+        }
+    )
     if request.method == "POST":
         name = request.POST.get("name", "").strip()
         email = request.POST.get("email", "").strip()
         phone = request.POST.get("phone", "").strip()
         city = request.POST.get("city", "").strip()
         if not name or not email or not phone or not city:
-            messages.error(request, "Please fill in your name, email, phone number and city.")
+            messages.error(
+                request, "Please fill in your name, email, phone number and city."
+            )
         else:
             ContactSubmission.objects.create(
                 name=name,
@@ -246,7 +277,11 @@ def contact(request):
                 phone=phone,
                 city=city,
             )
-            url = (SiteSettings.objects.first().google_form_url if SiteSettings.objects.first() else "") or getattr(settings, "GOOGLE_FORM_URL", "")
+            url = (
+                SiteSettings.objects.first().google_form_url
+                if SiteSettings.objects.first()
+                else ""
+            ) or getattr(settings, "GOOGLE_FORM_URL", "")
             if url:
                 data = {}
                 mappings = {
