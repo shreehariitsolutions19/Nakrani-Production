@@ -300,4 +300,4 @@ def contact(request):
                     pass
             messages.success(request, "Thanks! Your enquiry has been received.")
             return redirect("contact")
-    return render(request, "website/contact.html", context)
+    return render(request, "website/contact.html", context)   
