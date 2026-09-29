@@ -24,23 +24,23 @@ class DynamicContentTests(TestCase):
             slug="image-fallback",
             excerpt="Excerpt",
             content="Content",
-            cover_image="blog/1_branding-mockup.jpg",
+            cover_image="blog/1_branding-mockup.webp",
         )
         project = PortfolioProject(
             title="Image fallback",
             slug="image-fallback-project",
             category="Branding",
-            image="portfolio/6_tivra-brand.jpg",
+            image="portfolio/6_tivra-brand.webp",
         )
 
-        self.assertEqual(post.image_url, "/static/site/images/1_branding-mockup.jpg")
-        self.assertEqual(project.image_url, "/static/site/images/6_tivra-brand.jpg")
+        self.assertEqual(post.image_url, "/static/site/images/1_branding-mockup.webp")
+        self.assertEqual(project.image_url, "/static/site/images/6_tivra-brand.webp")
 
         missing_project_image = PortfolioProject(
             title="Missing image",
             slug="missing-image",
             category="Branding",
-            image="portfolio/not-deployed.png",
+            image="portfolio/not-deployed.webp",
         )
         self.assertEqual(
             missing_project_image.image_url,
@@ -53,15 +53,15 @@ class DynamicContentTests(TestCase):
             slug="image-fallback",
             excerpt="A short excerpt.",
             content="Article content.",
-            cover_image="blog/1_branding-mockup.jpg",
+            cover_image="blog/1_branding-mockup.webp",
             published_at=timezone.now(),
         )
 
         listing = self.client.get(reverse("blog"))
         detail = self.client.get(reverse("blog_detail", args=[post.slug]))
 
-        self.assertContains(listing, "/static/site/images/1_branding-mockup.jpg")
-        self.assertContains(detail, "/static/site/images/1_branding-mockup.jpg")
+        self.assertContains(listing, "/static/site/images/1_branding-mockup.webp")
+        self.assertContains(detail, "/static/site/images/1_branding-mockup.webp")
 
     def test_cgi_ad_service_shows_image_gallery_and_playable_video(self):
         data = next(item for item in SERVICES if item["slug"] == "cgi-ad-creation")
@@ -82,7 +82,7 @@ class DynamicContentTests(TestCase):
         )
         self.assertContains(
             detail,
-            "/static/site/images/cgi-helicopter-ad-poster.jpeg",
+            "/static/site/images/cgi-helicopter-ad-poster.webp",
         )
         for image_path in service.gallery_image_list:
             self.assertTrue(
@@ -113,13 +113,13 @@ class DynamicContentTests(TestCase):
             title="Related project",
             slug="related-project",
             category="Branding",
-            image="portfolio/6_tivra-brand.jpg",
+            image="portfolio/6_tivra-brand.webp",
             active=True,
         )
 
         response = self.client.get(reverse("portfolio_detail", args=["orbit-project"]))
 
-        self.assertContains(response, "/static/site/images/6_tivra-brand.jpg")
+        self.assertContains(response, "/static/site/images/6_tivra-brand.webp")
         self.assertContains(
             response, "window.addEventListener('scroll', scheduleParallax"
         )
@@ -232,7 +232,7 @@ class DynamicContentTests(TestCase):
         self.assertContains(response, "pd-cover-frame--vasani")
         self.assertEqual(
             response.content.decode().count(
-                "/static/site/images/vasani-natural-products-billboard.jpeg"
+                "/static/site/images/vasani-natural-products-billboard.webp"
             ),
             2,
         )
@@ -245,7 +245,7 @@ class DynamicContentTests(TestCase):
             )
             self.assertContains(response, f"/static/{image_path}")
         self.assertContains(
-            response, "/static/site/images/vasani-natural-products-billboard.jpeg"
+            response, "/static/site/images/vasani-natural-products-billboard.webp"
         )
 
     def test_contact_page_renders_active_database_faqs(self):

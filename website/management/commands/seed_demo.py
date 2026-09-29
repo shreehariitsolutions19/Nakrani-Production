@@ -59,7 +59,7 @@ SERVICES = [
             "visuals, animation and polished stills for digital campaigns."
         ),
         "icon_class": "ri-movie-2-line",
-        "image": "services/cgi-helicopter-ad-poster.jpeg",
+        "image": "services/cgi-helicopter-ad-poster.webp",
         "features": (
             "CGI Advertising Stills\n3D Product Visualisation\n"
             "Animated Product Films\nVirtual Scene Design\n"
@@ -91,10 +91,10 @@ SERVICES = [
             "video, composed for the campaign and the platforms where it will appear."
         ),
         "gallery_images": (
-            "site/images/cgi-helicopter-scene-side.jpeg\n"
-            "site/images/cgi-helicopter-camera-layout.jpeg\n"
-            "site/images/cgi-helicopter-render-settings.jpeg\n"
-            "site/images/cgi-helicopter-edit-timeline.jpeg"
+            "site/images/cgi-helicopter-scene-side.webp\n"
+            "site/images/cgi-helicopter-camera-layout.webp\n"
+            "site/images/cgi-helicopter-render-settings.webp\n"
+            "site/images/cgi-helicopter-edit-timeline.webp"
         ),
         "gallery_image_descriptions": (
             "3D helicopter scene and environment\n"
@@ -144,7 +144,7 @@ PROJECTS = [
         "result": "A confident, premium voice that now reads consistently across every touchpoint.",
         "client": "Tivra",
         "year": 2025,
-        "image": "6_tivra-brand.jpg",
+        "image": "6_tivra-brand.webp",
         "gallery_images": "site/images/tivra-gallery-1.webp\nsite/images/tivra-gallery-2.webp\nsite/images/tivra-gallery-3.webp",
         "featured": True,
     },
@@ -160,8 +160,8 @@ PROJECTS = [
         "result": "A brand that feels considered rather than loud, equally at home in physical space.",
         "client": "Tattva",
         "year": 2025,
-        "image": "9_tattva.png",
-        "gallery_images": "site/images/1_branding-mockup.jpg\nsite/images/2_creative-agency-mockup.jpg",
+        "image": "9_tattva.webp",
+        "gallery_images": "site/images/1_branding-mockup.webp\nsite/images/2_creative-agency-mockup.webp",
         "featured": False,
     },
     {
@@ -176,8 +176,8 @@ PROJECTS = [
         "result": "A luxurious, tactile range that feels collectible and unmistakably premium.",
         "client": "MOON Cosmetics",
         "year": 2024,
-        "image": "4_moon-cosmetics.jpg",
-        "gallery_images": "site/images/3_stationery-mockup.jpg\nsite/images/2_creative-agency-mockup.jpg",
+        "image": "4_moon-cosmetics.webp",
+        "gallery_images": "site/images/3_stationery-mockup.webp\nsite/images/2_creative-agency-mockup.webp",
         "featured": False,
     },
     {
@@ -192,8 +192,8 @@ PROJECTS = [
         "result": "Every unboxing feels intentional and each product reads instantly on shelf.",
         "client": "Aura",
         "year": 2024,
-        "image": "5_aura-packaging.jpg",
-        "gallery_images": "site/images/3_stationery-mockup.jpg\nsite/images/1_branding-mockup.jpg",
+        "image": "5_aura-packaging.webp",
+        "gallery_images": "site/images/3_stationery-mockup.webp\nsite/images/1_branding-mockup.webp",
         "featured": False,
     },
     {
@@ -208,8 +208,8 @@ PROJECTS = [
         "result": "A crafted label system that gives the product quiet presence on shelf.",
         "client": "Lumina",
         "year": 2024,
-        "image": "8_lumina-label.jpg",
-        "gallery_images": "site/images/3_stationery-mockup.jpg\nsite/images/5_aura-packaging.jpg",
+        "image": "8_lumina-label.webp",
+        "gallery_images": "site/images/3_stationery-mockup.webp\nsite/images/5_aura-packaging.webp",
         "featured": False,
     },
     {
@@ -224,8 +224,8 @@ PROJECTS = [
         "result": "A designed, readable publication that stays unmistakably on-brand.",
         "client": "Cereal",
         "year": 2024,
-        "image": "7_cereal-editorial.jpg",
-        "gallery_images": "site/images/2_creative-agency-mockup.jpg\nsite/images/1_branding-mockup.jpg",
+        "image": "7_cereal-editorial.webp",
+        "gallery_images": "site/images/2_creative-agency-mockup.webp\nsite/images/1_branding-mockup.webp",
         "featured": False,
     },
     {
@@ -324,20 +324,20 @@ PROJECTS = [
         ),
         "client": "Vasani Natural",
         "year": 2026,
-        "image": "vasani-natural-products-billboard.jpeg",
+        "image": "vasani-natural-products-billboard.webp",
         "gallery_images": "\n".join(
             (
-                "site/images/vasani-natural-brand-mission-vision.jpeg",
-                "site/images/vasani-natural-logo-board.jpeg",
-                "site/images/vasani-natural-identity-variants.jpeg",
-                "site/images/vasani-natural-color-palette.jpeg",
-                "site/images/vasani-natural-typography.jpeg",
-                "site/images/vasani-natural-logo-cream.jpeg",
-                "site/images/vasani-natural-logo-dark-green.jpeg",
-                "site/images/vasani-natural-stationery-packaging.jpeg",
-                "site/images/vasani-natural-billboard-branding.jpeg",
-                "site/images/vasani-natural-thank-you.jpeg",
-                "site/images/vasani-natural-products-billboard.jpeg",
+                "site/images/vasani-natural-brand-mission-vision.webp",
+                "site/images/vasani-natural-logo-board.webp",
+                "site/images/vasani-natural-identity-variants.webp",
+                "site/images/vasani-natural-color-palette.webp",
+                "site/images/vasani-natural-typography.webp",
+                "site/images/vasani-natural-logo-cream.webp",
+                "site/images/vasani-natural-logo-dark-green.webp",
+                "site/images/vasani-natural-stationery-packaging.webp",
+                "site/images/vasani-natural-billboard-branding.webp",
+                "site/images/vasani-natural-thank-you.webp",
+                "site/images/vasani-natural-products-billboard.webp",
             )
         ),
         "featured": True,
@@ -351,7 +351,7 @@ BLOG_POSTS = [
         "category": "Branding",
         "excerpt": "A strong visual identity is more than a logo — it is the system that makes a brand instantly recognisable, trustworthy and impossible to forget.",
         "published_at": (2026, 9, 12),
-        "image": "1_branding-mockup.jpg",
+        "image": "1_branding-mockup.webp",
         "content": """In a market where attention lasts a fraction of a second, a brand is judged long before it is understood. Long before a customer reads a single word, they have already formed an impression from colour, type, spacing and form. That impression is your visual identity at work.
 
 A strong identity is not a single logo file. It is a connected system — a mark, a palette, a type hierarchy and a set of rules — that behaves consistently across packaging, print, digital and social. The stronger the system, the more recognisable the brand becomes with every exposure.
@@ -370,7 +370,7 @@ The most memorable brands treat identity as infrastructure, not decoration. It i
         "category": "Branding",
         "excerpt": "From positioning to palette — the practical foundations that turn a business into a brand people remember.",
         "published_at": (2026, 8, 28),
-        "image": "6_tivra-brand.jpg",
+        "image": "6_tivra-brand.webp",
         "content": """Every memorable brand identity starts with clarity before craft. Before a single mark is drawn, we define what the brand stands for, who it speaks to, and what it should feel like in the mind of the audience.
 
 Start with positioning
@@ -387,7 +387,7 @@ A brand identity is a decision system disguised as a visual style.""",
         "category": "Graphic Design",
         "excerpt": "Why the simplest marks are often the strongest, and how shape, balance and negative space shape perception.",
         "published_at": (2026, 8, 14),
-        "image": "1_branding-mockup.jpg",
+        "image": "1_branding-mockup.webp",
         "content": """A logo is read in milliseconds, and the brain makes its judgement before the conscious mind catches up. That is why the strongest marks rely on shape and balance rather than detail.
 
 Simplicity is not the absence of thinking
@@ -402,7 +402,7 @@ Negative space, proportion and optical balance do the quiet work. When they are 
         "category": "Packaging",
         "excerpt": "Packaging is the first physical touchpoint of a brand. Here is how to make it work on a crowded shelf.",
         "published_at": (2026, 7, 30),
-        "image": "5_aura-packaging.jpg",
+        "image": "5_aura-packaging.webp",
         "content": """Packaging has a hard job: it must attract, inform and reassure — often within a few seconds and a single glance. On a crowded shelf, clarity beats decoration every time.
 
 Design for the three-foot and the three-inch view
@@ -417,7 +417,7 @@ Packaging is the only medium your customer holds in their hands before they buy.
         "category": "Social Media",
         "excerpt": "A consistent template system can keep every post on-brand while still feeling fresh in a fast feed.",
         "published_at": (2026, 7, 16),
-        "image": "2_creative-agency-mockup.jpg",
+        "image": "2_creative-agency-mockup.webp",
         "content": """Social feeds move fast, and audiences scroll faster. The brands that stand out are not always the loudest — they are the most consistent and recognisable.
 
 Build a system, not one-offs
@@ -432,7 +432,7 @@ Recognition is the goal. When someone can identify your brand from a thumbnail a
         "category": "Branding",
         "excerpt": "Type carries tone before words do. The right typeface can make a brand feel premium, bold or quietly confident.",
         "published_at": (2026, 6, 28),
-        "image": "3_stationery-mockup.jpg",
+        "image": "3_stationery-mockup.webp",
         "content": """Typography is the voice of a brand made visible. Before a reader processes a single word, the shape and weight of the letterforms have already set the tone.
 
 Type does the emotional work
@@ -447,7 +447,7 @@ Scale, spacing and hierarchy then turn that personality into a system that stays
         "category": "Creative Process",
         "excerpt": "A look inside how we move from a first conversation to finished, production-ready creative work.",
         "published_at": (2026, 6, 10),
-        "image": "2_creative-agency-mockup.jpg",
+        "image": "2_creative-agency-mockup.webp",
         "content": """Good design rarely arrives fully formed. It is the result of a deliberate process that moves from understanding to exploring, refining and finally delivering.
 
 Discover, define, design, deliver
@@ -464,7 +464,7 @@ A clear process is what turns creativity into something reliable.""",
         "category": "Print",
         "excerpt": "Print is not disappearing — it is becoming a premium, tactile counterpoint to the screen.",
         "published_at": (2026, 5, 22),
-        "image": "7_cereal-editorial.jpg",
+        "image": "7_cereal-editorial.webp",
         "content": """In a world saturated with screens, print has become a rare and tactile signal of quality. Paper, finish and weight communicate in ways a pixel cannot.
 
 Print rewards the senses
@@ -479,7 +479,7 @@ The strongest brands use print deliberately — as a considered counterpoint to 
         "category": "Branding",
         "excerpt": "Consistency is what turns a set of assets into a brand. Here is how to keep every touchpoint aligned.",
         "published_at": (2026, 5, 6),
-        "image": "6_tivra-brand.jpg",
+        "image": "6_tivra-brand.webp",
         "content": """A brand is only as strong as its least considered touchpoint. One off-brand post or mismatched label quietly erodes the trust the rest of the identity has built.
 
 Guidelines are a tool, not a rulebook
@@ -576,7 +576,7 @@ class Command(BaseCommand):
                 "quote": "Nakrani Production understood our vision perfectly and delivered a brand identity that truly represents our business. Highly professional and creative team!",
                 "rating": 5,
                 "active": True,
-                "photo": self.copy_demo_image("10_ravi-patel.jpg", "testimonials"),
+                "photo": self.copy_demo_image("10_ravi-patel.webp", "testimonials"),
             },
         )
 

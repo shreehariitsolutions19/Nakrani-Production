@@ -95,34 +95,34 @@ def portfolio_detail(request, slug):
 
     fallback_gallery = {
         "moon-cosmetics": [
-            "site/images/4_moon-cosmetics.jpg",
-            "site/images/3_stationery-mockup.jpg",
-            "site/images/2_creative-agency-mockup.jpg",
+            "site/images/4_moon-cosmetics.webp",
+            "site/images/3_stationery-mockup.webp",
+            "site/images/2_creative-agency-mockup.webp",
         ],
         "aura-packaging": [
-            "site/images/5_aura-packaging.jpg",
-            "site/images/3_stationery-mockup.jpg",
-            "site/images/1_branding-mockup.jpg",
+            "site/images/5_aura-packaging.webp",
+            "site/images/3_stationery-mockup.webp",
+            "site/images/1_branding-mockup.webp",
         ],
         "tivra-brand": [
-            "site/images/6_tivra-brand.jpg",
+            "site/images/6_tivra-brand.webp",
             "site/images/tivra-gallery-1.webp",
             "site/images/tivra-gallery-2.webp",
         ],
         "cereal-editorial": [
-            "site/images/7_cereal-editorial.jpg",
-            "site/images/2_creative-agency-mockup.jpg",
-            "site/images/1_branding-mockup.jpg",
+            "site/images/7_cereal-editorial.webp",
+            "site/images/2_creative-agency-mockup.webp",
+            "site/images/1_branding-mockup.webp",
         ],
         "lumina-label": [
-            "site/images/8_lumina-label.jpg",
-            "site/images/3_stationery-mockup.jpg",
-            "site/images/5_aura-packaging.jpg",
+            "site/images/8_lumina-label.webp",
+            "site/images/3_stationery-mockup.webp",
+            "site/images/5_aura-packaging.webp",
         ],
         "tattva": [
-            "site/images/9_tattva.png",
-            "site/images/1_branding-mockup.jpg",
-            "site/images/2_creative-agency-mockup.jpg",
+            "site/images/9_tattva.webp",
+            "site/images/1_branding-mockup.webp",
+            "site/images/2_creative-agency-mockup.webp",
         ],
     }
 
@@ -147,17 +147,17 @@ def portfolio_detail(request, slug):
             gallery = [project.image_url] + gallery
 
     gallery_captions = {
-        "vasani-natural-brand-mission-vision.jpeg": "Brand mission and vision",
-        "vasani-natural-logo-board.jpeg": "Primary logo and brand board",
-        "vasani-natural-identity-variants.jpeg": "Logo variations and visual identity",
-        "vasani-natural-color-palette.jpeg": "Core colour palette",
-        "vasani-natural-typography.jpeg": "Typography and logo applications",
-        "vasani-natural-logo-cream.jpeg": "Logo on the cream colourway",
-        "vasani-natural-logo-dark-green.jpeg": "Logo on the deep green colourway",
-        "vasani-natural-stationery-packaging.jpeg": "Stationery and packaging",
-        "vasani-natural-billboard-branding.jpeg": "Outdoor brand billboard",
-        "vasani-natural-thank-you.jpeg": "Branded thank-you card",
-        "vasani-natural-products-billboard.jpeg": "Natural product billboard",
+        "vasani-natural-brand-mission-vision.webp": "Brand mission and vision",
+        "vasani-natural-logo-board.webp": "Primary logo and brand board",
+        "vasani-natural-identity-variants.webp": "Logo variations and visual identity",
+        "vasani-natural-color-palette.webp": "Core colour palette",
+        "vasani-natural-typography.webp": "Typography and logo applications",
+        "vasani-natural-logo-cream.webp": "Logo on the cream colourway",
+        "vasani-natural-logo-dark-green.webp": "Logo on the deep green colourway",
+        "vasani-natural-stationery-packaging.webp": "Stationery and packaging",
+        "vasani-natural-billboard-branding.webp": "Outdoor brand billboard",
+        "vasani-natural-thank-you.webp": "Branded thank-you card",
+        "vasani-natural-products-billboard.webp": "Natural product billboard",
     }
     gallery_cards = [
         {
